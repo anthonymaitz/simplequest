@@ -18,9 +18,9 @@ export function DiceRoller(props: DiceRollerProps) {
         value={props.die}
         onChange={(e) => props.onDieChange(e.currentTarget.value)}
         style={{
-          background: '#0f3460',
-          border: '1px solid #444444',
-          color: '#aaaaaa',
+          background: 'var(--sq-ctrl-bg)',
+          border: '1px solid var(--sq-ctrl-border)',
+          color: 'var(--sq-ctrl-text)',
           'border-radius': '4px',
           padding: '4px 6px',
           'font-size': '12px',

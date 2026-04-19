@@ -16,8 +16,8 @@ export function EnergyPool(props: EnergyPoolProps) {
               width: '14px',
               height: '14px',
               'border-radius': '50%',
-              background: filled ? 'var(--sq-accent)' : '#1a1a2e',
-              border: `2px solid ${filled ? 'var(--sq-accent)' : '#444444'}`,
+              background: filled ? 'var(--sq-overlay-text)' : 'var(--sq-dot-empty-bg)',
+              border: `2px solid ${filled ? 'var(--sq-overlay-text)' : 'var(--sq-dot-empty-border)'}`,
               cursor: 'pointer',
               transition: 'background 0.15s, border-color 0.15s',
             }}

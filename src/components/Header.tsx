@@ -16,8 +16,8 @@ export function Header(props: HeaderProps) {
   return (
     <div
       style={{
-        background: '#16213e',
-        'border-bottom': '2px solid var(--sq-accent)',
+        background: 'var(--sq-row-1)',
+        'border-bottom': '1px solid var(--sq-row-border)',
         padding: '10px 14px',
         display: 'flex',
         'align-items': 'center',
