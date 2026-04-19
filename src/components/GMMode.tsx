@@ -8,6 +8,7 @@ interface GMModeProps {
   onToggle: (enabled: boolean) => void
   onSave: () => void
   onLoad: (name: string) => void
+  onHelpOpen: () => void
 }
 
 export function GMMode(props: GMModeProps) {
@@ -16,8 +17,8 @@ export function GMMode(props: GMModeProps) {
   return (
     <div
       style={{
-        background: '#0d0d1a',
-        'border-top': '1px solid #222222',
+        background: 'var(--sq-row-3)',
+        'border-top': '1px solid var(--sq-row-border)',
         padding: '8px 14px',
         display: 'flex',
         gap: '10px',
@@ -25,7 +26,14 @@ export function GMMode(props: GMModeProps) {
         'flex-wrap': 'wrap',
       }}
     >
-      <span style={{ color: '#555555', 'font-size': '12px', 'text-transform': 'uppercase', 'letter-spacing': '1px' }}>
+      <span
+        style={{
+          color: 'var(--sq-overlay-text-muted)',
+          'font-size': '12px',
+          'text-transform': 'uppercase',
+          'letter-spacing': '1px',
+        }}
+      >
         GM
       </span>
       {/* Toggle switch */}
@@ -34,7 +42,8 @@ export function GMMode(props: GMModeProps) {
         style={{
           width: '36px',
           height: '18px',
-          background: props.enabled ? 'var(--sq-accent)' : '#333333',
+          background: props.enabled ? 'var(--sq-accent)' : 'var(--sq-ctrl-bg)',
+          border: `1px solid ${props.enabled ? 'var(--sq-accent)' : 'var(--sq-ctrl-border)'}`,
           'border-radius': '9px',
           cursor: 'pointer',
           position: 'relative',
@@ -49,8 +58,8 @@ export function GMMode(props: GMModeProps) {
             background: '#ffffff',
             'border-radius': '50%',
             position: 'absolute',
-            top: '2px',
-            left: props.enabled ? '20px' : '2px',
+            top: '1px',
+            left: props.enabled ? '19px' : '1px',
             transition: 'left 0.2s',
           }}
         />
@@ -61,7 +70,7 @@ export function GMMode(props: GMModeProps) {
             onClick={props.onSave}
             disabled={!props.characterName}
             style={{
-              background: '#0f3460',
+              background: 'var(--sq-ctrl-bg)',
               border: '1px solid var(--sq-accent)',
               color: 'var(--sq-accent)',
               'border-radius': '4px',
@@ -80,9 +89,9 @@ export function GMMode(props: GMModeProps) {
               e.currentTarget.value = ''
             }}
             style={{
-              background: '#0f3460',
-              border: '1px solid #444444',
-              color: '#aaaaaa',
+              background: 'var(--sq-ctrl-bg)',
+              border: '1px solid var(--sq-ctrl-border)',
+              color: 'var(--sq-ctrl-text)',
               'border-radius': '4px',
               padding: '3px 8px',
               'font-size': '12px',
@@ -97,6 +106,29 @@ export function GMMode(props: GMModeProps) {
           </select>
         </>
       )}
+      {/* Help button — always visible */}
+      <button
+        onClick={props.onHelpOpen}
+        style={{
+          'margin-left': 'auto',
+          background: 'var(--sq-ctrl-bg)',
+          border: '1px solid var(--sq-ctrl-border)',
+          color: 'var(--sq-overlay-text)',
+          'border-radius': '50%',
+          width: '24px',
+          height: '24px',
+          'font-size': '13px',
+          'font-weight': '700',
+          'font-family': 'inherit',
+          cursor: 'pointer',
+          display: 'flex',
+          'align-items': 'center',
+          'justify-content': 'center',
+          'flex-shrink': '0',
+        }}
+      >
+        ?
+      </button>
     </div>
   )
 }

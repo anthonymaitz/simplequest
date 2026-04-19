@@ -105,6 +105,7 @@ export function SimpleQuest(props: SimpleQuestProps) {
           onToggle={(enabled) => setState('gmMode', enabled)}
           onSave={saveCharacter}
           onLoad={loadCharacter}
+          onHelpOpen={() => {}}
         />
         <Toast message={toastMessage()} visible={toastVisible()} />
       </div>
