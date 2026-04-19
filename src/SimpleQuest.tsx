@@ -1,10 +1,12 @@
 import { createEffect, createMemo, createSignal, onMount, onCleanup } from 'solid-js'
+import { Show } from 'solid-js'
 import { createCharacterStore } from './store'
 import { Header } from './components/Header'
 import { CharacterSelector } from './components/CharacterSelector'
 import { CombatStateSelector } from './components/CombatStateSelector'
 import { AbilityCards } from './components/AbilityCards'
 import { GMMode } from './components/GMMode'
+import { HelpPanel } from './components/HelpPanel'
 import { Toast } from './components/Toast'
 import type { SimpleQuestContent, CombatState } from './types'
 import cssString from './styles/tailwind.css?inline'
@@ -20,6 +22,7 @@ export function SimpleQuest(props: SimpleQuestProps) {
 
   const [toastMessage, setToastMessage] = createSignal('')
   const [toastVisible, setToastVisible] = createSignal(false)
+  const [helpOpen, setHelpOpen] = createSignal(false)
   let toastTimer: ReturnType<typeof setTimeout> | undefined
 
   const content = createMemo<SimpleQuestContent | null>(() => {
@@ -93,9 +96,13 @@ export function SimpleQuest(props: SimpleQuestProps) {
         />
         <AbilityCards
           abilities={content()?.abilities ?? []}
+          descriptions={content()?.descriptions ?? {}}
+          deathContent={content()?.deathContent ?? ''}
           charClass={state.class}
           profession={state.profession}
+          personality={state.personality}
           combat={state.combat}
+          hp={state.hp}
           onRoll={handleRoll}
         />
         <GMMode
@@ -105,9 +112,15 @@ export function SimpleQuest(props: SimpleQuestProps) {
           onToggle={(enabled) => setState('gmMode', enabled)}
           onSave={saveCharacter}
           onLoad={loadCharacter}
-          onHelpOpen={() => {}}
+          onHelpOpen={() => setHelpOpen(true)}
         />
         <Toast message={toastMessage()} visible={toastVisible()} />
+        <Show when={helpOpen()}>
+          <HelpPanel
+            body={content()?.generalContent ?? ''}
+            onClose={() => setHelpOpen(false)}
+          />
+        </Show>
       </div>
     </>
   )
