@@ -26,16 +26,24 @@ const dieHeadingStyle = [
 
 function renderCardBody(markdown: string): string {
   const html = marked.parse(markdown) as string
-  // Pass 1: style D[X] inside <h4> tags with d20 background
-  const pass1 = html.replace(/<h4>([\s\S]*?)<\/h4>/g, (_, content: string) => {
-    const styled = content.replace(
-      /\bD(\d+)\b/g,
-      `<span class="die-heading" data-sides="$1" style="${dieHeadingStyle}">D$1</span>`
-    )
-    return `<h4>${styled}</h4>`
-  })
-  // Pass 2: style remaining D[X] (in body text) with teal underline
-  return pass1.replace(/\bD(\d+)\b/g, '<span class="die-inline" data-sides="$1">D$1</span>')
+  // Split HTML on h4 blocks so we can process them separately
+  const parts = html.split(/(<h4>[\s\S]*?<\/h4>)/g)
+  return parts
+    .map((part) => {
+      if (part.startsWith('<h4>')) {
+        // Style D[X] inside h4 with d20 background
+        return part.replace(/<h4>([\s\S]*?)<\/h4>/g, (_, content: string) => {
+          const styled = content.replace(
+            /\bD(\d+)\b/g,
+            `<span class="die-heading" data-sides="$1" style="${dieHeadingStyle}">D$1</span>`
+          )
+          return `<h4>${styled}</h4>`
+        })
+      }
+      // Style remaining D[X] (body text) with teal underline
+      return part.replace(/\bD(\d+)\b/g, '<span class="die-inline" data-sides="$1">D$1</span>')
+    })
+    .join('')
 }
 
 export function AbilityCard(props: AbilityCardProps) {
