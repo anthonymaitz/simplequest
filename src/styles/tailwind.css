@@ -1,27 +1,82 @@
 @import "tailwindcss";
 
-/* Font */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&family=Nunito:wght@400;600;700&display=swap');
 
-/* Shadow DOM host defaults */
+/* === Shadow DOM host defaults (no personality selected) === */
 :host {
   display: block;
-  font-family: var(--sq-font-family, 'Nunito', sans-serif);
-  background-color: #1a1a2e;
-  color: #ffffff;
+  font-family: var(--sq-font-family, 'Varela Round', 'Nunito', sans-serif);
+
+  /* Personality background */
+  --sq-bg: #888888;
+  /* Accent: card headings, badges, roll button, die-inline color */
   --sq-accent: #888888;
+
+  /* Text in overlay rows (header, selectors, GM bar) */
+  --sq-overlay-text: rgba(255, 255, 255, 0.95);
+  --sq-overlay-text-muted: rgba(255, 255, 255, 0.55);
+
+  /* Control elements (select, input) inside overlay rows */
+  --sq-ctrl-bg: rgba(255, 255, 255, 0.15);
+  --sq-ctrl-border: rgba(255, 255, 255, 0.3);
+  --sq-ctrl-text: rgba(255, 255, 255, 0.95);
+
+  /* Row overlay backgrounds */
+  --sq-row-1: rgba(0, 0, 0, 0.15);
+  --sq-row-2: rgba(0, 0, 0, 0.10);
+  --sq-row-3: rgba(0, 0, 0, 0.20);
+  --sq-row-border: rgba(0, 0, 0, 0.12);
+
+  /* Empty energy dot */
+  --sq-dot-empty-bg: rgba(255, 255, 255, 0.2);
+  --sq-dot-empty-border: rgba(255, 255, 255, 0.4);
+
+  background-color: var(--sq-bg);
+  color: #3f3e4a;
 }
 
-/* Personality accent colors */
-:host([data-personality="passionate"]) { --sq-accent: #e94560; }
-:host([data-personality="wild"])        { --sq-accent: #4ade80; }
-:host([data-personality="calculating"]) { --sq-accent: #60a5fa; }
-:host([data-personality="righteous"])   { --sq-accent: #fbbf24; }
-:host([data-personality="selfish"])     { --sq-accent: #a78bfa; }
+/* === Personality themes === */
+:host([data-personality="passionate"]) {
+  --sq-bg: #943a11;
+  --sq-accent: #943a11;
+}
 
-/* Clickable dice notation in ability cards */
-.dice-notation {
-  color: var(--sq-accent);
-  border-bottom: 1px dotted var(--sq-accent);
+:host([data-personality="calculating"]) {
+  --sq-bg: #26869d;
+  --sq-accent: #26869d;
+}
+
+:host([data-personality="wild"]) {
+  --sq-bg: #758d2c;
+  --sq-accent: #758d2c;
+}
+
+:host([data-personality="selfish"]) {
+  --sq-bg: #3f3e4a;
+  --sq-accent: #3f3e4a;
+}
+
+/* Righteous has a LIGHT background — all vars must work on #daceae */
+:host([data-personality="righteous"]) {
+  --sq-bg: #daceae;
+  --sq-accent: #5a5060;
+  --sq-overlay-text: #5a5060;
+  --sq-overlay-text-muted: rgba(90, 80, 96, 0.5);
+  --sq-ctrl-bg: rgba(0, 0, 0, 0.06);
+  --sq-ctrl-border: rgba(90, 80, 96, 0.25);
+  --sq-ctrl-text: #5a5060;
+  --sq-row-1: rgba(0, 0, 0, 0.06);
+  --sq-row-2: rgba(0, 0, 0, 0.04);
+  --sq-row-3: rgba(0, 0, 0, 0.08);
+  --sq-row-border: rgba(90, 80, 96, 0.15);
+  --sq-dot-empty-bg: rgba(90, 80, 96, 0.12);
+  --sq-dot-empty-border: rgba(90, 80, 96, 0.25);
+}
+
+/* === Inline dice notation (body text) === */
+.die-inline {
+  color: #26869d;
+  border-bottom: 1px solid #26869d;
+  font-weight: 700;
   cursor: pointer;
 }
