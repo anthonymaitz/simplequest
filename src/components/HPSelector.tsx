@@ -13,7 +13,7 @@ export function HPSelector(props: HPSelectorProps) {
       </label>
       <select
         value={props.hp}
-        onChange={(e) => props.onHpChange(parseInt(e.currentTarget.value))}
+        onChange={(e) => props.onHpChange(parseInt(e.currentTarget.value, 10))}
         style={{
           background: '#0f3460',
           border: '1px solid var(--sq-accent)',
