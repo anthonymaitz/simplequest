@@ -1,5 +1,4 @@
-import { createEffect, createMemo, createSignal, onMount, onCleanup } from 'solid-js'
-import { Show } from 'solid-js'
+import { createEffect, createMemo, createSignal, onMount, onCleanup, Show } from 'solid-js'
 import { createCharacterStore } from './store'
 import { Header } from './components/Header'
 import { CharacterSelector } from './components/CharacterSelector'
