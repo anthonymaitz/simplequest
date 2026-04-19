@@ -11,6 +11,7 @@ export interface AbilityCard {
   body: string        // Markdown; D[X] patterns become clickable dice rolls
   context: CombatState
   source: string      // 'wizard' | 'criminal' | 'general' | etc.
+  energyCost?: number // Optional energy cost, shown as badge on card header
 }
 
 export interface SimpleQuestContent {
@@ -19,6 +20,9 @@ export interface SimpleQuestContent {
   professions: string[]
   statuses: CombatStatus[]
   abilities: AbilityCard[]
+  descriptions: Record<string, string> // keyed by lowercase personality/class/profession name
+  generalContent: string               // rendered in the ? help panel
+  deathContent: string                 // rendered as DeathCard when HP = 0
 }
 
 export interface CharacterData {
