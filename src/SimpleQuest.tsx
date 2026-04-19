@@ -63,7 +63,7 @@ export function SimpleQuest(props: SimpleQuestProps) {
   return (
     <>
       <style>{cssString}</style>
-      <div style={{ 'min-height': '100%', background: '#1a1a2e', position: 'relative' }}>
+      <div style={{ 'min-height': '100%', position: 'relative' }}>
         <Header
           hp={state.hp}
           energy={state.energy}
