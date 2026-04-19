@@ -1,6 +1,5 @@
-@import "tailwindcss";
-
 @import url('https://fonts.googleapis.com/css2?family=Varela+Round&family=Nunito:wght@400;600;700&display=swap');
+@import "tailwindcss";
 
 /* === Shadow DOM host defaults (no personality selected) === */
 :host {
