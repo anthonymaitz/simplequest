@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SimpleQuest Dev</title>
+  <style>
+    body { margin: 0; background: #111; display: flex; justify-content: center; }
+    simple-quest { width: 100%; max-width: 480px; min-height: 100vh; }
+  </style>
+</head>
+<body>
+  <simple-quest id="sq"></simple-quest>
+  <script type="module" src="/src/index.tsx"></script>
+  <script type="module">
+    import { sampleContent } from '/src/sample-content.ts'
+    document.getElementById('sq').setAttribute('content', JSON.stringify(sampleContent))
+  </script>
+</body>
+</html>
