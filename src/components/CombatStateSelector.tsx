@@ -15,8 +15,8 @@ export function CombatStateSelector(props: CombatStateSelectorProps) {
   return (
     <div
       style={{
-        background: '#16213e',
-        'border-bottom': '1px solid #222222',
+        background: 'var(--sq-row-2)',
+        'border-bottom': '1px solid var(--sq-row-border)',
         padding: '8px 14px',
         display: 'flex',
         gap: '10px',
@@ -27,9 +27,9 @@ export function CombatStateSelector(props: CombatStateSelectorProps) {
         value={props.combat}
         onChange={(e) => props.onChange(e.currentTarget.value as CombatState)}
         style={{
-          background: '#0f3460',
-          border: '1px solid #444444',
-          color: '#aaaaaa',
+          background: 'var(--sq-ctrl-bg)',
+          border: '1px solid var(--sq-ctrl-border)',
+          color: 'var(--sq-ctrl-text)',
           'border-radius': '4px',
           padding: '4px 8px',
           'font-size': '13px',
@@ -41,7 +41,14 @@ export function CombatStateSelector(props: CombatStateSelectorProps) {
           {(s) => <option value={s.id}>{s.label}</option>}
         </For>
       </select>
-      <span style={{ color: 'var(--sq-accent)', 'font-size': '12px', flex: '1' }}>
+      <span
+        style={{
+          color: 'var(--sq-overlay-text)',
+          'font-size': '12px',
+          flex: '1',
+          opacity: '0.8',
+        }}
+      >
         {currentStatus()?.message ?? ''}
       </span>
     </div>

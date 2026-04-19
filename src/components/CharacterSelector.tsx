@@ -15,9 +15,9 @@ interface CharacterSelectorProps {
 }
 
 const selectStyle = {
-  background: '#0f3460',
-  border: '1px solid #444444',
-  color: '#aaaaaa',
+  background: 'var(--sq-ctrl-bg)',
+  border: '1px solid var(--sq-ctrl-border)',
+  color: 'var(--sq-ctrl-text)',
   'border-radius': '4px',
   padding: '5px 8px',
   'font-size': '13px',
@@ -29,9 +29,9 @@ const selectStyle = {
 }
 
 const inputStyle = {
-  background: '#0f3460',
-  border: '1px solid #444444',
-  color: '#ffffff',
+  background: 'var(--sq-ctrl-bg)',
+  border: '1px solid var(--sq-ctrl-border)',
+  color: 'var(--sq-ctrl-text)',
   'border-radius': '4px',
   padding: '5px 8px',
   'font-size': '13px',
@@ -45,8 +45,8 @@ export function CharacterSelector(props: CharacterSelectorProps) {
   return (
     <div
       style={{
-        background: '#16213e',
-        'border-bottom': '1px solid #222222',
+        background: 'var(--sq-row-2)',
+        'border-bottom': '1px solid var(--sq-row-border)',
         padding: '10px 14px',
         display: 'flex',
         gap: '8px',
