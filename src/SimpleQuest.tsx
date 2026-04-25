@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal, onMount, Show, on } from 'solid-js'
+import { createEffect, createMemo, createSignal, onMount, Show } from 'solid-js'
 import { createCharacterStore } from './store'
 import { Header } from './components/Header'
 import { CharacterSelector } from './components/CharacterSelector'
@@ -20,7 +20,6 @@ export function SimpleQuest(props: SimpleQuestProps) {
     createCharacterStore()
 
   const [helpOpen, setHelpOpen] = createSignal(false)
-  const [usedCards, setUsedCards] = createSignal(new Set<string>())
 
   const content = createMemo<SimpleQuestContent | null>(() => {
     if (!props.content) return null
@@ -45,11 +44,7 @@ export function SimpleQuest(props: SimpleQuestProps) {
     }
   })
 
-  // Reset used-card state each time the round increments
-  createEffect(on(() => state.round, () => { setUsedCards(new Set()) }, { defer: true }))
-
   function handleAbilityActivate(card: AbilityCardType) {
-    if (card.energyCost === undefined) return
     props.element.dispatchEvent(new CustomEvent('abilityactivate', {
       detail: { title: card.title, energyCost: card.energyCost },
       bubbles: true,
@@ -122,8 +117,8 @@ export function SimpleQuest(props: SimpleQuestProps) {
             profession={state.profession}
             personality={state.personality}
             combat={state.combat}
-            usedCards={usedCards()}
-            onUseCard={(title) => setUsedCards((prev) => new Set([...prev, title]))}
+            usedAbilities={state.usedAbilities ?? []}
+            selectedAbility={state.selectedAbility ?? null}
             onActivate={handleAbilityActivate}
           />
           <GMMode

@@ -5,13 +5,12 @@ import type { AbilityCard as AbilityCardType } from '../types'
 interface AbilityCardProps {
   card: AbilityCardType
   used: boolean
+  selected: boolean
   onActivate?: (card: AbilityCardType) => void
-  onUse: () => void
 }
 
 function renderCardBody(markdown: string): string {
   const html = marked.parse(markdown) as string
-  // Make D[X] references bold but not clickable
   return html.replace(/\bD(\d+)\b/g, '<strong>D$1</strong>')
 }
 
@@ -19,12 +18,15 @@ export function AbilityCard(props: AbilityCardProps) {
   const [expanded, setExpanded] = createSignal(false)
 
   function handleHeaderClick() {
+    if (props.used) return  // used cards are inert
+    props.onActivate?.(props.card)
     setExpanded((e) => !e)
   }
 
-  function handleMarkUsed() {
-    props.onUse()
-    props.onActivate?.(props.card)
+  const borderColor = () => {
+    if (props.used) return '#e0e0e0'
+    if (props.selected) return 'var(--sq-accent)'
+    return 'transparent'
   }
 
   return (
@@ -33,13 +35,16 @@ export function AbilityCard(props: AbilityCardProps) {
         background: '#ffffff',
         'border-radius': '6px',
         'margin-bottom': '8px',
-        'box-shadow': '0px -2px 4px rgba(0,0,0,0.2)',
+        'box-shadow': props.selected
+          ? '0 0 0 2px var(--sq-accent), 0px -2px 4px rgba(0,0,0,0.15)'
+          : '0px -2px 4px rgba(0,0,0,0.2)',
+        border: `2px solid ${borderColor()}`,
         overflow: 'hidden',
-        opacity: props.used ? 0.55 : 1,
-        transition: 'opacity 0.2s',
+        opacity: props.used ? 0.45 : 1,
+        transition: 'opacity 0.2s, box-shadow 0.15s',
       }}
     >
-      {/* Card header: title button + badges */}
+      {/* Card header: title + badges */}
       <div
         onClick={handleHeaderClick}
         style={{
@@ -47,13 +52,14 @@ export function AbilityCard(props: AbilityCardProps) {
           'justify-content': 'space-between',
           'align-items': 'center',
           padding: '10px 12px',
-          cursor: 'pointer',
+          cursor: props.used ? 'default' : 'pointer',
           'user-select': 'none',
+          background: props.selected ? 'color-mix(in srgb, var(--sq-accent) 8%, white)' : 'transparent',
         }}
       >
         <span
           style={{
-            color: props.used ? '#999999' : 'var(--sq-accent)',
+            color: props.used ? '#bbbbbb' : props.selected ? 'var(--sq-accent)' : 'var(--sq-accent)',
             'font-size': '12px',
             'font-weight': '700',
             'text-transform': 'uppercase',
@@ -65,75 +71,52 @@ export function AbilityCard(props: AbilityCardProps) {
         </span>
         <div style={{ display: 'flex', gap: '6px', 'align-items': 'center' }}>
           {props.used ? (
-            <span
-              style={{
-                background: '#ddd',
-                color: '#888',
-                'border-radius': '3px',
-                padding: '2px 6px',
-                'font-size': '9px',
-                'font-weight': '700',
-                'letter-spacing': '0.5px',
-              }}
-            >
+            <span style={{
+              background: '#ddd', color: '#999',
+              'border-radius': '3px', padding: '2px 6px',
+              'font-size': '9px', 'font-weight': '700', 'letter-spacing': '0.5px',
+            }}>
               USED
+            </span>
+          ) : props.selected ? (
+            <span style={{
+              background: 'var(--sq-accent)', color: '#fff',
+              'border-radius': '3px', padding: '2px 8px',
+              'font-size': '9px', 'font-weight': '700', 'letter-spacing': '0.5px',
+            }}>
+              SELECT TARGET
             </span>
           ) : (
             props.card.energyCost !== undefined && (
-              <span
-                style={{
-                  background: 'var(--sq-accent)',
-                  color: '#ffffff',
-                  'border-radius': '3px',
-                  padding: '2px 8px',
-                  'font-size': '10px',
-                  'font-weight': '700',
-                  'white-space': 'nowrap',
-                }}
-              >
+              <span style={{
+                background: 'var(--sq-accent)', color: '#ffffff',
+                'border-radius': '3px', padding: '2px 8px',
+                'font-size': '10px', 'font-weight': '700', 'white-space': 'nowrap',
+              }}>
                 {props.card.energyCost} energy
               </span>
             )
           )}
-          <span style={{ color: '#aaaaaa', 'font-size': '12px' }}>
-            {expanded() ? '▲' : '▼'}
-          </span>
+          {!props.used && (
+            <span style={{ color: '#aaaaaa', 'font-size': '12px' }}>
+              {expanded() ? '▲' : '▼'}
+            </span>
+          )}
         </div>
       </div>
 
-      {/* Card body: only visible when expanded */}
-      {expanded() && (
-        <div style={{ padding: '0 12px 10px' }}>
-          <div
-            innerHTML={renderCardBody(props.card.body)}
-            style={{
-              color: '#555555',
-              'font-size': '13px',
-              'line-height': '1.6',
-              'font-family': "'Varela Round', 'Nunito', sans-serif",
-            }}
-          />
-          {!props.used && (
-            <button
-              onClick={handleMarkUsed}
-              style={{
-                'margin-top': '8px',
-                padding: '5px 14px',
-                background: 'var(--sq-accent)',
-                color: '#fff',
-                border: 'none',
-                'border-radius': '4px',
-                'font-size': '11px',
-                'font-weight': '700',
-                cursor: 'pointer',
-                'text-transform': 'uppercase',
-                'letter-spacing': '0.5px',
-              }}
-            >
-              Mark as Used
-            </button>
-          )}
-        </div>
+      {/* Card body: visible when expanded */}
+      {expanded() && !props.used && (
+        <div
+          innerHTML={renderCardBody(props.card.body)}
+          style={{
+            padding: '0 12px 10px',
+            color: '#555555',
+            'font-size': '13px',
+            'line-height': '1.6',
+            'font-family': "'Varela Round', 'Nunito', sans-serif",
+          }}
+        />
       )}
     </div>
   )

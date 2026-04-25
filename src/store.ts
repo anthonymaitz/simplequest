@@ -13,6 +13,8 @@ const defaultState: CharacterState = {
   hp: 10,
   die: 'd6',
   round: 0,
+  usedAbilities: [] as string[],
+  selectedAbility: null as string | null,
   gmMode: false,
   savedCharacters: {},
 }

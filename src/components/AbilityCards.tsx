@@ -11,8 +11,8 @@ interface AbilityCardsProps {
   profession: string
   personality: string
   combat: CombatState
-  usedCards: Set<string>
-  onUseCard: (title: string) => void
+  usedAbilities: string[]
+  selectedAbility: string | null
   onActivate?: (card: AbilityCardType) => void
 }
 
@@ -23,7 +23,6 @@ export function AbilityCards(props: AbilityCardsProps) {
         card.source === props.charClass ||
         card.source === props.profession ||
         card.source === 'general'
-      // inGeneral cards only show in general mode; context must match exactly
       const contextMatch = card.context === props.combat
       return sourceMatch && contextMatch
     })
@@ -61,8 +60,8 @@ export function AbilityCards(props: AbilityCardsProps) {
         {(card) => (
           <AbilityCard
             card={card}
-            used={props.usedCards.has(card.title)}
-            onUse={() => props.onUseCard(card.title)}
+            used={props.usedAbilities.includes(card.title)}
+            selected={props.selectedAbility === card.title}
             onActivate={props.onActivate}
           />
         )}
