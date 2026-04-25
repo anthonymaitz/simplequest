@@ -17,16 +17,15 @@ function renderCardBody(markdown: string): string {
 export function AbilityCard(props: AbilityCardProps) {
   const [expanded, setExpanded] = createSignal(false)
 
-  function handleHeaderClick() {
-    if (props.used) return  // used cards are inert
+  function handleTitleClick() {
+    if (props.used) return
     props.onActivate?.(props.card)
-    setExpanded((e) => !e)
   }
 
-  const borderColor = () => {
-    if (props.used) return '#e0e0e0'
-    if (props.selected) return 'var(--sq-accent)'
-    return 'transparent'
+  function handleExpandClick(e: MouseEvent) {
+    e.stopPropagation()
+    if (props.used) return
+    setExpanded((v) => !v)
   }
 
   return (
@@ -38,38 +37,41 @@ export function AbilityCard(props: AbilityCardProps) {
         'box-shadow': props.selected
           ? '0 0 0 2px var(--sq-accent), 0px -2px 4px rgba(0,0,0,0.15)'
           : '0px -2px 4px rgba(0,0,0,0.2)',
-        border: `2px solid ${borderColor()}`,
+        border: `2px solid ${props.used ? '#e0e0e0' : props.selected ? 'var(--sq-accent)' : 'transparent'}`,
         overflow: 'hidden',
         opacity: props.used ? 0.45 : 1,
         transition: 'opacity 0.2s, box-shadow 0.15s',
       }}
     >
-      {/* Card header: title + badges */}
+      {/* Card header */}
       <div
-        onClick={handleHeaderClick}
         style={{
           display: 'flex',
-          'justify-content': 'space-between',
           'align-items': 'center',
           padding: '10px 12px',
-          cursor: props.used ? 'default' : 'pointer',
-          'user-select': 'none',
           background: props.selected ? 'color-mix(in srgb, var(--sq-accent) 8%, white)' : 'transparent',
         }}
       >
+        {/* Title — clicking selects the ability for targeting */}
         <span
+          onClick={handleTitleClick}
           style={{
-            color: props.used ? '#bbbbbb' : props.selected ? 'var(--sq-accent)' : 'var(--sq-accent)',
+            flex: '1',
+            color: props.used ? '#bbbbbb' : 'var(--sq-accent)',
             'font-size': '12px',
             'font-weight': '700',
             'text-transform': 'uppercase',
             'letter-spacing': '1px',
             'text-decoration': props.used ? 'line-through' : 'none',
+            cursor: props.used ? 'default' : 'pointer',
+            'user-select': 'none',
           }}
         >
           {props.card.title}
         </span>
-        <div style={{ display: 'flex', gap: '6px', 'align-items': 'center' }}>
+
+        {/* Badges */}
+        <div style={{ display: 'flex', gap: '6px', 'align-items': 'center', 'margin-right': '8px' }}>
           {props.used ? (
             <span style={{
               background: '#ddd', color: '#999',
@@ -78,34 +80,37 @@ export function AbilityCard(props: AbilityCardProps) {
             }}>
               USED
             </span>
-          ) : props.selected ? (
+          ) : props.card.energyCost !== undefined && (
             <span style={{
-              background: 'var(--sq-accent)', color: '#fff',
+              background: props.selected ? 'var(--sq-accent)' : 'rgba(0,0,0,0.12)',
+              color: props.selected ? '#fff' : 'var(--sq-accent)',
               'border-radius': '3px', padding: '2px 8px',
-              'font-size': '9px', 'font-weight': '700', 'letter-spacing': '0.5px',
+              'font-size': '10px', 'font-weight': '700', 'white-space': 'nowrap',
+              transition: 'all 0.15s',
             }}>
-              SELECT TARGET
-            </span>
-          ) : (
-            props.card.energyCost !== undefined && (
-              <span style={{
-                background: 'var(--sq-accent)', color: '#ffffff',
-                'border-radius': '3px', padding: '2px 8px',
-                'font-size': '10px', 'font-weight': '700', 'white-space': 'nowrap',
-              }}>
-                {props.card.energyCost} energy
-              </span>
-            )
-          )}
-          {!props.used && (
-            <span style={{ color: '#aaaaaa', 'font-size': '12px' }}>
-              {expanded() ? '▲' : '▼'}
+              {props.card.energyCost} energy
             </span>
           )}
         </div>
+
+        {/* Expand arrow — only toggles body, never activates */}
+        {!props.used && (
+          <span
+            onClick={handleExpandClick}
+            style={{
+              color: '#aaaaaa',
+              'font-size': '12px',
+              cursor: 'pointer',
+              'user-select': 'none',
+              padding: '0 2px',
+            }}
+          >
+            {expanded() ? '▲' : '▼'}
+          </span>
+        )}
       </div>
 
-      {/* Card body: visible when expanded */}
+      {/* Card body: only when expanded */}
       {expanded() && !props.used && (
         <div
           innerHTML={renderCardBody(props.card.body)}
