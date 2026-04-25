@@ -7,11 +7,12 @@ import { AbilityCards } from './components/AbilityCards'
 import { GMMode } from './components/GMMode'
 import { HelpPanel } from './components/HelpPanel'
 import { Toast } from './components/Toast'
-import type { SimpleQuestContent, CombatState } from './types'
+import type { SimpleQuestContent, CombatState, CharacterData, AbilityCard as AbilityCardType } from './types'
 import cssString from './styles/tailwind.css?inline'
 
 interface SimpleQuestProps {
   content: string
+  character?: string
   element: HTMLElement
 }
 
@@ -37,6 +38,16 @@ export function SimpleQuest(props: SimpleQuestProps) {
     loadFromStorage()
   })
 
+  createEffect(() => {
+    if (!props.character) return
+    try {
+      const data = JSON.parse(props.character) as CharacterData
+      setState({ ...data })
+    } catch {
+      // ignore malformed character JSON
+    }
+  })
+
   onCleanup(() => {
     if (toastTimer !== undefined) clearTimeout(toastTimer)
   })
@@ -51,6 +62,15 @@ export function SimpleQuest(props: SimpleQuestProps) {
   function handleRoll(sides: number) {
     const result = Math.floor(Math.random() * sides) + 1
     showToast(`d${sides} → ${result}`)
+  }
+
+  function handleAbilityActivate(card: AbilityCardType) {
+    if (card.energyCost === undefined) return
+    props.element.dispatchEvent(new CustomEvent('abilityactivate', {
+      detail: { title: card.title, energyCost: card.energyCost },
+      bubbles: true,
+      composed: true,
+    }))
   }
 
   // Sync personality to data-personality on the host element for CSS theming
@@ -103,6 +123,7 @@ export function SimpleQuest(props: SimpleQuestProps) {
           combat={state.combat}
           hp={state.hp}
           onRoll={handleRoll}
+          onActivate={handleAbilityActivate}
         />
         <GMMode
           enabled={state.gmMode}

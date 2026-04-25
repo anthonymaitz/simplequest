@@ -6,6 +6,7 @@ import type { AbilityCard as AbilityCardType } from '../types'
 interface AbilityCardProps {
   card: AbilityCardType
   onRoll: (sides: number) => void
+  onActivate?: (card: AbilityCardType) => void
 }
 
 const dieHeadingStyle = [
@@ -72,7 +73,7 @@ export function AbilityCard(props: AbilityCardProps) {
     >
       {/* Card header row: title + optional energy badge */}
       <div
-        onClick={() => setCollapsed((c) => !c)}
+        onClick={() => { setCollapsed((c) => !c); props.onActivate?.(props.card) }}
         style={{
           display: 'flex',
           'justify-content': 'space-between',

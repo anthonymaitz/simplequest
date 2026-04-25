@@ -14,6 +14,7 @@ interface AbilityCardsProps {
   combat: CombatState
   hp: number
   onRoll: (sides: number) => void
+  onActivate?: (card: AbilityCardType) => void
 }
 
 export function AbilityCards(props: AbilityCardsProps) {
@@ -58,7 +59,7 @@ export function AbilityCards(props: AbilityCardsProps) {
 
       {/* Ability cards */}
       <For each={visible()}>
-        {(card) => <AbilityCard card={card} onRoll={props.onRoll} />}
+        {(card) => <AbilityCard card={card} onRoll={props.onRoll} onActivate={props.onActivate} />}
       </For>
     </div>
   )
