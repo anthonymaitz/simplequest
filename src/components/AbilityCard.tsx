@@ -19,13 +19,12 @@ export function AbilityCard(props: AbilityCardProps) {
   const [expanded, setExpanded] = createSignal(false)
 
   function handleHeaderClick() {
-    if (!props.used) {
-      props.onUse()
-      props.onActivate?.(props.card)
-      setExpanded(true)
-    } else {
-      setExpanded((e) => !e)
-    }
+    setExpanded((e) => !e)
+  }
+
+  function handleMarkUsed() {
+    props.onUse()
+    props.onActivate?.(props.card)
   }
 
   return (
@@ -104,16 +103,37 @@ export function AbilityCard(props: AbilityCardProps) {
 
       {/* Card body: only visible when expanded */}
       {expanded() && (
-        <div
-          innerHTML={renderCardBody(props.card.body)}
-          style={{
-            padding: '0 12px 10px',
-            color: '#555555',
-            'font-size': '13px',
-            'line-height': '1.6',
-            'font-family': "'Varela Round', 'Nunito', sans-serif",
-          }}
-        />
+        <div style={{ padding: '0 12px 10px' }}>
+          <div
+            innerHTML={renderCardBody(props.card.body)}
+            style={{
+              color: '#555555',
+              'font-size': '13px',
+              'line-height': '1.6',
+              'font-family': "'Varela Round', 'Nunito', sans-serif",
+            }}
+          />
+          {!props.used && (
+            <button
+              onClick={handleMarkUsed}
+              style={{
+                'margin-top': '8px',
+                padding: '5px 14px',
+                background: 'var(--sq-accent)',
+                color: '#fff',
+                border: 'none',
+                'border-radius': '4px',
+                'font-size': '11px',
+                'font-weight': '700',
+                cursor: 'pointer',
+                'text-transform': 'uppercase',
+                'letter-spacing': '0.5px',
+              }}
+            >
+              Mark as Used
+            </button>
+          )}
+        </div>
       )}
     </div>
   )
