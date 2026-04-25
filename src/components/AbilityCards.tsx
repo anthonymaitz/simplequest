@@ -1,7 +1,6 @@
 import { For, createMemo, Show } from 'solid-js'
 import { AbilityCard } from './AbilityCard'
 import { DescriptionCard } from './DescriptionCard'
-import { DeathCard } from './DeathCard'
 import type { AbilityCard as AbilityCardType, CombatState } from '../types'
 
 interface AbilityCardsProps {
@@ -12,7 +11,6 @@ interface AbilityCardsProps {
   profession: string
   personality: string
   combat: CombatState
-  hp: number
   usedCards: Set<string>
   onUseCard: (title: string) => void
   onActivate?: (card: AbilityCardType) => void
@@ -33,9 +31,9 @@ export function AbilityCards(props: AbilityCardsProps) {
 
   return (
     <div style={{ padding: '12px 14px' }}>
-      {/* Death card: shown above all else when HP = 0 */}
-      <Show when={props.hp === 0 && props.deathContent}>
-        <DeathCard body={props.deathContent} />
+      {/* Dead mode intro: rules summary shown above dying ability cards */}
+      <Show when={props.combat === 'isDead' && props.deathContent}>
+        <DescriptionCard title="Dead" body={props.deathContent} />
       </Show>
 
       {/* Description cards: only in general mode */}

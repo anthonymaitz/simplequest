@@ -11,6 +11,7 @@ export const sampleContent: SimpleQuestContent = {
     { id: 'inGeneral',   label: 'General',      message: 'Standard rules apply.' },
     { id: 'inCombat',    label: 'In Combat',     message: 'Combat is active. Initiative counts.' },
     { id: 'outOfCombat', label: 'Out of Combat', message: 'No enemies nearby.' },
+    { id: 'isDead',      label: 'Dead',          message: 'You have 0 HP. Move up to 3 squares per turn. Use your Dying ability or Resuscitate.' },
   ],
 
   // ─── Descriptions ────────────────────────────────────────────────────────────
@@ -148,59 +149,13 @@ There is no permanent death in Simplequest. Dead players are returned to life at
 
 Fire in combat does 2 damage to adjacent enemies or players if they END their turn adjacent to it. Standing in fire does 3 damage. Fire can spread in flammable areas.`,
 
-  // ─── Death Rules (shown when HP = 0) ─────────────────────────────────────────
-  deathContent: `Not really. Your character is still alive, but a couple things have happened:
+  // ─── Death intro (shown as description header when status = Dead) ────────────
+  deathContent: `Your character is still alive, but a couple things have happened:
 
 * You can no longer use your combat abilities and have ZERO energy.
 * You can move up to 3 squares per turn.
-* You can use your class's special Dying ability OR attempt to Resuscitate yourself.
-* **DEATH PENALTY:** Discard one equippable item or lose 4 Gold.
-
-# Resuscitate
-
-Attempt to recover from your wounds and return to the fight. If an ally is adjacent, they can spend 3 Energy to boost your roll by 1 BEFORE you roll.
-
-#### Roll a D6
-
-* _1–5_ You are still clinging to life. If you attempt to Resuscitate next turn, add 1 to your roll.
-* _6_ You return to life with 5 HP and 4 energy.
-
-# Dying Warrior — Trip
-**Adjacent**
-
-#### Roll a D20
-
-* _1–4_ You hold on, but they keep moving. If the enemy moves, they drag you with them.
-* _5–13_ You trip the enemy. They are unable to physically move on their turn.
-* _14–19_ You trip the enemy. They can't move and take 3 damage in the fall.
-* _20_ You leap on an enemy's back. They flail about, likely hitting themselves or a fellow enemy.
-
-# Dying Marksman — Shoot
-**Defensive**
-
-Every time an enemy passes your line of sight (any square DIRECTLY in front of you), shoot an arrow at them.
-
-#### Roll a D4
-
-Do the rolled amount of damage.
-
-# Dying Sage — Possession
-**Range 5** — NOTE: Previously possessed enemies CANNOT be possessed again.
-
-#### Roll a D20
-
-* _1–5_ Failed possession. The enemy does half damage this turn.
-* _6–13_ Possess the enemy for a turn.
-* _14–19_ Possess the enemy until it takes damage.
-* _20_ Possess an enemy until it dies.
-
-# Dying Wizard — Elemental Storm
-
-#### Roll a D6 twice
-
-Drop a burst of flame X squares left/right and Y squares up/down from the Wizard's location. You choose which roll is X and which is Y.
-
-If the flame lands ON an enemy, they take 4 damage. NEXT TO an enemy: 1 damage. The flame remains for the encounter and damages friend and foe alike.`,
+* Use your class's special Dying ability OR attempt to Resuscitate yourself.
+* **DEATH PENALTY:** Discard one equippable item or lose 4 Gold.`,
 
   // ─── Abilities ───────────────────────────────────────────────────────────────
   abilities: [
@@ -1375,6 +1330,77 @@ Search the immediate area for the components you need. GM assigns a target numbe
 Your tinkerer can keep up to 2 successfully created machines to use later. Every time you use the machine, roll a D6 — if you roll a 1, it breaks.`,
       context: 'outOfCombat',
       source: 'tinkerer',
+    },
+
+    // ── Dying (isDead) ────────────────────────────────────────────────────────
+    {
+      title: 'Resuscitate',
+      body: `Attempt to recover from your wounds and return to the fight. If an ally is adjacent, they can spend 3 Energy to boost your roll by 1 BEFORE you roll.
+
+#### Roll a D6
+
+* _1–5_ You are still clinging to life. If you attempt to Resuscitate next turn, add 1 to your roll.
+* _6_ You return to life with 5 HP and 4 energy.`,
+      context: 'isDead',
+      source: 'general',
+    },
+    {
+      title: 'Dying — Trip',
+      body: `**Adjacent**
+
+#### Roll a D20
+
+* _1–4_ You hold on, but they keep moving. If the enemy moves, they drag you with them.
+* _5–13_ You trip the enemy. They are unable to physically move on their turn.
+* _14–19_ You trip the enemy. They can't move and take 3 damage in the fall.
+* _20_ You leap on an enemy's back. They flail about, likely hitting themselves or a fellow enemy.`,
+      context: 'isDead',
+      source: 'fighter',
+    },
+    {
+      title: 'Dying — Shoot',
+      body: `**Defensive**
+
+Every time an enemy passes your line of sight (any square DIRECTLY in front of you), shoot an arrow at them.
+
+#### Roll a D4
+
+Do the rolled amount of damage.`,
+      context: 'isDead',
+      source: 'marksman',
+    },
+    {
+      title: 'Dying — Possession',
+      body: `**Range 5** — NOTE: Previously possessed enemies CANNOT be possessed again.
+
+#### Roll a D20
+
+* _1–5_ Failed possession. The enemy does half damage this turn.
+* _6–13_ Possess the enemy for a turn.
+* _14–19_ Possess the enemy until it takes damage.
+* _20_ Possess an enemy until it dies.`,
+      context: 'isDead',
+      source: 'sage',
+    },
+    {
+      title: 'Dying — Elemental Storm',
+      body: `#### Roll a D6 twice
+
+Drop a burst of flame X squares left/right and Y squares up/down from your location. You choose which roll is X and which is Y.
+
+If the flame lands ON an enemy, they take 4 damage. NEXT TO an enemy: 1 damage. The flame remains for the encounter and damages friend and foe alike.`,
+      context: 'isDead',
+      source: 'wizard',
+    },
+    {
+      title: 'Dying — Last Stand',
+      body: `Even as you fall, your training drives one final strike.
+
+#### Roll a D8
+
+Do the rolled amount of damage to an adjacent enemy.`,
+      context: 'isDead',
+      source: 'monk',
     },
 
     // ── Warlock ───────────────────────────────────────────────────────────────

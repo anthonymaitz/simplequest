@@ -122,7 +122,6 @@ export function SimpleQuest(props: SimpleQuestProps) {
             profession={state.profession}
             personality={state.personality}
             combat={state.combat}
-            hp={state.hp}
             usedCards={usedCards()}
             onUseCard={(title) => setUsedCards((prev) => new Set([...prev, title]))}
             onActivate={handleAbilityActivate}

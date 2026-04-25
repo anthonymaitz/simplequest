@@ -1,4 +1,4 @@
-export type CombatState = 'inGeneral' | 'inCombat' | 'outOfCombat'
+export type CombatState = 'inGeneral' | 'inCombat' | 'outOfCombat' | 'isDead'
 
 export interface CombatStatus {
   id: CombatState

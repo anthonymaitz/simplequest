@@ -10,7 +10,7 @@ const defaultState: CharacterState = {
   profession: '',
   combat: 'inGeneral',
   energy: Array(10).fill(false) as boolean[],
-  hp: 0,
+  hp: 10,
   die: 'd6',
   round: 0,
   gmMode: false,
