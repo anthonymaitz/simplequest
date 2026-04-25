@@ -82,6 +82,21 @@ export function SimpleQuest(props: SimpleQuestProps) {
     }
   })
 
+  // Emit characterchange whenever the character identity fields change
+  createEffect(() => {
+    props.element.dispatchEvent(new CustomEvent('characterchange', {
+      detail: {
+        name: state.name,
+        class: state.class,
+        profession: state.profession,
+        personality: state.personality,
+        die: state.die,
+      },
+      bubbles: true,
+      composed: true,
+    }))
+  })
+
   return (
     <>
       <style>{cssString}</style>
