@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "main": "dist/simple-quest.esm.js",
+  "module": "dist/simple-quest.esm.js",
+  "exports": {
+    ".": "./dist/simple-quest.esm.js"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
