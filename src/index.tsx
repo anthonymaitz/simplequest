@@ -3,9 +3,14 @@ import { SimpleQuest } from './SimpleQuest'
 
 customElement(
   'simple-quest',
-  { content: '', character: '' },
+  { content: '', character: '', locked: '' },
   (props, { element }) => (
-    <SimpleQuest content={props.content} character={props.character} element={element as HTMLElement} />
+    <SimpleQuest
+      content={props.content}
+      character={props.character}
+      locked={props.locked === 'true'}
+      element={element as HTMLElement}
+    />
   ),
   { shadow: true }
 )

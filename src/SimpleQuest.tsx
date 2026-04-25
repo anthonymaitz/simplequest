@@ -12,6 +12,7 @@ import cssString from './styles/tailwind.css?inline'
 interface SimpleQuestProps {
   content: string
   character?: string
+  locked?: boolean
   element: HTMLElement
 }
 
@@ -98,6 +99,7 @@ export function SimpleQuest(props: SimpleQuestProps) {
           personalities={content()?.personalities ?? []}
           classes={content()?.classes ?? []}
           professions={content()?.professions ?? []}
+          locked={props.locked}
           onNameChange={(name) => setState('name', name)}
           onPersonalityChange={(p) => setState('personality', p)}
           onClassChange={(c) => setState('class', c)}

@@ -8,6 +8,7 @@ interface CharacterSelectorProps {
   personalities: string[]
   classes: string[]
   professions: string[]
+  locked?: boolean
   onNameChange: (name: string) => void
   onPersonalityChange: (p: string) => void
   onClassChange: (c: string) => void
@@ -41,6 +42,13 @@ const inputStyle = {
   outline: 'none',
 }
 
+const labelStyle = {
+  ...inputStyle,
+  cursor: 'default',
+  opacity: '0.7',
+  'text-transform': 'capitalize',
+}
+
 export function CharacterSelector(props: CharacterSelectorProps) {
   return (
     <div
@@ -53,43 +61,63 @@ export function CharacterSelector(props: CharacterSelectorProps) {
         'flex-wrap': 'wrap',
       }}
     >
-      <input
-        type="text"
-        placeholder="Character name"
-        value={props.name}
-        onInput={(e) => props.onNameChange(e.currentTarget.value)}
-        style={inputStyle}
-      />
-      <select
-        value={props.personality}
-        onChange={(e) => props.onPersonalityChange(e.currentTarget.value)}
-        style={selectStyle}
-      >
-        <option value="">Personality</option>
-        <For each={props.personalities}>
-          {(p) => <option value={p}>{p}</option>}
-        </For>
-      </select>
-      <select
-        value={props.charClass}
-        onChange={(e) => props.onClassChange(e.currentTarget.value)}
-        style={selectStyle}
-      >
-        <option value="">Class</option>
-        <For each={props.classes}>
-          {(c) => <option value={c}>{c}</option>}
-        </For>
-      </select>
-      <select
-        value={props.profession}
-        onChange={(e) => props.onProfessionChange(e.currentTarget.value)}
-        style={selectStyle}
-      >
-        <option value="">Profession</option>
-        <For each={props.professions}>
-          {(p) => <option value={p}>{p}</option>}
-        </For>
-      </select>
+      {props.locked
+        ? <span style={labelStyle}>{props.name || '—'}</span>
+        : (
+          <input
+            type="text"
+            placeholder="Character name"
+            value={props.name}
+            onInput={(e) => props.onNameChange(e.currentTarget.value)}
+            style={inputStyle}
+          />
+        )
+      }
+      {props.locked
+        ? <span style={labelStyle}>{props.personality || '—'}</span>
+        : (
+          <select
+            value={props.personality}
+            onChange={(e) => props.onPersonalityChange(e.currentTarget.value)}
+            style={selectStyle}
+          >
+            <option value="">Personality</option>
+            <For each={props.personalities}>
+              {(p) => <option value={p}>{p}</option>}
+            </For>
+          </select>
+        )
+      }
+      {props.locked
+        ? <span style={labelStyle}>{props.charClass || '—'}</span>
+        : (
+          <select
+            value={props.charClass}
+            onChange={(e) => props.onClassChange(e.currentTarget.value)}
+            style={selectStyle}
+          >
+            <option value="">Class</option>
+            <For each={props.classes}>
+              {(c) => <option value={c}>{c}</option>}
+            </For>
+          </select>
+        )
+      }
+      {props.locked
+        ? <span style={labelStyle}>{props.profession || '—'}</span>
+        : (
+          <select
+            value={props.profession}
+            onChange={(e) => props.onProfessionChange(e.currentTarget.value)}
+            style={selectStyle}
+          >
+            <option value="">Profession</option>
+            <For each={props.professions}>
+              {(p) => <option value={p}>{p}</option>}
+            </For>
+          </select>
+        )
+      }
     </div>
   )
 }
