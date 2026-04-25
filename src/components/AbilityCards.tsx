@@ -37,20 +37,20 @@ export function AbilityCards(props: AbilityCardsProps) {
         <DeathCard body={props.deathContent} />
       </Show>
 
-      {/* Description cards: collapsed, at top of list */}
-      <Show when={props.descriptions[props.personality]}>
+      {/* Description cards: only in general mode */}
+      <Show when={props.combat === 'inGeneral' && !!props.descriptions[props.personality]}>
         <DescriptionCard
           title={props.personality}
           body={props.descriptions[props.personality]}
         />
       </Show>
-      <Show when={props.descriptions[props.charClass]}>
+      <Show when={props.combat === 'inGeneral' && !!props.descriptions[props.charClass]}>
         <DescriptionCard
           title={props.charClass}
           body={props.descriptions[props.charClass]}
         />
       </Show>
-      <Show when={props.descriptions[props.profession]}>
+      <Show when={props.combat === 'inGeneral' && !!props.descriptions[props.profession]}>
         <DescriptionCard
           title={props.profession}
           body={props.descriptions[props.profession]}

@@ -85,15 +85,16 @@ export function SimpleQuest(props: SimpleQuestProps) {
   return (
     <>
       <style>{cssString}</style>
-      <div style={{ 'min-height': '100%', position: 'relative' }}>
+      <div style={{ height: '100%', display: 'flex', 'flex-direction': 'column', overflow: 'hidden', position: 'relative' }}>
         <Header
           hp={state.hp}
           energy={state.energy}
-          die={state.die}
+          name={state.name}
+          charClass={state.class}
+          profession={state.profession}
+          personality={state.personality}
           onHpChange={(hp) => setState('hp', hp)}
           onEnergyClick={setEnergy}
-          onDieChange={(die) => setState('die', die)}
-          onRoll={handleRoll}
         />
         <CharacterSelector
           name={state.name}
@@ -113,27 +114,29 @@ export function SimpleQuest(props: SimpleQuestProps) {
           statuses={content()?.statuses ?? []}
           onChange={(combat) => setState('combat', combat as CombatState)}
         />
-        <AbilityCards
-          abilities={content()?.abilities ?? []}
-          descriptions={content()?.descriptions ?? {}}
-          deathContent={content()?.deathContent ?? ''}
-          charClass={state.class}
-          profession={state.profession}
-          personality={state.personality}
-          combat={state.combat}
-          hp={state.hp}
-          onRoll={handleRoll}
-          onActivate={handleAbilityActivate}
-        />
-        <GMMode
-          enabled={state.gmMode}
-          characterName={state.name}
-          savedCharacters={state.savedCharacters}
-          onToggle={(enabled) => setState('gmMode', enabled)}
-          onSave={saveCharacter}
-          onLoad={loadCharacter}
-          onHelpOpen={() => setHelpOpen(true)}
-        />
+        <div style={{ flex: '1', 'overflow-y': 'auto', 'min-height': '0' }}>
+          <AbilityCards
+            abilities={content()?.abilities ?? []}
+            descriptions={content()?.descriptions ?? {}}
+            deathContent={content()?.deathContent ?? ''}
+            charClass={state.class}
+            profession={state.profession}
+            personality={state.personality}
+            combat={state.combat}
+            hp={state.hp}
+            onRoll={handleRoll}
+            onActivate={handleAbilityActivate}
+          />
+          <GMMode
+            enabled={state.gmMode}
+            characterName={state.name}
+            savedCharacters={state.savedCharacters}
+            onToggle={(enabled) => setState('gmMode', enabled)}
+            onSave={saveCharacter}
+            onLoad={loadCharacter}
+            onHelpOpen={() => setHelpOpen(true)}
+          />
+        </div>
         <Toast message={toastMessage()} visible={toastVisible()} />
         <Show when={helpOpen()}>
           <HelpPanel

@@ -18,39 +18,47 @@ export function CombatStateSelector(props: CombatStateSelectorProps) {
         background: 'var(--sq-row-2)',
         'border-bottom': '1px solid var(--sq-row-border)',
         padding: '8px 14px',
-        display: 'flex',
-        gap: '10px',
-        'align-items': 'center',
       }}
     >
-      <select
-        value={props.combat}
-        onChange={(e) => props.onChange(e.currentTarget.value as CombatState)}
-        style={{
-          background: 'var(--sq-ctrl-bg)',
-          border: '1px solid var(--sq-ctrl-border)',
-          color: 'var(--sq-ctrl-text)',
-          'border-radius': '4px',
-          padding: '4px 8px',
-          'font-size': '13px',
-          'font-family': 'inherit',
-          cursor: 'pointer',
-        }}
-      >
+      {/* Exclusive button group */}
+      <div style={{ display: 'flex', gap: '4px', 'flex-wrap': 'wrap' }}>
         <For each={props.statuses}>
-          {(s) => <option value={s.id}>{s.label}</option>}
+          {(s) => {
+            const active = () => props.combat === s.id
+            return (
+              <button
+                onClick={() => props.onChange(s.id)}
+                style={{
+                  background: active() ? 'var(--sq-accent)' : 'var(--sq-ctrl-bg)',
+                  color: active() ? '#ffffff' : 'var(--sq-ctrl-text)',
+                  border: `1px solid ${active() ? 'var(--sq-accent)' : 'var(--sq-ctrl-border)'}`,
+                  'border-radius': '4px',
+                  padding: '4px 12px',
+                  'font-size': '12px',
+                  'font-family': 'inherit',
+                  cursor: 'pointer',
+                  'font-weight': active() ? '600' : '400',
+                  transition: 'all 0.1s',
+                }}
+              >
+                {s.label}
+              </button>
+            )
+          }}
         </For>
-      </select>
-      <span
+      </div>
+      {/* Status message */}
+      <div
         style={{
           color: 'var(--sq-overlay-text)',
-          'font-size': '12px',
-          flex: '1',
-          opacity: '0.8',
+          'font-size': '11px',
+          opacity: '0.7',
+          'margin-top': '4px',
+          'min-height': '14px',
         }}
       >
         {currentStatus()?.message ?? ''}
-      </span>
+      </div>
     </div>
   )
 }
