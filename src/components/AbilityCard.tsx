@@ -1,63 +1,30 @@
 import { createSignal } from 'solid-js'
 import { marked } from 'marked'
-import { d20DataUrl } from '../assets/d20'
 import type { AbilityCard as AbilityCardType } from '../types'
 
 interface AbilityCardProps {
   card: AbilityCardType
-  onRoll: (sides: number) => void
+  used: boolean
   onActivate?: (card: AbilityCardType) => void
+  onUse: () => void
 }
-
-const dieHeadingStyle = [
-  'display:inline-block',
-  `background-image:radial-gradient(circle, rgba(255,255,255,.75), rgba(255,255,255,0)), url(${d20DataUrl})`,
-  'background-size:66% 66%,contain',
-  'background-repeat:no-repeat',
-  'background-position:50% 50%,50% 50%',
-  'color:#3f3e4a',
-  'padding:0.8em 0.6em',
-  'line-height:2em',
-  'font-weight:700',
-  'font-size:13px',
-  'min-width:50px',
-  'text-align:center',
-  'cursor:pointer',
-].join(';')
 
 function renderCardBody(markdown: string): string {
   const html = marked.parse(markdown) as string
-  // Split HTML on h4 blocks so we can process them separately
-  const parts = html.split(/(<h4>[\s\S]*?<\/h4>)/g)
-  return parts
-    .map((part) => {
-      if (part.startsWith('<h4>')) {
-        // Style D[X] inside h4 with d20 background
-        return part.replace(/<h4>([\s\S]*?)<\/h4>/g, (_, content: string) => {
-          const styled = content.replace(
-            /\bD(\d+)\b/g,
-            `<span class="die-heading" data-sides="$1" style="${dieHeadingStyle}">D$1</span>`
-          )
-          return `<h4>${styled}</h4>`
-        })
-      }
-      // Style remaining D[X] (body text) with teal underline
-      return part.replace(/\bD(\d+)\b/g, '<span class="die-inline" data-sides="$1">D$1</span>')
-    })
-    .join('')
+  // Make D[X] references bold but not clickable
+  return html.replace(/\bD(\d+)\b/g, '<strong>D$1</strong>')
 }
 
 export function AbilityCard(props: AbilityCardProps) {
-  const [collapsed, setCollapsed] = createSignal(false)
+  const [expanded, setExpanded] = createSignal(false)
 
-  function handleContentClick(e: MouseEvent) {
-    const target = e.target as HTMLElement
-    if (
-      target.classList.contains('die-inline') ||
-      target.classList.contains('die-heading')
-    ) {
-      const sides = parseInt(target.dataset.sides ?? '6', 10)
-      props.onRoll(sides)
+  function handleHeaderClick() {
+    if (!props.used) {
+      props.onUse()
+      props.onActivate?.(props.card)
+      setExpanded(true)
+    } else {
+      setExpanded((e) => !e)
     }
   }
 
@@ -69,11 +36,13 @@ export function AbilityCard(props: AbilityCardProps) {
         'margin-bottom': '8px',
         'box-shadow': '0px -2px 4px rgba(0,0,0,0.2)',
         overflow: 'hidden',
+        opacity: props.used ? 0.55 : 1,
+        transition: 'opacity 0.2s',
       }}
     >
-      {/* Card header row: title + optional energy badge */}
+      {/* Card header: title button + badges */}
       <div
-        onClick={() => { setCollapsed((c) => !c); props.onActivate?.(props.card) }}
+        onClick={handleHeaderClick}
         style={{
           display: 'flex',
           'justify-content': 'space-between',
@@ -85,46 +54,58 @@ export function AbilityCard(props: AbilityCardProps) {
       >
         <span
           style={{
-            color: 'var(--sq-accent)',
+            color: props.used ? '#999999' : 'var(--sq-accent)',
             'font-size': '12px',
             'font-weight': '700',
             'text-transform': 'uppercase',
             'letter-spacing': '1px',
+            'text-decoration': props.used ? 'line-through' : 'none',
           }}
         >
           {props.card.title}
         </span>
-        <div style={{ display: 'flex', gap: '8px', 'align-items': 'center' }}>
-          {props.card.energyCost !== undefined && (
+        <div style={{ display: 'flex', gap: '6px', 'align-items': 'center' }}>
+          {props.used ? (
             <span
               style={{
-                background: 'var(--sq-accent)',
-                color: '#ffffff',
+                background: '#ddd',
+                color: '#888',
                 'border-radius': '3px',
-                padding: '2px 8px',
-                'font-size': '10px',
+                padding: '2px 6px',
+                'font-size': '9px',
                 'font-weight': '700',
-                'white-space': 'nowrap',
+                'letter-spacing': '0.5px',
               }}
             >
-              {props.card.energyCost} energy
+              USED
             </span>
+          ) : (
+            props.card.energyCost !== undefined && (
+              <span
+                style={{
+                  background: 'var(--sq-accent)',
+                  color: '#ffffff',
+                  'border-radius': '3px',
+                  padding: '2px 8px',
+                  'font-size': '10px',
+                  'font-weight': '700',
+                  'white-space': 'nowrap',
+                }}
+              >
+                {props.card.energyCost} energy
+              </span>
+            )
           )}
-          <span
-            style={{
-              color: '#aaaaaa',
-              'font-size': '12px',
-            }}
-          >
-            {collapsed() ? '▼' : '▲'}
+          <span style={{ color: '#aaaaaa', 'font-size': '12px' }}>
+            {expanded() ? '▲' : '▼'}
           </span>
         </div>
       </div>
-      {/* Card body: rendered markdown */}
-      {!collapsed() && (
+
+      {/* Card body: only visible when expanded */}
+      {expanded() && (
         <div
           innerHTML={renderCardBody(props.card.body)}
-          onClick={handleContentClick}
           style={{
             padding: '0 12px 10px',
             color: '#555555',

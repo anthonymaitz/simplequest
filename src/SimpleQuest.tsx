@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal, onMount, onCleanup, Show } from 'solid-js'
+import { createEffect, createMemo, createSignal, onMount, Show, on } from 'solid-js'
 import { createCharacterStore } from './store'
 import { Header } from './components/Header'
 import { CharacterSelector } from './components/CharacterSelector'
@@ -6,7 +6,6 @@ import { CombatStateSelector } from './components/CombatStateSelector'
 import { AbilityCards } from './components/AbilityCards'
 import { GMMode } from './components/GMMode'
 import { HelpPanel } from './components/HelpPanel'
-import { Toast } from './components/Toast'
 import type { SimpleQuestContent, CombatState, CharacterData, AbilityCard as AbilityCardType } from './types'
 import cssString from './styles/tailwind.css?inline'
 
@@ -20,10 +19,8 @@ export function SimpleQuest(props: SimpleQuestProps) {
   const { state, setState, setEnergy, loadFromStorage, saveCharacter, loadCharacter } =
     createCharacterStore()
 
-  const [toastMessage, setToastMessage] = createSignal('')
-  const [toastVisible, setToastVisible] = createSignal(false)
   const [helpOpen, setHelpOpen] = createSignal(false)
-  let toastTimer: ReturnType<typeof setTimeout> | undefined
+  const [usedCards, setUsedCards] = createSignal(new Set<string>())
 
   const content = createMemo<SimpleQuestContent | null>(() => {
     if (!props.content) return null
@@ -48,21 +45,8 @@ export function SimpleQuest(props: SimpleQuestProps) {
     }
   })
 
-  onCleanup(() => {
-    if (toastTimer !== undefined) clearTimeout(toastTimer)
-  })
-
-  function showToast(message: string) {
-    if (toastTimer !== undefined) clearTimeout(toastTimer)
-    setToastMessage(message)
-    setToastVisible(true)
-    toastTimer = setTimeout(() => setToastVisible(false), 2500)
-  }
-
-  function handleRoll(sides: number) {
-    const result = Math.floor(Math.random() * sides) + 1
-    showToast(`d${sides} → ${result}`)
-  }
+  // Reset used-card state each time the round increments
+  createEffect(on(() => state.round, () => { setUsedCards(new Set()) }, { defer: true }))
 
   function handleAbilityActivate(card: AbilityCardType) {
     if (card.energyCost === undefined) return
@@ -139,7 +123,8 @@ export function SimpleQuest(props: SimpleQuestProps) {
             personality={state.personality}
             combat={state.combat}
             hp={state.hp}
-            onRoll={handleRoll}
+            usedCards={usedCards()}
+            onUseCard={(title) => setUsedCards((prev) => new Set([...prev, title]))}
             onActivate={handleAbilityActivate}
           />
           <GMMode
@@ -152,7 +137,6 @@ export function SimpleQuest(props: SimpleQuestProps) {
             onHelpOpen={() => setHelpOpen(true)}
           />
         </div>
-        <Toast message={toastMessage()} visible={toastVisible()} />
         <Show when={helpOpen()}>
           <HelpPanel
             body={content()?.generalContent ?? ''}

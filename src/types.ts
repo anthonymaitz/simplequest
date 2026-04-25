@@ -34,6 +34,7 @@ export interface CharacterData {
   energy: boolean[]   // length 10
   hp: number          // 0–30
   die: string         // 'd4' | 'd6' | 'd8' | 'd10' | 'd12' | 'd20' | 'd100'
+  round?: number      // current combat round — used to reset "used" card state
 }
 
 export interface CharacterState extends CharacterData {

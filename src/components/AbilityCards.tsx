@@ -13,7 +13,8 @@ interface AbilityCardsProps {
   personality: string
   combat: CombatState
   hp: number
-  onRoll: (sides: number) => void
+  usedCards: Set<string>
+  onUseCard: (title: string) => void
   onActivate?: (card: AbilityCardType) => void
 }
 
@@ -24,8 +25,8 @@ export function AbilityCards(props: AbilityCardsProps) {
         card.source === props.charClass ||
         card.source === props.profession ||
         card.source === 'general'
-      const contextMatch =
-        card.context === 'inGeneral' || card.context === props.combat
+      // inGeneral cards only show in general mode; context must match exactly
+      const contextMatch = card.context === props.combat
       return sourceMatch && contextMatch
     })
   )
@@ -59,7 +60,14 @@ export function AbilityCards(props: AbilityCardsProps) {
 
       {/* Ability cards */}
       <For each={visible()}>
-        {(card) => <AbilityCard card={card} onRoll={props.onRoll} onActivate={props.onActivate} />}
+        {(card) => (
+          <AbilityCard
+            card={card}
+            used={props.usedCards.has(card.title)}
+            onUse={() => props.onUseCard(card.title)}
+            onActivate={props.onActivate}
+          />
+        )}
       </For>
     </div>
   )

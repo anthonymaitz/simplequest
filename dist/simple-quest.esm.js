@@ -1,127 +1,142 @@
-var qt = Object.defineProperty;
-var Ke = (n) => {
+var Et = Object.defineProperty;
+var Ze = (n) => {
   throw TypeError(n);
 };
-var zt = (n, e, t) => e in n ? qt(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t;
-var x = (n, e, t) => zt(n, typeof e != "symbol" ? e + "" : e, t), It = (n, e, t) => e.has(n) || Ke("Cannot " + t);
-var Je = (n, e, t) => e.has(n) ? Ke("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(n) : e.set(n, t);
-var ce = (n, e, t) => (It(n, e, "access private method"), t);
-const Ot = (n, e) => n === e, G = Symbol("solid-proxy"), ze = Symbol("solid-track"), ge = {
-  equals: Ot
+var qt = (n, e, t) => e in n ? Et(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t;
+var w = (n, e, t) => qt(n, typeof e != "symbol" ? e + "" : e, t), zt = (n, e, t) => e.has(n) || Ze("Cannot " + t);
+var Ke = (n, e, t) => e.has(n) ? Ze("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(n) : e.set(n, t);
+var ue = (n, e, t) => (zt(n, e, "access private method"), t);
+const Yt = (n, e) => n === e, B = Symbol("solid-proxy"), ze = Symbol("solid-track"), ge = {
+  equals: Yt
 };
-let it = dt;
-const j = 1, ye = 2, st = {
+let it = ut;
+const M = 1, ye = 2, st = {
   owned: null,
   cleanups: null,
   context: null,
   owner: null
 };
-var S = null;
-let Re = null, Pt = null, T = null, R = null, L = null, Se = 0;
-function fe(n, e) {
-  const t = T, o = S, a = n.length === 0, r = e === void 0 ? o : e, i = a ? st : {
+var _ = null;
+let Ae = null, Ot = null, v = null, T = null, P = null, Se = 0;
+function pe(n, e) {
+  const t = v, o = _, a = n.length === 0, r = e === void 0 ? o : e, i = a ? st : {
     owned: null,
     cleanups: null,
     context: r ? r.context : null,
     owner: r
-  }, s = a ? n : () => n(() => Q(() => oe(i)));
-  S = i, T = null;
+  }, s = a ? n : () => n(() => j(() => ae(i)));
+  _ = i, v = null;
   try {
-    return W(s, !0);
+    return V(s, !0);
   } finally {
-    T = t, S = o;
+    v = t, _ = o;
   }
 }
-function B(n, e) {
+function F(n, e) {
   e = e ? Object.assign({}, ge, e) : ge;
   const t = {
     value: n,
     observers: null,
     observerSlots: null,
     comparator: e.equals || void 0
-  }, o = (a) => (typeof a == "function" && (a = a(t.value)), ut(t, a));
-  return [ct.bind(t), o];
+  }, o = (a) => (typeof a == "function" && (a = a(t.value)), ct(t, a));
+  return [lt.bind(t), o];
 }
-function D(n, e, t) {
-  const o = Me(n, e, !1, j);
-  ie(o);
+function C(n, e, t) {
+  const o = je(n, e, !1, M);
+  se(o);
 }
-function pe(n, e, t) {
-  it = jt;
-  const o = Me(n, e, !1, j);
-  o.user = !0, L ? L.push(o) : ie(o);
+function J(n, e, t) {
+  it = Ht;
+  const o = je(n, e, !1, M);
+  o.user = !0, P ? P.push(o) : se(o);
 }
-function M(n, e, t) {
+function L(n, e, t) {
   t = t ? Object.assign({}, ge, t) : ge;
-  const o = Me(n, e, !0, 0);
-  return o.observers = null, o.observerSlots = null, o.comparator = t.equals || void 0, ie(o), ct.bind(o);
+  const o = je(n, e, !0, 0);
+  return o.observers = null, o.observerSlots = null, o.comparator = t.equals || void 0, se(o), lt.bind(o);
 }
-function Lt(n) {
-  return W(n, !1);
+function It(n) {
+  return V(n, !1);
 }
-function Q(n) {
-  if (T === null) return n();
-  const e = T;
-  T = null;
+function j(n) {
+  if (v === null) return n();
+  const e = v;
+  v = null;
   try {
     return n();
   } finally {
-    T = e;
+    v = e;
   }
 }
+function Pt(n, e, t) {
+  const o = Array.isArray(n);
+  let a, r = t && t.defer;
+  return (i) => {
+    let s;
+    if (o) {
+      s = Array(n.length);
+      for (let c = 0; c < n.length; c++) s[c] = n[c]();
+    } else s = n();
+    if (r)
+      return r = !1, i;
+    const l = j(() => e(s, a, i));
+    return a = s, l;
+  };
+}
 function Nt(n) {
-  pe(() => Q(n));
+  J(() => j(n));
 }
-function lt(n) {
-  return S === null || (S.cleanups === null ? S.cleanups = [n] : S.cleanups.push(n)), n;
+function Lt(n) {
+  return _ === null || (_.cleanups === null ? _.cleanups = [n] : _.cleanups.push(n)), n;
 }
-function Ie() {
-  return T;
+function Ye() {
+  return v;
 }
-function ct() {
+function lt() {
   if (this.sources && this.state)
-    if (this.state === j) ie(this);
+    if (this.state === M) se(this);
     else {
-      const n = R;
-      R = null, W(() => be(this), !1), R = n;
+      const n = T;
+      T = null, V(() => be(this), !1), T = n;
     }
-  if (T) {
+  if (v) {
     const n = this.observers ? this.observers.length : 0;
-    T.sources ? (T.sources.push(this), T.sourceSlots.push(n)) : (T.sources = [this], T.sourceSlots = [n]), this.observers ? (this.observers.push(T), this.observerSlots.push(T.sources.length - 1)) : (this.observers = [T], this.observerSlots = [T.sources.length - 1]);
+    v.sources ? (v.sources.push(this), v.sourceSlots.push(n)) : (v.sources = [this], v.sourceSlots = [n]), this.observers ? (this.observers.push(v), this.observerSlots.push(v.sources.length - 1)) : (this.observers = [v], this.observerSlots = [v.sources.length - 1]);
   }
   return this.value;
 }
-function ut(n, e, t) {
+function ct(n, e, t) {
   let o = n.value;
-  return (!n.comparator || !n.comparator(o, e)) && (n.value = e, n.observers && n.observers.length && W(() => {
+  return (!n.comparator || !n.comparator(o, e)) && (n.value = e, n.observers && n.observers.length && V(() => {
     for (let a = 0; a < n.observers.length; a += 1) {
-      const r = n.observers[a], i = Re && Re.running;
-      i && Re.disposed.has(r), (i ? !r.tState : !r.state) && (r.pure ? R.push(r) : L.push(r), r.observers && ht(r)), i || (r.state = j);
+      const r = n.observers[a], i = Ae && Ae.running;
+      i && Ae.disposed.has(r), (i ? !r.tState : !r.state) && (r.pure ? T.push(r) : P.push(r), r.observers && dt(r)), i || (r.state = M);
     }
-    if (R.length > 1e6)
-      throw R = [], new Error();
+    if (T.length > 1e6)
+      throw T = [], new Error();
   }, !1)), e;
 }
-function ie(n) {
+function se(n) {
   if (!n.fn) return;
-  oe(n);
+  ae(n);
   const e = Se;
-  Bt(n, n.value, e);
+  jt(n, n.value, e);
 }
-function Bt(n, e, t) {
+function jt(n, e, t) {
   let o;
-  const a = S, r = T;
-  T = S = n;
+  const a = _, r = v;
+  v = _ = n;
   try {
     o = n.fn(e);
   } catch (i) {
-    return n.pure && (n.state = j, n.owned && n.owned.forEach(oe), n.owned = null), n.updatedAt = t + 1, ft(i);
+    return n.pure && (n.state = M, n.owned && n.owned.forEach(ae), n.owned = null), n.updatedAt = t + 1, ht(i);
   } finally {
-    T = r, S = a;
+    v = r, _ = a;
   }
-  (!n.updatedAt || n.updatedAt <= t) && (n.updatedAt != null && "observers" in n ? ut(n, o) : n.value = o, n.updatedAt = t);
+  (!n.updatedAt || n.updatedAt <= t) && (n.updatedAt != null && "observers" in n ? ct(n, o) : n.value = o, n.updatedAt = t);
 }
-function Me(n, e, t, o = j, a) {
+function je(n, e, t, o = M, a) {
   const r = {
     fn: n,
     state: o,
@@ -131,47 +146,47 @@ function Me(n, e, t, o = j, a) {
     sourceSlots: null,
     cleanups: null,
     value: e,
-    owner: S,
-    context: S ? S.context : null,
+    owner: _,
+    context: _ ? _.context : null,
     pure: t
   };
-  return S === null || S !== st && (S.owned ? S.owned.push(r) : S.owned = [r]), r;
+  return _ === null || _ !== st && (_.owned ? _.owned.push(r) : _.owned = [r]), r;
 }
 function me(n) {
   if (n.state === 0) return;
   if (n.state === ye) return be(n);
-  if (n.suspense && Q(n.suspense.inFallback)) return n.suspense.effects.push(n);
+  if (n.suspense && j(n.suspense.inFallback)) return n.suspense.effects.push(n);
   const e = [n];
   for (; (n = n.owner) && (!n.updatedAt || n.updatedAt < Se); )
     n.state && e.push(n);
   for (let t = e.length - 1; t >= 0; t--)
-    if (n = e[t], n.state === j)
-      ie(n);
+    if (n = e[t], n.state === M)
+      se(n);
     else if (n.state === ye) {
-      const o = R;
-      R = null, W(() => be(n, e[0]), !1), R = o;
+      const o = T;
+      T = null, V(() => be(n, e[0]), !1), T = o;
     }
 }
-function W(n, e) {
-  if (R) return n();
+function V(n, e) {
+  if (T) return n();
   let t = !1;
-  e || (R = []), L ? t = !0 : L = [], Se++;
+  e || (T = []), P ? t = !0 : P = [], Se++;
   try {
     const o = n();
     return Mt(t), o;
   } catch (o) {
-    t || (L = null), R = null, ft(o);
+    t || (P = null), T = null, ht(o);
   }
 }
 function Mt(n) {
-  if (R && (dt(R), R = null), n) return;
-  const e = L;
-  L = null, e.length && W(() => it(e), !1);
+  if (T && (ut(T), T = null), n) return;
+  const e = P;
+  P = null, e.length && V(() => it(e), !1);
 }
-function dt(n) {
+function ut(n) {
   for (let e = 0; e < n.length; e++) me(n[e]);
 }
-function jt(n) {
+function Ht(n) {
   let e, t = 0;
   for (e = 0; e < n.length; e++) {
     const o = n[e];
@@ -185,17 +200,17 @@ function be(n, e) {
     const o = n.sources[t];
     if (o.sources) {
       const a = o.state;
-      a === j ? o !== e && (!o.updatedAt || o.updatedAt < Se) && me(o) : a === ye && be(o, e);
+      a === M ? o !== e && (!o.updatedAt || o.updatedAt < Se) && me(o) : a === ye && be(o, e);
     }
   }
 }
-function ht(n) {
+function dt(n) {
   for (let e = 0; e < n.observers.length; e += 1) {
     const t = n.observers[e];
-    t.state || (t.state = ye, t.pure ? R.push(t) : L.push(t), t.observers && ht(t));
+    t.state || (t.state = ye, t.pure ? T.push(t) : P.push(t), t.observers && dt(t));
   }
 }
-function oe(n) {
+function ae(n) {
   let e;
   if (n.sources)
     for (; n.sources.length; ) {
@@ -206,11 +221,11 @@ function oe(n) {
       }
     }
   if (n.tOwned) {
-    for (e = n.tOwned.length - 1; e >= 0; e--) oe(n.tOwned[e]);
+    for (e = n.tOwned.length - 1; e >= 0; e--) ae(n.tOwned[e]);
     delete n.tOwned;
   }
   if (n.owned) {
-    for (e = n.owned.length - 1; e >= 0; e--) oe(n.owned[e]);
+    for (e = n.owned.length - 1; e >= 0; e--) ae(n.owned[e]);
     n.owned = null;
   }
   if (n.cleanups) {
@@ -219,81 +234,81 @@ function oe(n) {
   }
   n.state = 0;
 }
-function Ht(n) {
+function Bt(n) {
   return n instanceof Error ? n : new Error(typeof n == "string" ? n : "Unknown error", {
     cause: n
   });
 }
-function ft(n, e = S) {
-  throw Ht(n);
+function ht(n, e = _) {
+  throw Bt(n);
 }
-const Gt = Symbol("fallback");
-function Xe(n) {
+const Ft = Symbol("fallback");
+function Qe(n) {
   for (let e = 0; e < n.length; e++) n[e]();
 }
-function Qt(n, e, t = {}) {
+function Gt(n, e, t = {}) {
   let o = [], a = [], r = [], i = 0, s = e.length > 1 ? [] : null;
-  return lt(() => Xe(r)), () => {
+  return Lt(() => Qe(r)), () => {
     let l = n() || [], c = l.length, u, d;
-    return l[ze], Q(() => {
-      let p, k, C, _, q, y, A, f, z;
+    return l[ze], j(() => {
+      let p, x, f, S, N, A, $, E, q;
       if (c === 0)
-        i !== 0 && (Xe(r), r = [], o = [], a = [], i = 0, s && (s = [])), t.fallback && (o = [Gt], a[0] = fe((Et) => (r[0] = Et, t.fallback())), i = 1);
+        i !== 0 && (Qe(r), r = [], o = [], a = [], i = 0, s && (s = [])), t.fallback && (o = [Ft], a[0] = pe((Dt) => (r[0] = Dt, t.fallback())), i = 1);
       else if (i === 0) {
         for (a = new Array(c), d = 0; d < c; d++)
-          o[d] = l[d], a[d] = fe(h);
+          o[d] = l[d], a[d] = pe(h);
         i = c;
       } else {
-        for (C = new Array(c), _ = new Array(c), s && (q = new Array(c)), y = 0, A = Math.min(i, c); y < A && o[y] === l[y]; y++) ;
-        for (A = i - 1, f = c - 1; A >= y && f >= y && o[A] === l[f]; A--, f--)
-          C[f] = a[A], _[f] = r[A], s && (q[f] = s[A]);
-        for (p = /* @__PURE__ */ new Map(), k = new Array(f + 1), d = f; d >= y; d--)
-          z = l[d], u = p.get(z), k[d] = u === void 0 ? -1 : u, p.set(z, d);
-        for (u = y; u <= A; u++)
-          z = o[u], d = p.get(z), d !== void 0 && d !== -1 ? (C[d] = a[u], _[d] = r[u], s && (q[d] = s[u]), d = k[d], p.set(z, d)) : r[u]();
-        for (d = y; d < c; d++)
-          d in C ? (a[d] = C[d], r[d] = _[d], s && (s[d] = q[d], s[d](d))) : a[d] = fe(h);
+        for (f = new Array(c), S = new Array(c), s && (N = new Array(c)), A = 0, $ = Math.min(i, c); A < $ && o[A] === l[A]; A++) ;
+        for ($ = i - 1, E = c - 1; $ >= A && E >= A && o[$] === l[E]; $--, E--)
+          f[E] = a[$], S[E] = r[$], s && (N[E] = s[$]);
+        for (p = /* @__PURE__ */ new Map(), x = new Array(E + 1), d = E; d >= A; d--)
+          q = l[d], u = p.get(q), x[d] = u === void 0 ? -1 : u, p.set(q, d);
+        for (u = A; u <= $; u++)
+          q = o[u], d = p.get(q), d !== void 0 && d !== -1 ? (f[d] = a[u], S[d] = r[u], s && (N[d] = s[u]), d = x[d], p.set(q, d)) : r[u]();
+        for (d = A; d < c; d++)
+          d in f ? (a[d] = f[d], r[d] = S[d], s && (s[d] = N[d], s[d](d))) : a[d] = pe(h);
         a = a.slice(0, i = c), o = l.slice(0);
       }
       return a;
     });
     function h(p) {
       if (r[d] = p, s) {
-        const [k, C] = B(d);
-        return s[d] = C, e(l[d], k);
+        const [x, f] = F(d);
+        return s[d] = f, e(l[d], x);
       }
       return e(l[d]);
     }
   };
 }
 function b(n, e) {
-  return Q(() => n(e || {}));
+  return j(() => n(e || {}));
 }
-const Ft = (n) => `Stale read from <${n}>.`;
+const Ut = (n) => `Stale read from <${n}>.`;
 function H(n) {
   const e = "fallback" in n && {
     fallback: () => n.fallback
   };
-  return M(Qt(() => n.each, n.children, e || void 0));
+  return L(Gt(() => n.each, n.children, e || void 0));
 }
-function X(n) {
-  const e = n.keyed, t = M(() => n.when, void 0, void 0), o = e ? t : M(t, void 0, {
+function ee(n) {
+  const e = n.keyed, t = L(() => n.when, void 0, void 0), o = e ? t : L(t, void 0, {
     equals: (a, r) => !a == !r
   });
-  return M(() => {
+  return L(() => {
     const a = o();
     if (a) {
       const r = n.children;
-      return typeof r == "function" && r.length > 0 ? Q(() => r(e ? a : () => {
-        if (!Q(o)) throw Ft("Show");
+      return typeof r == "function" && r.length > 0 ? j(() => r(e ? a : () => {
+        if (!j(o)) throw Ut("Show");
         return t();
       })) : r;
     }
     return n.fallback;
   }, void 0, void 0);
 }
-const N = (n) => M(() => n());
-function Zt(n, e, t) {
+const I = (n) => L(() => n());
+function Wt(n, e, t) {
   let o = t.length, a = e.length, r = o, i = 0, s = 0, l = e[a - 1].nextSibling, c = null;
   for (; i < a || s < r; ) {
     if (e[i] === t[s]) {
@@ -324,8 +339,8 @@ function Zt(n, e, t) {
           for (; ++d < a && d < r && !((p = c.get(e[d])) == null || p !== u + h); )
             h++;
           if (h > u - s) {
-            const k = e[i];
-            for (; s < u; ) n.insertBefore(t[s++], k);
+            const x = e[i];
+            for (; s < u; ) n.insertBefore(t[s++], x);
           } else n.replaceChild(t[s++], e[i++]);
         } else i++;
       else e[i++].remove();
@@ -333,7 +348,7 @@ function Zt(n, e, t) {
   }
 }
 const Ve = "_$DX_DELEGATE";
-function v(n, e, t, o) {
+function k(n, e, t, o) {
   let a;
   const r = () => {
     const s = document.createElement("template");
@@ -341,21 +356,21 @@ function v(n, e, t, o) {
   }, i = () => (a || (a = r())).cloneNode(!0);
   return i.cloneNode = i, i;
 }
-function U(n, e = window.document) {
+function W(n, e = window.document) {
   const t = e[Ve] || (e[Ve] = /* @__PURE__ */ new Set());
   for (let o = 0, a = n.length; o < a; o++) {
     const r = n[o];
     t.has(r) || (t.add(r), e.addEventListener(r, Kt));
   }
 }
-function Ut(n, e, t) {
+function Zt(n, e, t) {
   n.removeAttribute(e);
 }
 function Oe(n, e, t, o) {
   Array.isArray(t) ? (n[`$$${e}`] = t[0], n[`$$${e}Data`] = t[1]) : n[`$$${e}`] = t;
 }
-function ue(n, e, t) {
-  if (!e) return t ? Ut(n, "style") : e;
+function de(n, e, t) {
+  if (!e) return t ? Zt(n, "style") : e;
   const o = n.style;
   if (typeof e == "string") return o.cssText = e;
   typeof t == "string" && (o.cssText = t = void 0), t || (t = {}), e || (e = {});
@@ -366,12 +381,12 @@ function ue(n, e, t) {
     a = e[r], a !== t[r] && (o.setProperty(r, a), t[r] = a);
   return t;
 }
-function E(n, e, t) {
+function R(n, e, t) {
   t != null ? n.style.setProperty(e, t) : n.style.removeProperty(e);
 }
 function g(n, e, t, o) {
   if (t !== void 0 && !o && (o = []), typeof e != "function") return we(n, e, o, t);
-  D((a) => we(n, e(), a, t), o);
+  C((a) => we(n, e(), a, t), o);
 }
 function Kt(n) {
   let e = n.target;
@@ -416,48 +431,48 @@ function we(n, e, t, o, a) {
       return t;
     if (i) {
       let s = t[0];
-      s && s.nodeType === 3 ? s.data !== e && (s.data = e) : s = document.createTextNode(e), t = J(n, t, o, s);
+      s && s.nodeType === 3 ? s.data !== e && (s.data = e) : s = document.createTextNode(e), t = K(n, t, o, s);
     } else
       t !== "" && typeof t == "string" ? t = n.firstChild.data = e : t = n.textContent = e;
   } else if (e == null || r === "boolean")
-    t = J(n, t, o);
+    t = K(n, t, o);
   else {
     if (r === "function")
-      return D(() => {
+      return C(() => {
         let s = e();
         for (; typeof s == "function"; ) s = s();
         t = we(n, s, t, o);
       }), () => t;
     if (Array.isArray(e)) {
       const s = [], l = t && Array.isArray(t);
-      if (Pe(s, e, t, a))
-        return D(() => t = we(n, s, t, o, !0)), () => t;
+      if (Ie(s, e, t, a))
+        return C(() => t = we(n, s, t, o, !0)), () => t;
       if (s.length === 0) {
-        if (t = J(n, t, o), i) return t;
-      } else l ? t.length === 0 ? We(n, s, o) : Zt(n, t, s) : (t && J(n), We(n, s));
+        if (t = K(n, t, o), i) return t;
+      } else l ? t.length === 0 ? Xe(n, s, o) : Wt(n, t, s) : (t && K(n), Xe(n, s));
       t = s;
     } else if (e.nodeType) {
       if (Array.isArray(t)) {
-        if (i) return t = J(n, t, o, e);
-        J(n, t, null, e);
+        if (i) return t = K(n, t, o, e);
+        K(n, t, null, e);
       } else t == null || t === "" || !n.firstChild ? n.appendChild(e) : n.replaceChild(e, n.firstChild);
       t = e;
     }
   }
   return t;
 }
-function Pe(n, e, t, o) {
+function Ie(n, e, t, o) {
   let a = !1;
   for (let r = 0, i = e.length; r < i; r++) {
     let s = e[r], l = t && t[n.length], c;
     if (!(s == null || s === !0 || s === !1)) if ((c = typeof s) == "object" && s.nodeType)
       n.push(s);
     else if (Array.isArray(s))
-      a = Pe(n, s, l) || a;
+      a = Ie(n, s, l) || a;
     else if (c === "function")
       if (o) {
         for (; typeof s == "function"; ) s = s();
-        a = Pe(n, Array.isArray(s) ? s : [s], Array.isArray(l) ? l : [l]) || a;
+        a = Ie(n, Array.isArray(s) ? s : [s], Array.isArray(l) ? l : [l]) || a;
       } else
         n.push(s), a = !0;
     else {
@@ -467,10 +482,10 @@ function Pe(n, e, t, o) {
   }
   return a;
 }
-function We(n, e, t = null) {
+function Xe(n, e, t = null) {
   for (let o = 0, a = e.length; o < a; o++) n.insertBefore(e[o], t);
 }
-function J(n, e, t, o) {
+function K(n, e, t, o) {
   if (t === void 0) return n.textContent = "";
   const a = o || document.createTextNode("");
   if (e.length) {
@@ -485,34 +500,34 @@ function J(n, e, t, o) {
   } else n.insertBefore(a, t);
   return [a];
 }
-function Jt(n) {
+function Qt(n) {
   return Object.keys(n).reduce((t, o) => {
     const a = n[o];
-    return t[o] = Object.assign({}, a), gt(a.value) && !en(a.value) && !Array.isArray(a.value) && (t[o].value = Object.assign({}, a.value)), Array.isArray(a.value) && (t[o].value = a.value.slice(0)), t;
+    return t[o] = Object.assign({}, a), pt(a.value) && !tn(a.value) && !Array.isArray(a.value) && (t[o].value = Object.assign({}, a.value)), Array.isArray(a.value) && (t[o].value = a.value.slice(0)), t;
   }, {});
 }
-function Xt(n) {
+function Vt(n) {
   return n ? Object.keys(n).reduce((t, o) => {
     const a = n[o];
-    return t[o] = gt(a) && "value" in a ? a : {
+    return t[o] = pt(a) && "value" in a ? a : {
       value: a
-    }, t[o].attribute || (t[o].attribute = $t(o)), t[o].parse = "parse" in t[o] ? t[o].parse : typeof t[o].value != "string", t;
+    }, t[o].attribute || (t[o].attribute = en(o)), t[o].parse = "parse" in t[o] ? t[o].parse : typeof t[o].value != "string", t;
   }, {}) : {};
 }
-function Vt(n) {
+function Xt(n) {
   return Object.keys(n).reduce((t, o) => (t[o] = n[o].value, t), {});
 }
-function Wt(n, e) {
-  const t = Jt(e);
+function Jt(n, e) {
+  const t = Qt(e);
   return Object.keys(e).forEach((a) => {
     const r = t[a], i = n.getAttribute(r.attribute), s = n[a];
-    i != null && (r.value = r.parse ? pt(i) : i), s != null && (r.value = Array.isArray(s) ? s.slice(0) : s), r.reflect && $e(n, r.attribute, r.value, !!r.parse), Object.defineProperty(n, a, {
+    i != null && (r.value = r.parse ? ft(i) : i), s != null && (r.value = Array.isArray(s) ? s.slice(0) : s), r.reflect && Je(n, r.attribute, r.value, !!r.parse), Object.defineProperty(n, a, {
       get() {
         return r.value;
       },
       set(l) {
         const c = r.value;
-        r.value = l, r.reflect && $e(this, r.attribute, r.value, !!r.parse);
+        r.value = l, r.reflect && Je(this, r.attribute, r.value, !!r.parse);
         for (let u = 0, d = this.__propertyChangedCallbacks.length; u < d; u++)
           this.__propertyChangedCallbacks[u](a, l, c);
       },
@@ -521,7 +536,7 @@ function Wt(n, e) {
     });
   }), t;
 }
-function pt(n) {
+function ft(n) {
   if (n)
     try {
       return JSON.parse(n);
@@ -529,25 +544,25 @@ function pt(n) {
       return n;
     }
 }
-function $e(n, e, t, o) {
+function Je(n, e, t, o) {
   if (t == null || t === !1) return n.removeAttribute(e);
   let a = o ? JSON.stringify(t) : t;
   n.__updating[e] = !0, a === "true" && (a = ""), n.setAttribute(e, a), Promise.resolve().then(() => delete n.__updating[e]);
 }
-function $t(n) {
+function en(n) {
   return n.replace(/\.?([A-Z]+)/g, (e, t) => "-" + t.toLowerCase()).replace("_", "-").replace(/^-/, "");
 }
-function gt(n) {
+function pt(n) {
   return n != null && (typeof n == "object" || typeof n == "function");
 }
-function en(n) {
+function tn(n) {
   return Object.prototype.toString.call(n) === "[object Function]";
 }
-function tn(n) {
+function nn(n) {
   return typeof n == "function" && n.toString().indexOf("class") === 0;
 }
-let _e;
-function nn(n, e) {
+let $e;
+function on(n, e) {
   const t = Object.keys(e);
   return class extends n {
     static get observedAttributes() {
@@ -560,16 +575,16 @@ function nn(n, e) {
     }
     connectedCallback() {
       if (this.__initialized) return;
-      this.__releaseCallbacks = [], this.__propertyChangedCallbacks = [], this.__updating = {}, this.props = Wt(this, e);
-      const a = Vt(this.props), r = this.Component, i = _e;
+      this.__releaseCallbacks = [], this.__propertyChangedCallbacks = [], this.__updating = {}, this.props = Jt(this, e);
+      const a = Xt(this.props), r = this.Component, i = $e;
       try {
-        _e = this, this.__initialized = !0, tn(r) ? new r(a, {
+        $e = this, this.__initialized = !0, nn(r) ? new r(a, {
           element: this
         }) : r(a, {
           element: this
         });
       } finally {
-        _e = i;
+        $e = i;
       }
     }
     async disconnectedCallback() {
@@ -582,7 +597,7 @@ function nn(n, e) {
     attributeChangedCallback(a, r, i) {
       if (this.__initialized && !this.__updating[a] && (a = this.lookupProp(a), a in e)) {
         if (i == null && !this[a]) return;
-        this[a] = e[a].parse ? pt(i) : i;
+        this[a] = e[a].parse ? ft(i) : i;
       }
     }
     lookupProp(a) {
@@ -602,7 +617,7 @@ function nn(n, e) {
     }
   };
 }
-function on(n, e = {}, t = {}) {
+function an(n, e = {}, t = {}) {
   const {
     BaseElement: o = HTMLElement,
     extension: a,
@@ -610,13 +625,13 @@ function on(n, e = {}, t = {}) {
   } = t;
   return (i) => {
     let s = r.get(n);
-    return s ? (s.prototype.Component = i, s) : (s = nn(o, Xt(e)), s.prototype.Component = i, s.prototype.registeredTag = n, r.define(n, s, a), s);
+    return s ? (s.prototype.Component = i, s) : (s = on(o, Vt(e)), s.prototype.Component = i, s.prototype.registeredTag = n, r.define(n, s, a), s);
   };
 }
-function an(n) {
+function rn(n) {
   const e = Object.keys(n), t = {};
   for (let o = 0; o < e.length; o++) {
-    const [a, r] = B(n[e[o]]);
+    const [a, r] = F(n[e[o]]);
     Object.defineProperty(t, e[o], {
       get: a,
       set(i) {
@@ -626,34 +641,34 @@ function an(n) {
   }
   return t;
 }
-function rn(n) {
+function sn(n) {
   if (n.assignedSlot && n.assignedSlot._$owner) return n.assignedSlot._$owner;
   let e = n.parentNode;
   for (; e && !e._$owner && !(e.assignedSlot && e.assignedSlot._$owner); )
     e = e.parentNode;
   return e && e.assignedSlot ? e.assignedSlot._$owner : n._$owner;
 }
-function sn(n) {
+function ln(n) {
   return (e, t) => {
     const { element: o } = t;
-    return fe((a) => {
-      const r = an(e);
+    return pe((a) => {
+      const r = rn(e);
       o.addPropertyChangedCallback((s, l) => r[s] = l), o.addReleaseCallback(() => {
         o.renderRoot.textContent = "", a();
       });
       const i = n(r, t);
       return g(o.renderRoot, i);
-    }, rn(o));
+    }, sn(o));
   };
 }
-function ln(n, e, t) {
-  return arguments.length === 2 && (t = e, e = {}), on(n, e)(sn(t));
+function cn(n, e, t) {
+  return arguments.length === 2 && (t = e, e = {}), an(n, e)(ln(t));
 }
-const Le = Symbol("store-raw"), V = Symbol("store-node"), P = Symbol("store-has"), yt = Symbol("store-self");
-function mt(n) {
-  let e = n[G];
-  if (!e && (Object.defineProperty(n, G, {
-    value: e = new Proxy(n, dn)
+const Pe = Symbol("store-raw"), Q = Symbol("store-node"), O = Symbol("store-has"), gt = Symbol("store-self");
+function yt(n) {
+  let e = n[B];
+  if (!e && (Object.defineProperty(n, B, {
+    value: e = new Proxy(n, hn)
   }), !Array.isArray(n))) {
     const t = Object.keys(n), o = Object.getOwnPropertyDescriptors(n);
     for (let a = 0, r = t.length; a < r; a++) {
@@ -668,21 +683,21 @@ function mt(n) {
 }
 function ke(n) {
   let e;
-  return n != null && typeof n == "object" && (n[G] || !(e = Object.getPrototypeOf(n)) || e === Object.prototype || Array.isArray(n));
+  return n != null && typeof n == "object" && (n[B] || !(e = Object.getPrototypeOf(n)) || e === Object.prototype || Array.isArray(n));
 }
-function ae(n, e = /* @__PURE__ */ new Set()) {
+function re(n, e = /* @__PURE__ */ new Set()) {
   let t, o, a, r;
-  if (t = n != null && n[Le]) return t;
+  if (t = n != null && n[Pe]) return t;
   if (!ke(n) || e.has(n)) return n;
   if (Array.isArray(n)) {
     Object.isFrozen(n) ? n = n.slice(0) : e.add(n);
     for (let i = 0, s = n.length; i < s; i++)
-      a = n[i], (o = ae(a, e)) !== a && (n[i] = o);
+      a = n[i], (o = re(a, e)) !== a && (n[i] = o);
   } else {
     Object.isFrozen(n) ? n = Object.assign({}, n) : e.add(n);
     const i = Object.keys(n), s = Object.getOwnPropertyDescriptors(n);
     for (let l = 0, c = i.length; l < c; l++)
-      r = i[l], !s[r].get && (a = n[r], (o = ae(a, e)) !== a && (n[r] = o));
+      r = i[l], !s[r].get && (a = n[r], (o = re(a, e)) !== a && (n[r] = o));
   }
   return n;
 }
@@ -692,41 +707,41 @@ function xe(n, e) {
     value: t = /* @__PURE__ */ Object.create(null)
   }), t;
 }
-function re(n, e, t) {
+function ie(n, e, t) {
   if (n[e]) return n[e];
-  const [o, a] = B(t, {
+  const [o, a] = F(t, {
     equals: !1,
     internal: !0
   });
   return o.$ = a, n[e] = o;
 }
-function cn(n, e) {
+function un(n, e) {
   const t = Reflect.getOwnPropertyDescriptor(n, e);
-  return !t || t.get || !t.configurable || e === G || e === V || (delete t.value, delete t.writable, t.get = () => n[G][e]), t;
+  return !t || t.get || !t.configurable || e === B || e === Q || (delete t.value, delete t.writable, t.get = () => n[B][e]), t;
 }
-function bt(n) {
-  Ie() && re(xe(n, V), yt)();
+function mt(n) {
+  Ye() && ie(xe(n, Q), gt)();
 }
-function un(n) {
-  return bt(n), Reflect.ownKeys(n);
+function dn(n) {
+  return mt(n), Reflect.ownKeys(n);
 }
-const dn = {
+const hn = {
   get(n, e, t) {
-    if (e === Le) return n;
-    if (e === G) return t;
+    if (e === Pe) return n;
+    if (e === B) return t;
     if (e === ze)
-      return bt(n), t;
-    const o = xe(n, V), a = o[e];
+      return mt(n), t;
+    const o = xe(n, Q), a = o[e];
     let r = a ? a() : n[e];
-    if (e === V || e === P || e === "__proto__") return r;
+    if (e === Q || e === O || e === "__proto__") return r;
     if (!a) {
       const i = Object.getOwnPropertyDescriptor(n, e);
-      Ie() && (typeof r != "function" || n.hasOwnProperty(e)) && !(i && i.get) && (r = re(o, e, r)());
+      Ye() && (typeof r != "function" || n.hasOwnProperty(e)) && !(i && i.get) && (r = ie(o, e, r)());
     }
-    return ke(r) ? mt(r) : r;
+    return ke(r) ? yt(r) : r;
   },
   has(n, e) {
-    return e === Le || e === G || e === ze || e === V || e === P || e === "__proto__" ? !0 : (Ie() && re(xe(n, P), e)(), e in n);
+    return e === Pe || e === B || e === ze || e === Q || e === O || e === "__proto__" ? !0 : (Ye() && ie(xe(n, O), e)(), e in n);
   },
   set() {
     return !0;
@@ -734,29 +749,29 @@ const dn = {
   deleteProperty() {
     return !0;
   },
-  ownKeys: un,
-  getOwnPropertyDescriptor: cn
+  ownKeys: dn,
+  getOwnPropertyDescriptor: un
 };
 function ve(n, e, t, o = !1) {
   if (!o && n[e] === t) return;
   const a = n[e], r = n.length;
-  t === void 0 ? (delete n[e], n[P] && n[P][e] && a !== void 0 && n[P][e].$()) : (n[e] = t, n[P] && n[P][e] && a === void 0 && n[P][e].$());
-  let i = xe(n, V), s;
-  if ((s = re(i, e, a)) && s.$(() => t), Array.isArray(n) && n.length !== r) {
+  t === void 0 ? (delete n[e], n[O] && n[O][e] && a !== void 0 && n[O][e].$()) : (n[e] = t, n[O] && n[O][e] && a === void 0 && n[O][e].$());
+  let i = xe(n, Q), s;
+  if ((s = ie(i, e, a)) && s.$(() => t), Array.isArray(n) && n.length !== r) {
     for (let l = n.length; l < r; l++) (s = i[l]) && s.$();
-    (s = re(i, "length", r)) && s.$(n.length);
+    (s = ie(i, "length", r)) && s.$(n.length);
   }
-  (s = i[yt]) && s.$();
+  (s = i[gt]) && s.$();
 }
-function wt(n, e) {
+function bt(n, e) {
   const t = Object.keys(e);
   for (let o = 0; o < t.length; o += 1) {
     const a = t[o];
     ve(n, a, e[a]);
   }
 }
-function hn(n, e) {
-  if (typeof e == "function" && (e = e(n)), e = ae(e), Array.isArray(e)) {
+function fn(n, e) {
+  if (typeof e == "function" && (e = e(n)), e = re(e), Array.isArray(e)) {
     if (n === e) return;
     let t = 0, o = e.length;
     for (; t < o; t++) {
@@ -764,20 +779,20 @@ function hn(n, e) {
       n[t] !== a && ve(n, t, a);
     }
     ve(n, "length", o);
-  } else wt(n, e);
+  } else bt(n, e);
 }
-function ee(n, e, t = []) {
+function te(n, e, t = []) {
   let o, a = n;
   if (e.length > 1) {
     o = e.shift();
     const i = typeof o, s = Array.isArray(n);
     if (Array.isArray(o)) {
       for (let l = 0; l < o.length; l++)
-        ee(n, [o[l]].concat(e), t);
+        te(n, [o[l]].concat(e), t);
       return;
     } else if (s && i === "function") {
       for (let l = 0; l < n.length; l++)
-        o(n[l], l) && ee(n, [l].concat(e), t);
+        o(n[l], l) && te(n, [l].concat(e), t);
       return;
     } else if (s && i === "object") {
       const {
@@ -786,27 +801,27 @@ function ee(n, e, t = []) {
         by: u = 1
       } = o;
       for (let d = l; d <= c; d += u)
-        ee(n, [d].concat(e), t);
+        te(n, [d].concat(e), t);
       return;
     } else if (e.length > 1) {
-      ee(n[o], e, [o].concat(t));
+      te(n[o], e, [o].concat(t));
       return;
     }
     a = n[o], t = [o].concat(t);
   }
   let r = e[0];
-  typeof r == "function" && (r = r(a, t), r === a) || o === void 0 && r == null || (r = ae(r), o === void 0 || ke(a) && ke(r) && !Array.isArray(r) ? wt(a, r) : ve(n, o, r));
+  typeof r == "function" && (r = r(a, t), r === a) || o === void 0 && r == null || (r = re(r), o === void 0 || ke(a) && ke(r) && !Array.isArray(r) ? bt(a, r) : ve(n, o, r));
 }
-function fn(...[n, e]) {
-  const t = ae(n || {}), o = Array.isArray(t), a = mt(t);
+function pn(...[n, e]) {
+  const t = re(n || {}), o = Array.isArray(t), a = yt(t);
   function r(...i) {
-    Lt(() => {
-      o && i.length === 1 ? hn(t, i[0]) : ee(t, i);
+    It(() => {
+      o && i.length === 1 ? fn(t, i[0]) : te(t, i);
     });
   }
   return [a, r];
 }
-const et = "simplequest-characters", pn = {
+const et = "simplequest-characters", gn = {
   name: "",
   personality: "",
   class: "",
@@ -815,12 +830,13 @@ const et = "simplequest-characters", pn = {
   energy: Array(10).fill(!1),
   hp: 0,
   die: "d6",
+  round: 0,
   gmMode: !1,
   savedCharacters: {}
 };
-function gn() {
-  const [n, e] = fn(
-    structuredClone(pn)
+function yn() {
+  const [n, e] = pn(
+    structuredClone(gn)
   );
   function t(i) {
     e("energy", (s) => s.map((l, c) => c <= i));
@@ -847,48 +863,48 @@ function gn() {
   }
   return { state: n, setState: e, setEnergy: t, loadFromStorage: o, saveCharacter: a, loadCharacter: r };
 }
-var yn = /* @__PURE__ */ v('<div style=display:flex;align-items:center;gap:6px><label style=color:var(--sq-overlay-text-muted);font-size:12px;text-transform:uppercase;letter-spacing:1px>HP</label><select style="background:var(--sq-ctrl-bg);border:1px solid var(--sq-ctrl-border);color:var(--sq-ctrl-text);border-radius:4px;padding:4px 8px;font-size:13px;font-family:inherit;cursor:pointer">'), mn = /* @__PURE__ */ v("<option>");
-function bn(n) {
+var mn = /* @__PURE__ */ k('<div style=display:flex;align-items:center;gap:6px><label style=color:var(--sq-overlay-text-muted);font-size:12px;text-transform:uppercase;letter-spacing:1px>HP</label><select style="background:var(--sq-ctrl-bg);border:1px solid var(--sq-ctrl-border);color:var(--sq-ctrl-text);border-radius:4px;padding:4px 8px;font-size:13px;font-family:inherit;cursor:pointer">'), bn = /* @__PURE__ */ k("<option>");
+function wn(n) {
   const e = Array.from({
     length: 31
   }, (t, o) => o);
   return (() => {
-    var t = yn(), o = t.firstChild, a = o.nextSibling;
+    var t = mn(), o = t.firstChild, a = o.nextSibling;
     return a.addEventListener("change", (r) => n.onHpChange(parseInt(r.currentTarget.value, 10))), g(a, () => e.map((r) => (() => {
-      var i = mn();
+      var i = bn();
       return i.value = r, g(i, r), i;
-    })())), D(() => a.value = n.hp), t;
+    })())), C(() => a.value = n.hp), t;
   })();
 }
-var wn = /* @__PURE__ */ v("<div style=display:flex;gap:5px;align-items:center>"), kn = /* @__PURE__ */ v('<div style="width:14px;height:14px;border-radius:50%;cursor:pointer;transition:background 0.15s, border-color 0.15s">');
-function xn(n) {
+var kn = /* @__PURE__ */ k("<div style=display:flex;gap:5px;align-items:center>"), xn = /* @__PURE__ */ k('<div style="width:14px;height:14px;border-radius:50%;cursor:pointer;transition:background 0.15s, border-color 0.15s">');
+function vn(n) {
   return (() => {
-    var e = wn();
+    var e = kn();
     return g(e, b(H, {
       get each() {
         return n.energy;
       },
       children: (t, o) => (() => {
-        var a = kn();
-        return a.$$click = () => n.onEnergyClick(o()), E(a, "background", t ? "var(--sq-overlay-text)" : "var(--sq-dot-empty-bg)"), E(a, "border", `2px solid ${t ? "var(--sq-overlay-text)" : "var(--sq-dot-empty-border)"}`), a;
+        var a = xn();
+        return a.$$click = () => n.onEnergyClick(o()), R(a, "background", t ? "var(--sq-overlay-text)" : "var(--sq-dot-empty-bg)"), R(a, "border", `2px solid ${t ? "var(--sq-overlay-text)" : "var(--sq-dot-empty-border)"}`), a;
       })()
     })), e;
   })();
 }
-U(["click"]);
-var vn = /* @__PURE__ */ v('<div style="background:var(--sq-row-1);border-bottom:1px solid var(--sq-row-border);position:sticky;top:0;z-index:100"><div style="padding:8px 14px 2px;font-size:13px;color:var(--sq-ctrl-text);text-transform:capitalize;user-select:none;-webkit-user-select:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div><div style="padding:4px 14px 10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">');
+W(["click"]);
+var _n = /* @__PURE__ */ k('<div style="background:var(--sq-row-1);border-bottom:1px solid var(--sq-row-border);position:sticky;top:0;z-index:100"><div style="padding:8px 14px 2px;font-size:13px;color:var(--sq-ctrl-text);text-transform:capitalize;user-select:none;-webkit-user-select:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div><div style="padding:4px 14px 10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">');
 function Cn(n) {
   const e = () => [n.name, n.charClass, n.profession, n.personality].filter(Boolean).join(" · ");
   return (() => {
-    var t = vn(), o = t.firstChild, a = o.nextSibling;
-    return g(o, e), g(a, b(bn, {
+    var t = _n(), o = t.firstChild, a = o.nextSibling;
+    return g(o, e), g(a, b(wn, {
       get hp() {
         return n.hp;
       },
       get onHpChange() {
         return n.onHpChange;
       }
-    }), null), g(a, b(xn, {
+    }), null), g(a, b(vn, {
       get energy() {
         return n.energy;
       },
@@ -898,7 +914,7 @@ function Cn(n) {
     }), null), t;
   })();
 }
-var An = /* @__PURE__ */ v('<div style="background:var(--sq-row-2);border-bottom:1px solid var(--sq-row-border);padding:10px 14px;display:flex;gap:8px;flex-wrap:wrap"><input type=text placeholder="Character name"><select><option value>Personality</option></select><select><option value>Class</option></select><select><option value>Profession'), Ye = /* @__PURE__ */ v("<option>");
+var Tn = /* @__PURE__ */ k('<div style="background:var(--sq-row-2);border-bottom:1px solid var(--sq-row-border);padding:10px 14px;display:flex;gap:8px;flex-wrap:wrap"><input type=text placeholder="Character name"><select><option value>Personality</option></select><select><option value>Class</option></select><select><option value>Profession'), De = /* @__PURE__ */ k("<option>");
 const Ee = {
   background: "var(--sq-ctrl-bg)",
   border: "1px solid var(--sq-ctrl-border)",
@@ -911,7 +927,7 @@ const Ee = {
   flex: "1",
   "min-width": "0",
   "text-transform": "capitalize"
-}, Tn = {
+}, Sn = {
   background: "var(--sq-ctrl-bg)",
   border: "1px solid var(--sq-ctrl-border)",
   color: "var(--sq-ctrl-text)",
@@ -923,19 +939,19 @@ const Ee = {
   "min-width": "0",
   outline: "none"
 };
-function Sn(n) {
+function Rn(n) {
   return (() => {
-    var e = An(), t = e.firstChild, o = t.nextSibling;
+    var e = Tn(), t = e.firstChild, o = t.nextSibling;
     o.firstChild;
     var a = o.nextSibling;
     a.firstChild;
     var r = a.nextSibling;
-    return r.firstChild, t.$$input = (i) => n.onNameChange(i.currentTarget.value), ue(t, Tn), o.addEventListener("change", (i) => n.onPersonalityChange(i.currentTarget.value)), g(o, b(H, {
+    return r.firstChild, t.$$input = (i) => n.onNameChange(i.currentTarget.value), de(t, Sn), o.addEventListener("change", (i) => n.onPersonalityChange(i.currentTarget.value)), g(o, b(H, {
       get each() {
         return n.personalities;
       },
       children: (i) => (() => {
-        var s = Ye();
+        var s = De();
         return s.value = i, g(s, i), s;
       })()
     }), null), a.addEventListener("change", (i) => n.onClassChange(i.currentTarget.value)), g(a, b(H, {
@@ -943,7 +959,7 @@ function Sn(n) {
         return n.classes;
       },
       children: (i) => (() => {
-        var s = Ye();
+        var s = De();
         return s.value = i, g(s, i), s;
       })()
     }), null), r.addEventListener("change", (i) => n.onProfessionChange(i.currentTarget.value)), g(r, b(H, {
@@ -951,25 +967,25 @@ function Sn(n) {
         return n.professions;
       },
       children: (i) => (() => {
-        var s = Ye();
+        var s = De();
         return s.value = i, g(s, i), s;
       })()
-    }), null), D((i) => {
+    }), null), C((i) => {
       var s = Ee, l = Ee, c = Ee;
-      return i.e = ue(o, s, i.e), i.t = ue(a, l, i.t), i.a = ue(r, c, i.a), i;
+      return i.e = de(o, s, i.e), i.t = de(a, l, i.t), i.a = de(r, c, i.a), i;
     }, {
       e: void 0,
       t: void 0,
       a: void 0
-    }), D(() => t.value = n.name), D(() => o.value = n.personality), D(() => a.value = n.charClass), D(() => r.value = n.profession), e;
+    }), C(() => t.value = n.name), C(() => o.value = n.personality), C(() => a.value = n.charClass), C(() => r.value = n.profession), e;
   })();
 }
-U(["input"]);
-var Dn = /* @__PURE__ */ v('<div style="background:var(--sq-row-2);border-bottom:1px solid var(--sq-row-border);padding:8px 14px"><div style=display:flex;gap:4px;flex-wrap:wrap></div><div style=color:var(--sq-overlay-text);font-size:11px;opacity:0.7;margin-top:4px;min-height:14px>'), Rn = /* @__PURE__ */ v('<button style="border-radius:4px;padding:4px 12px;font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.1s">');
-function _n(n) {
-  const e = M(() => n.statuses.find((t) => t.id === n.combat));
+W(["input"]);
+var An = /* @__PURE__ */ k('<div style="background:var(--sq-row-2);border-bottom:1px solid var(--sq-row-border);padding:8px 14px"><div style=display:flex;gap:4px;flex-wrap:wrap></div><div style=color:var(--sq-overlay-text);font-size:11px;opacity:0.7;margin-top:4px;min-height:14px>'), $n = /* @__PURE__ */ k('<button style="border-radius:4px;padding:4px 12px;font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.1s">');
+function Dn(n) {
+  const e = L(() => n.statuses.find((t) => t.id === n.combat));
   return (() => {
-    var t = Dn(), o = t.firstChild, a = o.nextSibling;
+    var t = An(), o = t.firstChild, a = o.nextSibling;
     return g(o, b(H, {
       get each() {
         return n.statuses;
@@ -977,10 +993,10 @@ function _n(n) {
       children: (r) => {
         const i = () => n.combat === r.id;
         return (() => {
-          var s = Rn();
-          return s.$$click = () => n.onChange(r.id), g(s, () => r.label), D((l) => {
+          var s = $n();
+          return s.$$click = () => n.onChange(r.id), g(s, () => r.label), C((l) => {
             var c = i() ? "var(--sq-accent)" : "var(--sq-ctrl-bg)", u = i() ? "#ffffff" : "var(--sq-ctrl-text)", d = `1px solid ${i() ? "var(--sq-accent)" : "var(--sq-ctrl-border)"}`, h = i() ? "600" : "400";
-            return c !== l.e && E(s, "background", l.e = c), u !== l.t && E(s, "color", l.t = u), d !== l.a && E(s, "border", l.a = d), h !== l.o && E(s, "font-weight", l.o = h), l;
+            return c !== l.e && R(s, "background", l.e = c), u !== l.t && R(s, "color", l.t = u), d !== l.a && R(s, "border", l.a = d), h !== l.o && R(s, "font-weight", l.o = h), l;
           }, {
             e: void 0,
             t: void 0,
@@ -995,8 +1011,8 @@ function _n(n) {
     }), t;
   })();
 }
-U(["click"]);
-function je() {
+W(["click"]);
+function Me() {
   return {
     async: !1,
     breaks: !1,
@@ -1010,37 +1026,37 @@ function je() {
     walkTokens: null
   };
 }
-let K = je();
-function kt(n) {
-  K = n;
+let Z = Me();
+function wt(n) {
+  Z = n;
 }
-const xt = /[&<>"']/, Yn = new RegExp(xt.source, "g"), vt = /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/, En = new RegExp(vt.source, "g"), qn = {
+const kt = /[&<>"']/, En = new RegExp(kt.source, "g"), xt = /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/, qn = new RegExp(xt.source, "g"), zn = {
   "&": "&amp;",
   "<": "&lt;",
   ">": "&gt;",
   '"': "&quot;",
   "'": "&#39;"
-}, tt = (n) => qn[n];
-function Y(n, e) {
+}, tt = (n) => zn[n];
+function D(n, e) {
   if (e) {
-    if (xt.test(n))
-      return n.replace(Yn, tt);
-  } else if (vt.test(n))
-    return n.replace(En, tt);
+    if (kt.test(n))
+      return n.replace(En, tt);
+  } else if (xt.test(n))
+    return n.replace(qn, tt);
   return n;
 }
-const zn = /&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig;
-function In(n) {
-  return n.replace(zn, (e, t) => (t = t.toLowerCase(), t === "colon" ? ":" : t.charAt(0) === "#" ? t.charAt(1) === "x" ? String.fromCharCode(parseInt(t.substring(2), 16)) : String.fromCharCode(+t.substring(1)) : ""));
+const Yn = /&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig;
+function On(n) {
+  return n.replace(Yn, (e, t) => (t = t.toLowerCase(), t === "colon" ? ":" : t.charAt(0) === "#" ? t.charAt(1) === "x" ? String.fromCharCode(parseInt(t.substring(2), 16)) : String.fromCharCode(+t.substring(1)) : ""));
 }
-const On = /(^|[^\[])\^/g;
-function w(n, e) {
+const In = /(^|[^\[])\^/g;
+function m(n, e) {
   let t = typeof n == "string" ? n : n.source;
   e = e || "";
   const o = {
     replace: (a, r) => {
       let i = typeof r == "string" ? r : r.source;
-      return i = i.replace(On, "$1"), t = t.replace(a, i), o;
+      return i = i.replace(In, "$1"), t = t.replace(a, i), o;
     },
     getRegex: () => new RegExp(t, e)
   };
@@ -1054,7 +1070,7 @@ function nt(n) {
   }
   return n;
 }
-const te = { exec: () => null };
+const ne = { exec: () => null };
 function ot(n, e) {
   const t = n.replace(/\|/g, (r, i, s) => {
     let l = !1, c = i;
@@ -1073,7 +1089,7 @@ function ot(n, e) {
     o[a] = o[a].trim().replace(/\\\|/g, "|");
   return o;
 }
-function de(n, e, t) {
+function he(n, e, t) {
   const o = n.length;
   if (o === 0)
     return "";
@@ -1096,7 +1112,7 @@ function Pn(n, e) {
   return -1;
 }
 function at(n, e, t, o) {
-  const a = e.href, r = e.title ? Y(e.title) : null, i = n[1].replace(/\\([\[\]])/g, "$1");
+  const a = e.href, r = e.title ? D(e.title) : null, i = n[1].replace(/\\([\[\]])/g, "$1");
   if (n[0].charAt(0) !== "!") {
     o.state.inLink = !0;
     const s = {
@@ -1114,10 +1130,10 @@ function at(n, e, t, o) {
     raw: t,
     href: a,
     title: r,
-    text: Y(i)
+    text: D(i)
   };
 }
-function Ln(n, e) {
+function Nn(n, e) {
   const t = n.match(/^(\s+)(?:```)/);
   if (t === null)
     return e;
@@ -1132,14 +1148,14 @@ function Ln(n, e) {
   }).join(`
 `);
 }
-class Ce {
+class _e {
   // set by the lexer
   constructor(e) {
-    x(this, "options");
-    x(this, "rules");
+    w(this, "options");
+    w(this, "rules");
     // set by the lexer
-    x(this, "lexer");
-    this.options = e || K;
+    w(this, "lexer");
+    this.options = e || Z;
   }
   space(e) {
     const t = this.rules.block.newline.exec(e);
@@ -1157,7 +1173,7 @@ class Ce {
         type: "code",
         raw: t[0],
         codeBlockStyle: "indented",
-        text: this.options.pedantic ? o : de(o, `
+        text: this.options.pedantic ? o : he(o, `
 `)
       };
     }
@@ -1165,7 +1181,7 @@ class Ce {
   fences(e) {
     const t = this.rules.block.fences.exec(e);
     if (t) {
-      const o = t[0], a = Ln(o, t[3] || "");
+      const o = t[0], a = Nn(o, t[3] || "");
       return {
         type: "code",
         raw: o,
@@ -1179,7 +1195,7 @@ class Ce {
     if (t) {
       let o = t[2].trim();
       if (/#$/.test(o)) {
-        const a = de(o, "#");
+        const a = he(o, "#");
         (this.options.pedantic || !a || / $/.test(a)) && (o = a.trim());
       }
       return {
@@ -1204,7 +1220,7 @@ class Ce {
     if (t) {
       let o = t[0].replace(/\n {0,3}((?:=+|-+) *)(?=\n|$)/g, `
     $1`);
-      o = de(o.replace(/^ *>[ \t]?/gm, ""), `
+      o = he(o.replace(/^ *>[ \t]?/gm, ""), `
 `);
       const a = this.lexer.state.top;
       this.lexer.state.top = !0;
@@ -1238,38 +1254,38 @@ class Ce {
           break;
         s = t[0], e = e.substring(s.length);
         let d = t[2].split(`
-`, 1)[0].replace(/^\t+/, (q) => " ".repeat(3 * q.length)), h = e.split(`
+`, 1)[0].replace(/^\t+/, (N) => " ".repeat(3 * N.length)), h = e.split(`
 `, 1)[0], p = 0;
         this.options.pedantic ? (p = 2, l = d.trimStart()) : (p = t[2].search(/[^ ]/), p = p > 4 ? 1 : p, l = d.slice(p), p += t[1].length);
-        let k = !1;
+        let x = !1;
         if (!d && /^ *$/.test(h) && (s += h + `
 `, e = e.substring(h.length + 1), u = !0), !u) {
-          const q = new RegExp(`^ {0,${Math.min(3, p - 1)}}(?:[*+-]|\\d{1,9}[.)])((?:[ 	][^\\n]*)?(?:\\n|$))`), y = new RegExp(`^ {0,${Math.min(3, p - 1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`), A = new RegExp(`^ {0,${Math.min(3, p - 1)}}(?:\`\`\`|~~~)`), f = new RegExp(`^ {0,${Math.min(3, p - 1)}}#`);
+          const N = new RegExp(`^ {0,${Math.min(3, p - 1)}}(?:[*+-]|\\d{1,9}[.)])((?:[ 	][^\\n]*)?(?:\\n|$))`), A = new RegExp(`^ {0,${Math.min(3, p - 1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`), $ = new RegExp(`^ {0,${Math.min(3, p - 1)}}(?:\`\`\`|~~~)`), E = new RegExp(`^ {0,${Math.min(3, p - 1)}}#`);
           for (; e; ) {
-            const z = e.split(`
+            const q = e.split(`
 `, 1)[0];
-            if (h = z, this.options.pedantic && (h = h.replace(/^ {1,4}(?=( {4})*[^ ])/g, "  ")), A.test(h) || f.test(h) || q.test(h) || y.test(e))
+            if (h = q, this.options.pedantic && (h = h.replace(/^ {1,4}(?=( {4})*[^ ])/g, "  ")), $.test(h) || E.test(h) || N.test(h) || A.test(e))
               break;
             if (h.search(/[^ ]/) >= p || !h.trim())
               l += `
 ` + h.slice(p);
             else {
-              if (k || d.search(/[^ ]/) >= 4 || A.test(d) || f.test(d) || y.test(d))
+              if (x || d.search(/[^ ]/) >= 4 || $.test(d) || E.test(d) || A.test(d))
                 break;
               l += `
 ` + h;
             }
-            !k && !h.trim() && (k = !0), s += z + `
-`, e = e.substring(z.length + 1), d = h.slice(p);
+            !x && !h.trim() && (x = !0), s += q + `
+`, e = e.substring(q.length + 1), d = h.slice(p);
           }
         }
         r.loose || (c ? r.loose = !0 : /\n *\n *$/.test(s) && (c = !0));
-        let C = null, _;
-        this.options.gfm && (C = /^\[[ xX]\] /.exec(l), C && (_ = C[0] !== "[ ] ", l = l.replace(/^\[[ xX]\] +/, ""))), r.items.push({
+        let f = null, S;
+        this.options.gfm && (f = /^\[[ xX]\] /.exec(l), f && (S = f[0] !== "[ ] ", l = l.replace(/^\[[ xX]\] +/, ""))), r.items.push({
           type: "list_item",
           raw: s,
-          task: !!C,
-          checked: _,
+          task: !!f,
+          checked: S,
           loose: !1,
           text: l,
           tokens: []
@@ -1379,7 +1395,7 @@ class Ce {
       return {
         type: "escape",
         raw: t[0],
-        text: Y(t[1])
+        text: D(t[1])
       };
   }
   tag(e) {
@@ -1401,7 +1417,7 @@ class Ce {
       if (!this.options.pedantic && /^</.test(o)) {
         if (!/>$/.test(o))
           return;
-        const i = de(o.slice(0, -1), "\\");
+        const i = he(o.slice(0, -1), "\\");
         if ((o.length - i.length) % 2 === 0)
           return;
       } else {
@@ -1461,20 +1477,20 @@ class Ce {
         l = Math.min(l, l + c + u);
         const h = [...a[0]][0].length, p = e.slice(0, i + a.index + h + l);
         if (Math.min(i, l) % 2) {
-          const C = p.slice(1, -1);
+          const f = p.slice(1, -1);
           return {
             type: "em",
             raw: p,
-            text: C,
-            tokens: this.lexer.inlineTokens(C)
+            text: f,
+            tokens: this.lexer.inlineTokens(f)
           };
         }
-        const k = p.slice(2, -2);
+        const x = p.slice(2, -2);
         return {
           type: "strong",
           raw: p,
-          text: k,
-          tokens: this.lexer.inlineTokens(k)
+          text: x,
+          tokens: this.lexer.inlineTokens(x)
         };
       }
     }
@@ -1484,7 +1500,7 @@ class Ce {
     if (t) {
       let o = t[2].replace(/\n/g, " ");
       const a = /[^ ]/.test(o), r = /^ /.test(o) && / $/.test(o);
-      return a && r && (o = o.substring(1, o.length - 1)), o = Y(o, !0), {
+      return a && r && (o = o.substring(1, o.length - 1)), o = D(o, !0), {
         type: "codespan",
         raw: t[0],
         text: o
@@ -1513,7 +1529,7 @@ class Ce {
     const t = this.rules.inline.autolink.exec(e);
     if (t) {
       let o, a;
-      return t[2] === "@" ? (o = Y(t[1]), a = "mailto:" + o) : (o = Y(t[1]), a = o), {
+      return t[2] === "@" ? (o = D(t[1]), a = "mailto:" + o) : (o = D(t[1]), a = o), {
         type: "link",
         raw: t[0],
         text: o,
@@ -1534,13 +1550,13 @@ class Ce {
     if (t = this.rules.inline.url.exec(e)) {
       let a, r;
       if (t[2] === "@")
-        a = Y(t[0]), r = "mailto:" + a;
+        a = D(t[0]), r = "mailto:" + a;
       else {
         let i;
         do
           i = t[0], t[0] = ((o = this.rules.inline._backpedal.exec(t[0])) == null ? void 0 : o[0]) ?? "";
         while (i !== t[0]);
-        a = Y(t[0]), t[1] === "www." ? r = "http://" + t[0] : r = t[0];
+        a = D(t[0]), t[1] === "www." ? r = "http://" + t[0] : r = t[0];
       }
       return {
         type: "link",
@@ -1561,7 +1577,7 @@ class Ce {
     const t = this.rules.inline.text.exec(e);
     if (t) {
       let o;
-      return this.lexer.state.inRawBlock ? o = t[0] : o = Y(t[0]), {
+      return this.lexer.state.inRawBlock ? o = t[0] : o = D(t[0]), {
         type: "text",
         raw: t[0],
         text: o
@@ -1569,118 +1585,118 @@ class Ce {
     }
   }
 }
-const Nn = /^(?: *(?:\n|$))+/, Bn = /^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/, Mn = /^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/, se = /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/, jn = /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/, Ct = /(?:[*+-]|\d{1,9}[.)])/, At = w(/^(?!bull |blockCode|fences|blockquote|heading|html)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html))+?)\n {0,3}(=+|-+) *(?:\n+|$)/).replace(/bull/g, Ct).replace(/blockCode/g, / {4}/).replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g, / {0,3}>/).replace(/heading/g, / {0,3}#{1,6}/).replace(/html/g, / {0,3}<[^\n>]+>\n/).getRegex(), He = /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/, Hn = /^[^\n]+/, Ge = /(?!\s*\])(?:\\.|[^\[\]\\])+/, Gn = w(/^ {0,3}\[(label)\]: *(?:\n *)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/).replace("label", Ge).replace("title", /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex(), Qn = w(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g, Ct).getRegex(), De = "address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul", Qe = /<!--(?:-?>|[\s\S]*?(?:-->|$))/, Fn = w("^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$))", "i").replace("comment", Qe).replace("tag", De).replace("attribute", / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex(), Tt = w(He).replace("hr", se).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("|table", "").replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", De).getRegex(), Zn = w(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph", Tt).getRegex(), Fe = {
-  blockquote: Zn,
-  code: Bn,
-  def: Gn,
+const Ln = /^(?: *(?:\n|$))+/, jn = /^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/, Mn = /^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/, le = /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/, Hn = /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/, vt = /(?:[*+-]|\d{1,9}[.)])/, _t = m(/^(?!bull |blockCode|fences|blockquote|heading|html)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html))+?)\n {0,3}(=+|-+) *(?:\n+|$)/).replace(/bull/g, vt).replace(/blockCode/g, / {4}/).replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g, / {0,3}>/).replace(/heading/g, / {0,3}#{1,6}/).replace(/html/g, / {0,3}<[^\n>]+>\n/).getRegex(), He = /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/, Bn = /^[^\n]+/, Be = /(?!\s*\])(?:\\.|[^\[\]\\])+/, Fn = m(/^ {0,3}\[(label)\]: *(?:\n *)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/).replace("label", Be).replace("title", /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex(), Gn = m(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g, vt).getRegex(), Re = "address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul", Fe = /<!--(?:-?>|[\s\S]*?(?:-->|$))/, Un = m("^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$))", "i").replace("comment", Fe).replace("tag", Re).replace("attribute", / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex(), Ct = m(He).replace("hr", le).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("|table", "").replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", Re).getRegex(), Wn = m(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph", Ct).getRegex(), Ge = {
+  blockquote: Wn,
+  code: jn,
+  def: Fn,
   fences: Mn,
-  heading: jn,
-  hr: se,
-  html: Fn,
-  lheading: At,
-  list: Qn,
-  newline: Nn,
-  paragraph: Tt,
-  table: te,
-  text: Hn
-}, rt = w("^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)").replace("hr", se).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("blockquote", " {0,3}>").replace("code", " {4}[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", De).getRegex(), Un = {
-  ...Fe,
+  heading: Hn,
+  hr: le,
+  html: Un,
+  lheading: _t,
+  list: Gn,
+  newline: Ln,
+  paragraph: Ct,
+  table: ne,
+  text: Bn
+}, rt = m("^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)").replace("hr", le).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("blockquote", " {0,3}>").replace("code", " {4}[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", Re).getRegex(), Zn = {
+  ...Ge,
   table: rt,
-  paragraph: w(He).replace("hr", se).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("table", rt).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", De).getRegex()
+  paragraph: m(He).replace("hr", le).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("table", rt).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", Re).getRegex()
 }, Kn = {
-  ...Fe,
-  html: w(`^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`).replace("comment", Qe).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),
+  ...Ge,
+  html: m(`^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`).replace("comment", Fe).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),
   def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,
   heading: /^(#{1,6})(.*)(?:\n+|$)/,
-  fences: te,
+  fences: ne,
   // fences not supported
   lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,
-  paragraph: w(He).replace("hr", se).replace("heading", ` *#{1,6} *[^
-]`).replace("lheading", At).replace("|table", "").replace("blockquote", " {0,3}>").replace("|fences", "").replace("|list", "").replace("|html", "").replace("|tag", "").getRegex()
-}, St = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/, Jn = /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/, Dt = /^( {2,}|\\)\n(?!\s*$)/, Xn = /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/, le = "\\p{P}\\p{S}", Vn = w(/^((?![*_])[\spunctuation])/, "u").replace(/punctuation/g, le).getRegex(), Wn = /\[[^[\]]*?\]\([^\(\)]*?\)|`[^`]*?`|<[^<>]*?>/g, $n = w(/^(?:\*+(?:((?!\*)[punct])|[^\s*]))|^_+(?:((?!_)[punct])|([^\s_]))/, "u").replace(/punct/g, le).getRegex(), eo = w("^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)[punct](\\*+)(?=[\\s]|$)|[^punct\\s](\\*+)(?!\\*)(?=[punct\\s]|$)|(?!\\*)[punct\\s](\\*+)(?=[^punct\\s])|[\\s](\\*+)(?!\\*)(?=[punct])|(?!\\*)[punct](\\*+)(?!\\*)(?=[punct])|[^punct\\s](\\*+)(?=[^punct\\s])", "gu").replace(/punct/g, le).getRegex(), to = w("^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)[punct](_+)(?=[\\s]|$)|[^punct\\s](_+)(?!_)(?=[punct\\s]|$)|(?!_)[punct\\s](_+)(?=[^punct\\s])|[\\s](_+)(?!_)(?=[punct])|(?!_)[punct](_+)(?!_)(?=[punct])", "gu").replace(/punct/g, le).getRegex(), no = w(/\\([punct])/, "gu").replace(/punct/g, le).getRegex(), oo = w(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme", /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email", /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex(), ao = w(Qe).replace("(?:-->|$)", "-->").getRegex(), ro = w("^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>").replace("comment", ao).replace("attribute", /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex(), Ae = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/, io = w(/^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/).replace("label", Ae).replace("href", /<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/).replace("title", /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex(), Rt = w(/^!?\[(label)\]\[(ref)\]/).replace("label", Ae).replace("ref", Ge).getRegex(), _t = w(/^!?\[(ref)\](?:\[\])?/).replace("ref", Ge).getRegex(), so = w("reflink|nolink(?!\\()", "g").replace("reflink", Rt).replace("nolink", _t).getRegex(), Ze = {
-  _backpedal: te,
+  paragraph: m(He).replace("hr", le).replace("heading", ` *#{1,6} *[^
+]`).replace("lheading", _t).replace("|table", "").replace("blockquote", " {0,3}>").replace("|fences", "").replace("|list", "").replace("|html", "").replace("|tag", "").getRegex()
+}, Tt = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/, Qn = /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/, St = /^( {2,}|\\)\n(?!\s*$)/, Vn = /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/, ce = "\\p{P}\\p{S}", Xn = m(/^((?![*_])[\spunctuation])/, "u").replace(/punctuation/g, ce).getRegex(), Jn = /\[[^[\]]*?\]\([^\(\)]*?\)|`[^`]*?`|<[^<>]*?>/g, eo = m(/^(?:\*+(?:((?!\*)[punct])|[^\s*]))|^_+(?:((?!_)[punct])|([^\s_]))/, "u").replace(/punct/g, ce).getRegex(), to = m("^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)[punct](\\*+)(?=[\\s]|$)|[^punct\\s](\\*+)(?!\\*)(?=[punct\\s]|$)|(?!\\*)[punct\\s](\\*+)(?=[^punct\\s])|[\\s](\\*+)(?!\\*)(?=[punct])|(?!\\*)[punct](\\*+)(?!\\*)(?=[punct])|[^punct\\s](\\*+)(?=[^punct\\s])", "gu").replace(/punct/g, ce).getRegex(), no = m("^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)[punct](_+)(?=[\\s]|$)|[^punct\\s](_+)(?!_)(?=[punct\\s]|$)|(?!_)[punct\\s](_+)(?=[^punct\\s])|[\\s](_+)(?!_)(?=[punct])|(?!_)[punct](_+)(?!_)(?=[punct])", "gu").replace(/punct/g, ce).getRegex(), oo = m(/\\([punct])/, "gu").replace(/punct/g, ce).getRegex(), ao = m(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme", /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email", /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex(), ro = m(Fe).replace("(?:-->|$)", "-->").getRegex(), io = m("^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>").replace("comment", ro).replace("attribute", /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex(), Ce = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/, so = m(/^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/).replace("label", Ce).replace("href", /<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/).replace("title", /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex(), Rt = m(/^!?\[(label)\]\[(ref)\]/).replace("label", Ce).replace("ref", Be).getRegex(), At = m(/^!?\[(ref)\](?:\[\])?/).replace("ref", Be).getRegex(), lo = m("reflink|nolink(?!\\()", "g").replace("reflink", Rt).replace("nolink", At).getRegex(), Ue = {
+  _backpedal: ne,
   // only used for GFM url
-  anyPunctuation: no,
-  autolink: oo,
-  blockSkip: Wn,
-  br: Dt,
-  code: Jn,
-  del: te,
-  emStrongLDelim: $n,
-  emStrongRDelimAst: eo,
-  emStrongRDelimUnd: to,
-  escape: St,
-  link: io,
-  nolink: _t,
-  punctuation: Vn,
+  anyPunctuation: oo,
+  autolink: ao,
+  blockSkip: Jn,
+  br: St,
+  code: Qn,
+  del: ne,
+  emStrongLDelim: eo,
+  emStrongRDelimAst: to,
+  emStrongRDelimUnd: no,
+  escape: Tt,
+  link: so,
+  nolink: At,
+  punctuation: Xn,
   reflink: Rt,
-  reflinkSearch: so,
-  tag: ro,
-  text: Xn,
-  url: te
-}, lo = {
-  ...Ze,
-  link: w(/^!?\[(label)\]\((.*?)\)/).replace("label", Ae).getRegex(),
-  reflink: w(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label", Ae).getRegex()
+  reflinkSearch: lo,
+  tag: io,
+  text: Vn,
+  url: ne
+}, co = {
+  ...Ue,
+  link: m(/^!?\[(label)\]\((.*?)\)/).replace("label", Ce).getRegex(),
+  reflink: m(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label", Ce).getRegex()
 }, Ne = {
-  ...Ze,
-  escape: w(St).replace("])", "~|])").getRegex(),
-  url: w(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/, "i").replace("email", /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(),
+  ...Ue,
+  escape: m(Tt).replace("])", "~|])").getRegex(),
+  url: m(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/, "i").replace("email", /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(),
   _backpedal: /(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/,
   del: /^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/,
   text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/
-}, co = {
+}, uo = {
   ...Ne,
-  br: w(Dt).replace("{2,}", "*").getRegex(),
-  text: w(Ne.text).replace("\\b_", "\\b_| {2,}\\n").replace(/\{2,\}/g, "*").getRegex()
-}, he = {
-  normal: Fe,
-  gfm: Un,
+  br: m(St).replace("{2,}", "*").getRegex(),
+  text: m(Ne.text).replace("\\b_", "\\b_| {2,}\\n").replace(/\{2,\}/g, "*").getRegex()
+}, fe = {
+  normal: Ge,
+  gfm: Zn,
   pedantic: Kn
-}, $ = {
-  normal: Ze,
+}, X = {
+  normal: Ue,
   gfm: Ne,
-  breaks: co,
-  pedantic: lo
+  breaks: uo,
+  pedantic: co
 };
-class I {
+class z {
   constructor(e) {
-    x(this, "tokens");
-    x(this, "options");
-    x(this, "state");
-    x(this, "tokenizer");
-    x(this, "inlineQueue");
-    this.tokens = [], this.tokens.links = /* @__PURE__ */ Object.create(null), this.options = e || K, this.options.tokenizer = this.options.tokenizer || new Ce(), this.tokenizer = this.options.tokenizer, this.tokenizer.options = this.options, this.tokenizer.lexer = this, this.inlineQueue = [], this.state = {
+    w(this, "tokens");
+    w(this, "options");
+    w(this, "state");
+    w(this, "tokenizer");
+    w(this, "inlineQueue");
+    this.tokens = [], this.tokens.links = /* @__PURE__ */ Object.create(null), this.options = e || Z, this.options.tokenizer = this.options.tokenizer || new _e(), this.tokenizer = this.options.tokenizer, this.tokenizer.options = this.options, this.tokenizer.lexer = this, this.inlineQueue = [], this.state = {
       inLink: !1,
       inRawBlock: !1,
       top: !0
     };
     const t = {
-      block: he.normal,
-      inline: $.normal
+      block: fe.normal,
+      inline: X.normal
     };
-    this.options.pedantic ? (t.block = he.pedantic, t.inline = $.pedantic) : this.options.gfm && (t.block = he.gfm, this.options.breaks ? t.inline = $.breaks : t.inline = $.gfm), this.tokenizer.rules = t;
+    this.options.pedantic ? (t.block = fe.pedantic, t.inline = X.pedantic) : this.options.gfm && (t.block = fe.gfm, this.options.breaks ? t.inline = X.breaks : t.inline = X.gfm), this.tokenizer.rules = t;
   }
   /**
    * Expose Rules
    */
   static get rules() {
     return {
-      block: he,
-      inline: $
+      block: fe,
+      inline: X
     };
   }
   /**
    * Static Lex Method
    */
   static lex(e, t) {
-    return new I(t).lex(e);
+    return new z(t).lex(e);
   }
   /**
    * Static Lex Inline Method
    */
   static lexInline(e, t) {
-    return new I(t).inlineTokens(e);
+    return new z(t).inlineTokens(e);
   }
   /**
    * Preprocessing
@@ -1868,15 +1884,15 @@ class I {
 }
 class Te {
   constructor(e) {
-    x(this, "options");
-    this.options = e || K;
+    w(this, "options");
+    this.options = e || Z;
   }
   code(e, t, o) {
     var r;
     const a = (r = (t || "").match(/^\S*/)) == null ? void 0 : r[0];
     return e = e.replace(/\n$/, "") + `
-`, a ? '<pre><code class="language-' + Y(a) + '">' + (o ? e : Y(e, !0)) + `</code></pre>
-` : "<pre><code>" + (o ? e : Y(e, !0)) + `</code></pre>
+`, a ? '<pre><code class="language-' + D(a) + '">' + (o ? e : D(e, !0)) + `</code></pre>
+` : "<pre><code>" + (o ? e : D(e, !0)) + `</code></pre>
 `;
   }
   blockquote(e) {
@@ -1967,7 +1983,7 @@ ${e}</tr>
     return e;
   }
 }
-class Ue {
+class We {
   // no need for block level renderers
   strong(e) {
     return e;
@@ -1997,24 +2013,24 @@ class Ue {
     return "";
   }
 }
-class O {
+class Y {
   constructor(e) {
-    x(this, "options");
-    x(this, "renderer");
-    x(this, "textRenderer");
-    this.options = e || K, this.options.renderer = this.options.renderer || new Te(), this.renderer = this.options.renderer, this.renderer.options = this.options, this.textRenderer = new Ue();
+    w(this, "options");
+    w(this, "renderer");
+    w(this, "textRenderer");
+    this.options = e || Z, this.options.renderer = this.options.renderer || new Te(), this.renderer = this.options.renderer, this.renderer.options = this.options, this.textRenderer = new We();
   }
   /**
    * Static Parse Method
    */
   static parse(e, t) {
-    return new O(t).parse(e);
+    return new Y(t).parse(e);
   }
   /**
    * Static Parse Inline Method
    */
   static parseInline(e, t) {
-    return new O(t).parseInline(e);
+    return new Y(t).parseInline(e);
   }
   /**
    * Parse Loop
@@ -2039,7 +2055,7 @@ class O {
         }
         case "heading": {
           const i = r;
-          o += this.renderer.heading(this.parseInline(i.tokens), i.depth, In(this.parseInline(i.tokens, this.textRenderer)));
+          o += this.renderer.heading(this.parseInline(i.tokens), i.depth, On(this.parseInline(i.tokens, this.textRenderer)));
           continue;
         }
         case "code": {
@@ -2073,16 +2089,16 @@ class O {
           const i = r, s = i.ordered, l = i.start, c = i.loose;
           let u = "";
           for (let d = 0; d < i.items.length; d++) {
-            const h = i.items[d], p = h.checked, k = h.task;
-            let C = "";
+            const h = i.items[d], p = h.checked, x = h.task;
+            let f = "";
             if (h.task) {
-              const _ = this.renderer.checkbox(!!p);
-              c ? h.tokens.length > 0 && h.tokens[0].type === "paragraph" ? (h.tokens[0].text = _ + " " + h.tokens[0].text, h.tokens[0].tokens && h.tokens[0].tokens.length > 0 && h.tokens[0].tokens[0].type === "text" && (h.tokens[0].tokens[0].text = _ + " " + h.tokens[0].tokens[0].text)) : h.tokens.unshift({
+              const S = this.renderer.checkbox(!!p);
+              c ? h.tokens.length > 0 && h.tokens[0].type === "paragraph" ? (h.tokens[0].text = S + " " + h.tokens[0].text, h.tokens[0].tokens && h.tokens[0].tokens.length > 0 && h.tokens[0].tokens[0].type === "text" && (h.tokens[0].tokens[0].text = S + " " + h.tokens[0].tokens[0].text)) : h.tokens.unshift({
                 type: "text",
-                text: _ + " "
-              }) : C += _ + " ";
+                text: S + " "
+              }) : f += S + " ";
             }
-            C += this.parse(h.tokens, c), u += this.renderer.listitem(C, k, !!p);
+            f += this.parse(h.tokens, c), u += this.renderer.listitem(f, x, !!p);
           }
           o += this.renderer.list(u, s, l);
           continue;
@@ -2191,10 +2207,10 @@ class O {
     return o;
   }
 }
-class ne {
+class oe {
   constructor(e) {
-    x(this, "options");
-    this.options = e || K;
+    w(this, "options");
+    this.options = e || Z;
   }
   /**
    * Process markdown before marked
@@ -2215,25 +2231,25 @@ class ne {
     return e;
   }
 }
-x(ne, "passThroughHooks", /* @__PURE__ */ new Set([
+w(oe, "passThroughHooks", /* @__PURE__ */ new Set([
   "preprocess",
   "postprocess",
   "processAllTokens"
 ]));
-var Z, Be, Yt;
-class uo {
+var U, Le, $t;
+class ho {
   constructor(...e) {
-    Je(this, Z);
-    x(this, "defaults", je());
-    x(this, "options", this.setOptions);
-    x(this, "parse", ce(this, Z, Be).call(this, I.lex, O.parse));
-    x(this, "parseInline", ce(this, Z, Be).call(this, I.lexInline, O.parseInline));
-    x(this, "Parser", O);
-    x(this, "Renderer", Te);
-    x(this, "TextRenderer", Ue);
-    x(this, "Lexer", I);
-    x(this, "Tokenizer", Ce);
-    x(this, "Hooks", ne);
+    Ke(this, U);
+    w(this, "defaults", Me());
+    w(this, "options", this.setOptions);
+    w(this, "parse", ue(this, U, Le).call(this, z.lex, Y.parse));
+    w(this, "parseInline", ue(this, U, Le).call(this, z.lexInline, Y.parseInline));
+    w(this, "Parser", Y);
+    w(this, "Renderer", Te);
+    w(this, "TextRenderer", We);
+    w(this, "Lexer", z);
+    w(this, "Tokenizer", _e);
+    w(this, "Hooks", oe);
     this.use(...e);
   }
   /**
@@ -2305,7 +2321,7 @@ class uo {
         a.renderer = r;
       }
       if (o.tokenizer) {
-        const r = this.defaults.tokenizer || new Ce(this.defaults);
+        const r = this.defaults.tokenizer || new _e(this.defaults);
         for (const i in o.tokenizer) {
           if (!(i in r))
             throw new Error(`tokenizer '${i}' does not exist`);
@@ -2320,14 +2336,14 @@ class uo {
         a.tokenizer = r;
       }
       if (o.hooks) {
-        const r = this.defaults.hooks || new ne();
+        const r = this.defaults.hooks || new oe();
         for (const i in o.hooks) {
           if (!(i in r))
             throw new Error(`hook '${i}' does not exist`);
           if (i === "options")
             continue;
           const s = i, l = o.hooks[s], c = r[s];
-          ne.passThroughHooks.has(i) ? r[s] = (u) => {
+          oe.passThroughHooks.has(i) ? r[s] = (u) => {
             if (this.defaults.async)
               return Promise.resolve(l.call(r, u)).then((h) => c.call(r, h));
             const d = l.call(r, u);
@@ -2353,17 +2369,17 @@ class uo {
     return this.defaults = { ...this.defaults, ...e }, this;
   }
   lexer(e, t) {
-    return I.lex(e, t ?? this.defaults);
+    return z.lex(e, t ?? this.defaults);
   }
   parser(e, t) {
-    return O.parse(e, t ?? this.defaults);
+    return Y.parse(e, t ?? this.defaults);
   }
 }
-Z = new WeakSet(), Be = function(e, t) {
+U = new WeakSet(), Le = function(e, t) {
   return (o, a) => {
     const r = { ...a }, i = { ...this.defaults, ...r };
     this.defaults.async === !0 && r.async === !1 && (i.silent || console.warn("marked(): The async option was set to true by an extension. The async: false option sent to parse will be ignored."), i.async = !0);
-    const s = ce(this, Z, Yt).call(this, !!i.silent, !!i.async);
+    const s = ue(this, U, $t).call(this, !!i.silent, !!i.async);
     if (typeof o > "u" || o === null)
       return s(new Error("marked(): input parameter is undefined or null"));
     if (typeof o != "string")
@@ -2380,11 +2396,11 @@ Z = new WeakSet(), Be = function(e, t) {
       return s(l);
     }
   };
-}, Yt = function(e, t) {
+}, $t = function(e, t) {
   return (o) => {
     if (o.message += `
 Please report this to https://github.com/markedjs/marked.`, e) {
-      const a = "<p>An error occurred:</p><pre>" + Y(o.message + "", !0) + "</pre>";
+      const a = "<p>An error occurred:</p><pre>" + D(o.message + "", !0) + "</pre>";
       return t ? Promise.resolve(a) : a;
     }
     if (t)
@@ -2392,109 +2408,108 @@ Please report this to https://github.com/markedjs/marked.`, e) {
     throw o;
   };
 };
-const F = new uo();
-function m(n, e) {
-  return F.parse(n, e);
+const G = new ho();
+function y(n, e) {
+  return G.parse(n, e);
 }
-m.options = m.setOptions = function(n) {
-  return F.setOptions(n), m.defaults = F.defaults, kt(m.defaults), m;
+y.options = y.setOptions = function(n) {
+  return G.setOptions(n), y.defaults = G.defaults, wt(y.defaults), y;
 };
-m.getDefaults = je;
-m.defaults = K;
-m.use = function(...n) {
-  return F.use(...n), m.defaults = F.defaults, kt(m.defaults), m;
+y.getDefaults = Me;
+y.defaults = Z;
+y.use = function(...n) {
+  return G.use(...n), y.defaults = G.defaults, wt(y.defaults), y;
 };
-m.walkTokens = function(n, e) {
-  return F.walkTokens(n, e);
+y.walkTokens = function(n, e) {
+  return G.walkTokens(n, e);
 };
-m.parseInline = F.parseInline;
-m.Parser = O;
-m.parser = O.parse;
-m.Renderer = Te;
-m.TextRenderer = Ue;
-m.Lexer = I;
-m.lexer = I.lex;
-m.Tokenizer = Ce;
-m.Hooks = ne;
-m.parse = m;
-m.options;
-m.setOptions;
-m.use;
-m.walkTokens;
-m.parseInline;
-O.parse;
-I.lex;
-const ho = "data:image/png;base64,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";
-var fo = /* @__PURE__ */ v('<div style="background:#ffffff;border-radius:6px;margin-bottom:8px;box-shadow:0px -2px 4px rgba(0,0,0,0.2);overflow:hidden"><div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;cursor:pointer;user-select:none"><span style=color:var(--sq-accent);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px></span><div style=display:flex;gap:8px;align-items:center><span style=color:#aaaaaa;font-size:12px>'), po = /* @__PURE__ */ v('<span style="background:var(--sq-accent);color:#ffffff;border-radius:3px;padding:2px 8px;font-size:10px;font-weight:700;white-space:nowrap"> energy'), go = /* @__PURE__ */ v(`<div style="padding:0 12px 10px;color:#555555;font-size:13px;line-height:1.6;font-family:'Varela Round', 'Nunito', sans-serif">`);
-const yo = ["display:inline-block", `background-image:radial-gradient(circle, rgba(255,255,255,.75), rgba(255,255,255,0)), url(${ho})`, "background-size:66% 66%,contain", "background-repeat:no-repeat", "background-position:50% 50%,50% 50%", "color:#3f3e4a", "padding:0.8em 0.6em", "line-height:2em", "font-weight:700", "font-size:13px", "min-width:50px", "text-align:center", "cursor:pointer"].join(";");
+y.parseInline = G.parseInline;
+y.Parser = Y;
+y.parser = Y.parse;
+y.Renderer = Te;
+y.TextRenderer = We;
+y.Lexer = z;
+y.lexer = z.lex;
+y.Tokenizer = _e;
+y.Hooks = oe;
+y.parse = y;
+y.options;
+y.setOptions;
+y.use;
+y.walkTokens;
+y.parseInline;
+Y.parse;
+z.lex;
+var fo = /* @__PURE__ */ k('<div style="background:#ffffff;border-radius:6px;margin-bottom:8px;box-shadow:0px -2px 4px rgba(0,0,0,0.2);overflow:hidden;transition:opacity 0.2s"><div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;cursor:pointer;user-select:none"><span style=font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px></span><div style=display:flex;gap:6px;align-items:center><span style=color:#aaaaaa;font-size:12px>'), po = /* @__PURE__ */ k('<span style="background:#ddd;color:#888;border-radius:3px;padding:2px 6px;font-size:9px;font-weight:700;letter-spacing:0.5px">USED'), go = /* @__PURE__ */ k('<span style="background:var(--sq-accent);color:#ffffff;border-radius:3px;padding:2px 8px;font-size:10px;font-weight:700;white-space:nowrap"> energy'), yo = /* @__PURE__ */ k(`<div style="padding:0 12px 10px;color:#555555;font-size:13px;line-height:1.6;font-family:'Varela Round', 'Nunito', sans-serif">`);
 function mo(n) {
-  return m.parse(n).split(/(<h4>[\s\S]*?<\/h4>)/g).map((o) => o.startsWith("<h4>") ? o.replace(/<h4>([\s\S]*?)<\/h4>/g, (a, r) => `<h4>${r.replace(/\bD(\d+)\b/g, `<span class="die-heading" data-sides="$1" style="${yo}">D$1</span>`)}</h4>`) : o.replace(/\bD(\d+)\b/g, '<span class="die-inline" data-sides="$1">D$1</span>')).join("");
+  return y.parse(n).replace(/\bD(\d+)\b/g, "<strong>D$1</strong>");
 }
 function bo(n) {
-  const [e, t] = B(!1);
-  function o(a) {
-    const r = a.target;
-    if (r.classList.contains("die-inline") || r.classList.contains("die-heading")) {
-      const i = parseInt(r.dataset.sides ?? "6", 10);
-      n.onRoll(i);
-    }
+  const [e, t] = F(!1);
+  function o() {
+    var a;
+    n.used ? t((r) => !r) : (n.onUse(), (a = n.onActivate) == null || a.call(n, n.card), t(!0));
   }
   return (() => {
     var a = fo(), r = a.firstChild, i = r.firstChild, s = i.nextSibling, l = s.firstChild;
-    return r.$$click = () => {
-      var c;
-      t((u) => !u), (c = n.onActivate) == null || c.call(n, n.card);
-    }, g(i, () => n.card.title), g(s, (() => {
-      var c = N(() => n.card.energyCost !== void 0);
-      return () => c() && (() => {
-        var u = po(), d = u.firstChild;
+    return r.$$click = o, g(i, () => n.card.title), g(s, (() => {
+      var c = I(() => !!n.used);
+      return () => c() ? po() : I(() => n.card.energyCost !== void 0)() && (() => {
+        var u = go(), d = u.firstChild;
         return g(u, () => n.card.energyCost, d), u;
       })();
-    })(), l), g(l, () => e() ? "▼" : "▲"), g(a, (() => {
-      var c = N(() => !e());
+    })(), l), g(l, () => e() ? "▲" : "▼"), g(a, (() => {
+      var c = I(() => !!e());
       return () => c() && (() => {
-        var u = go();
-        return u.$$click = o, D(() => u.innerHTML = mo(n.card.body)), u;
+        var u = yo();
+        return C(() => u.innerHTML = mo(n.card.body)), u;
       })();
-    })(), null), a;
+    })(), null), C((c) => {
+      var u = n.used ? 0.55 : 1, d = n.used ? "#999999" : "var(--sq-accent)", h = n.used ? "line-through" : "none";
+      return u !== c.e && R(a, "opacity", c.e = u), d !== c.t && R(i, "color", c.t = d), h !== c.a && R(i, "text-decoration", c.a = h), c;
+    }, {
+      e: void 0,
+      t: void 0,
+      a: void 0
+    }), a;
   })();
 }
-U(["click"]);
-var wo = /* @__PURE__ */ v('<div style="background:#ffffff;border-radius:6px;margin-bottom:8px;box-shadow:0px -2px 4px rgba(0,0,0,0.2);overflow:hidden"><div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;cursor:pointer;user-select:none"><span style=color:var(--sq-accent);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px></span><span style=color:#aaaaaa;font-size:12px>'), ko = /* @__PURE__ */ v(`<div style="padding:0 12px 10px;color:#555555;font-size:13px;line-height:1.6;font-family:'Varela Round', 'Nunito', sans-serif">`);
+W(["click"]);
+var wo = /* @__PURE__ */ k('<div style="background:#ffffff;border-radius:6px;margin-bottom:8px;box-shadow:0px -2px 4px rgba(0,0,0,0.2);overflow:hidden"><div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;cursor:pointer;user-select:none"><span style=color:var(--sq-accent);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px></span><span style=color:#aaaaaa;font-size:12px>'), ko = /* @__PURE__ */ k(`<div style="padding:0 12px 10px;color:#555555;font-size:13px;line-height:1.6;font-family:'Varela Round', 'Nunito', sans-serif">`);
 function qe(n) {
-  const [e, t] = B(!1);
+  const [e, t] = F(!1);
   return (() => {
     var o = wo(), a = o.firstChild, r = a.firstChild, i = r.nextSibling;
     return a.$$click = () => t((s) => !s), g(r, () => n.title), g(i, () => e() ? "▲" : "▼"), g(o, (() => {
-      var s = N(() => !!e());
+      var s = I(() => !!e());
       return () => s() && (() => {
         var l = ko();
-        return D(() => l.innerHTML = m.parse(n.body)), l;
+        return C(() => l.innerHTML = y.parse(n.body)), l;
       })();
     })(), null), o;
   })();
 }
-U(["click"]);
-var xo = /* @__PURE__ */ v(`<div style="background:#ffffff;border-radius:6px;margin-bottom:8px;box-shadow:0px -2px 4px rgba(0,0,0,0.2);border-top:3px solid var(--sq-accent);overflow:hidden"><div style="padding:10px 12px 4px"><span style=color:var(--sq-accent);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px>Am I Dead?</span></div><div style="padding:0 12px 12px;color:#555555;font-size:13px;line-height:1.6;font-family:'Varela Round', 'Nunito', sans-serif">`);
+W(["click"]);
+var xo = /* @__PURE__ */ k(`<div style="background:#ffffff;border-radius:6px;margin-bottom:8px;box-shadow:0px -2px 4px rgba(0,0,0,0.2);border-top:3px solid var(--sq-accent);overflow:hidden"><div style="padding:10px 12px 4px"><span style=color:var(--sq-accent);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px>Am I Dead?</span></div><div style="padding:0 12px 12px;color:#555555;font-size:13px;line-height:1.6;font-family:'Varela Round', 'Nunito', sans-serif">`);
 function vo(n) {
   return (() => {
     var e = xo(), t = e.firstChild;
     t.firstChild;
     var o = t.nextSibling;
-    return D(() => o.innerHTML = m.parse(n.body)), e;
+    return C(() => o.innerHTML = y.parse(n.body)), e;
   })();
 }
-var Co = /* @__PURE__ */ v('<div style="padding:12px 14px">');
-function Ao(n) {
-  const e = M(() => n.abilities.filter((t) => {
-    const o = t.source === n.charClass || t.source === n.profession || t.source === "general", a = t.context === "inGeneral" || t.context === n.combat;
+var _o = /* @__PURE__ */ k('<div style="padding:12px 14px">');
+function Co(n) {
+  const e = L(() => n.abilities.filter((t) => {
+    const o = t.source === n.charClass || t.source === n.profession || t.source === "general", a = t.context === n.combat;
     return o && a;
   }));
   return (() => {
-    var t = Co();
-    return g(t, b(X, {
+    var t = _o();
+    return g(t, b(ee, {
       get when() {
-        return N(() => n.hp === 0)() && n.deathContent;
+        return I(() => n.hp === 0)() && n.deathContent;
       },
       get children() {
         return b(vo, {
@@ -2503,9 +2518,9 @@ function Ao(n) {
           }
         });
       }
-    }), null), g(t, b(X, {
+    }), null), g(t, b(ee, {
       get when() {
-        return N(() => n.combat === "inGeneral")() && !!n.descriptions[n.personality];
+        return I(() => n.combat === "inGeneral")() && !!n.descriptions[n.personality];
       },
       get children() {
         return b(qe, {
@@ -2517,9 +2532,9 @@ function Ao(n) {
           }
         });
       }
-    }), null), g(t, b(X, {
+    }), null), g(t, b(ee, {
       get when() {
-        return N(() => n.combat === "inGeneral")() && !!n.descriptions[n.charClass];
+        return I(() => n.combat === "inGeneral")() && !!n.descriptions[n.charClass];
       },
       get children() {
         return b(qe, {
@@ -2531,9 +2546,9 @@ function Ao(n) {
           }
         });
       }
-    }), null), g(t, b(X, {
+    }), null), g(t, b(ee, {
       get when() {
-        return N(() => n.combat === "inGeneral")() && !!n.descriptions[n.profession];
+        return I(() => n.combat === "inGeneral")() && !!n.descriptions[n.profession];
       },
       get children() {
         return b(qe, {
@@ -2551,9 +2566,10 @@ function Ao(n) {
       },
       children: (o) => b(bo, {
         card: o,
-        get onRoll() {
-          return n.onRoll;
+        get used() {
+          return n.usedCards.has(o.title);
         },
+        onUse: () => n.onUseCard(o.title),
         get onActivate() {
           return n.onActivate;
         }
@@ -2561,25 +2577,25 @@ function Ao(n) {
     }), null), t;
   })();
 }
-var To = /* @__PURE__ */ v('<div style="background:var(--sq-row-3);border-top:1px solid var(--sq-row-border);padding:8px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style=color:var(--sq-overlay-text-muted);font-size:12px;text-transform:uppercase;letter-spacing:1px>GM</span><div style="width:36px;height:18px;border-radius:9px;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0"><div style="width:14px;height:14px;background:#ffffff;border-radius:50%;position:absolute;top:1px;transition:left 0.2s"></div></div><button style="margin-left:auto;background:var(--sq-ctrl-bg);border:1px solid var(--sq-ctrl-border);color:var(--sq-overlay-text);border-radius:50%;width:24px;height:24px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">?'), So = /* @__PURE__ */ v('<button style="background:var(--sq-ctrl-bg);border:1px solid var(--sq-accent);color:var(--sq-accent);border-radius:4px;padding:3px 10px;font-size:12px;font-family:inherit">Save'), Do = /* @__PURE__ */ v('<select style="background:var(--sq-ctrl-bg);border:1px solid var(--sq-ctrl-border);color:var(--sq-ctrl-text);border-radius:4px;padding:3px 8px;font-size:12px;font-family:inherit;cursor:pointer"><option value>Load character...'), Ro = /* @__PURE__ */ v("<option>");
-function _o(n) {
+var To = /* @__PURE__ */ k('<div style="background:var(--sq-row-3);border-top:1px solid var(--sq-row-border);padding:8px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style=color:var(--sq-overlay-text-muted);font-size:12px;text-transform:uppercase;letter-spacing:1px>GM</span><div style="width:36px;height:18px;border-radius:9px;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0"><div style="width:14px;height:14px;background:#ffffff;border-radius:50%;position:absolute;top:1px;transition:left 0.2s"></div></div><button style="margin-left:auto;background:var(--sq-ctrl-bg);border:1px solid var(--sq-ctrl-border);color:var(--sq-overlay-text);border-radius:50%;width:24px;height:24px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">?'), So = /* @__PURE__ */ k('<button style="background:var(--sq-ctrl-bg);border:1px solid var(--sq-accent);color:var(--sq-accent);border-radius:4px;padding:3px 10px;font-size:12px;font-family:inherit">Save'), Ro = /* @__PURE__ */ k('<select style="background:var(--sq-ctrl-bg);border:1px solid var(--sq-ctrl-border);color:var(--sq-ctrl-text);border-radius:4px;padding:3px 8px;font-size:12px;font-family:inherit;cursor:pointer"><option value>Load character...'), Ao = /* @__PURE__ */ k("<option>");
+function $o(n) {
   const e = () => Object.keys(n.savedCharacters);
   return (() => {
     var t = To(), o = t.firstChild, a = o.nextSibling, r = a.firstChild, i = a.nextSibling;
     return a.$$click = () => n.onToggle(!n.enabled), g(t, (() => {
-      var s = N(() => !!n.enabled);
+      var s = I(() => !!n.enabled);
       return () => s() && [(() => {
         var l = So();
-        return Oe(l, "click", n.onSave), D((c) => {
+        return Oe(l, "click", n.onSave), C((c) => {
           var u = !n.characterName, d = n.characterName ? "pointer" : "not-allowed", h = n.characterName ? "1" : "0.4";
-          return u !== c.e && (l.disabled = c.e = u), d !== c.t && E(l, "cursor", c.t = d), h !== c.a && E(l, "opacity", c.a = h), c;
+          return u !== c.e && (l.disabled = c.e = u), d !== c.t && R(l, "cursor", c.t = d), h !== c.a && R(l, "opacity", c.a = h), c;
         }, {
           e: void 0,
           t: void 0,
           a: void 0
         }), l;
       })(), (() => {
-        var l = Do();
+        var l = Ro();
         return l.firstChild, l.addEventListener("change", (c) => {
           c.currentTarget.value && n.onLoad(c.currentTarget.value), c.currentTarget.value = "";
         }), g(l, b(H, {
@@ -2587,14 +2603,14 @@ function _o(n) {
             return e();
           },
           children: (c) => (() => {
-            var u = Ro();
+            var u = Ao();
             return u.value = c, g(u, c), u;
           })()
         }), null), l;
       })()];
-    })(), i), Oe(i, "click", n.onHelpOpen), D((s) => {
+    })(), i), Oe(i, "click", n.onHelpOpen), C((s) => {
       var l = n.enabled ? "var(--sq-accent)" : "var(--sq-ctrl-bg)", c = `1px solid ${n.enabled ? "var(--sq-accent)" : "var(--sq-ctrl-border)"}`, u = n.enabled ? "19px" : "1px";
-      return l !== s.e && E(a, "background", s.e = l), c !== s.t && E(a, "border", s.t = c), u !== s.a && E(r, "left", s.a = u), s;
+      return l !== s.e && R(a, "background", s.e = l), c !== s.t && R(a, "border", s.t = c), u !== s.a && R(r, "left", s.a = u), s;
     }, {
       e: void 0,
       t: void 0,
@@ -2602,30 +2618,18 @@ function _o(n) {
     }), t;
   })();
 }
-U(["click"]);
-var Yo = /* @__PURE__ */ v(`<div style=position:absolute;inset:0;background:#ffffff;z-index:500;overflow:auto;padding:16px><div style=display:flex;justify-content:space-between;align-items:center;margin-bottom:12px><span style=color:var(--sq-accent);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px>General Rules</span><button style=background:var(--sq-accent);color:#ffffff;border:none;border-radius:50%;width:28px;height:28px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0>×</button></div><div style="color:#3f3e4a;font-size:13px;line-height:1.7;font-family:'Varela Round', 'Nunito', sans-serif">`);
+W(["click"]);
+var Do = /* @__PURE__ */ k(`<div style=position:absolute;inset:0;background:#ffffff;z-index:500;overflow:auto;padding:16px><div style=display:flex;justify-content:space-between;align-items:center;margin-bottom:12px><span style=color:var(--sq-accent);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px>General Rules</span><button style=background:var(--sq-accent);color:#ffffff;border:none;border-radius:50%;width:28px;height:28px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0>×</button></div><div style="color:#3f3e4a;font-size:13px;line-height:1.7;font-family:'Varela Round', 'Nunito', sans-serif">`);
 function Eo(n) {
   return (() => {
-    var e = Yo(), t = e.firstChild, o = t.firstChild, a = o.nextSibling, r = t.nextSibling;
-    return Oe(a, "click", n.onClose), D(() => r.innerHTML = m.parse(n.body)), e;
+    var e = Do(), t = e.firstChild, o = t.firstChild, a = o.nextSibling, r = t.nextSibling;
+    return Oe(a, "click", n.onClose), C(() => r.innerHTML = y.parse(n.body)), e;
   })();
 }
-U(["click"]);
-var qo = /* @__PURE__ */ v('<div style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.85);border:1px solid var(--sq-accent);color:#ffffff;padding:10px 20px;border-radius:6px;font-size:16px;font-weight:700;z-index:9999;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,0.5)">');
-function zo(n) {
-  return b(X, {
-    get when() {
-      return n.visible;
-    },
-    get children() {
-      var e = qo();
-      return g(e, () => n.message), e;
-    }
-  });
-}
-const Io = '@import"https://fonts.googleapis.com/css2?family=Varela+Round&family=Nunito:wght@400;600;700&display=swap";/*! tailwindcss v4.2.4 | MIT License | https://tailwindcss.com */@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-rotate-x:initial;--tw-rotate-y:initial;--tw-rotate-z:initial;--tw-skew-x:initial;--tw-skew-y:initial;--tw-border-style:solid;--tw-ordinal:initial;--tw-slashed-zero:initial;--tw-numeric-figure:initial;--tw-numeric-spacing:initial;--tw-numeric-fraction:initial;--tw-shadow:0 0 #0000;--tw-shadow-color:initial;--tw-shadow-alpha:100%;--tw-inset-shadow:0 0 #0000;--tw-inset-shadow-color:initial;--tw-inset-shadow-alpha:100%;--tw-ring-color:initial;--tw-ring-shadow:0 0 #0000;--tw-inset-ring-color:initial;--tw-inset-ring-shadow:0 0 #0000;--tw-ring-inset:initial;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-offset-shadow:0 0 #0000;--tw-outline-style:solid;--tw-blur:initial;--tw-brightness:initial;--tw-contrast:initial;--tw-grayscale:initial;--tw-hue-rotate:initial;--tw-invert:initial;--tw-opacity:initial;--tw-saturate:initial;--tw-sepia:initial;--tw-drop-shadow:initial;--tw-drop-shadow-color:initial;--tw-drop-shadow-alpha:100%;--tw-drop-shadow-size:initial;--tw-backdrop-blur:initial;--tw-backdrop-brightness:initial;--tw-backdrop-contrast:initial;--tw-backdrop-grayscale:initial;--tw-backdrop-hue-rotate:initial;--tw-backdrop-invert:initial;--tw-backdrop-opacity:initial;--tw-backdrop-saturate:initial;--tw-backdrop-sepia:initial}}}@layer theme{:root,:host{--font-sans:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";--font-mono:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;--color-red-900:oklch(39.6% .141 25.723);--spacing:.25rem;--default-transition-duration:.15s;--default-transition-timing-function:cubic-bezier(.4, 0, .2, 1);--default-font-family:var(--font-sans);--default-mono-font-family:var(--font-mono)}}@layer base{*,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}::file-selector-button{box-sizing:border-box;border:0 solid;margin:0;padding:0}html,:host{-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;line-height:1.5;font-family:var(--default-font-family,ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");font-feature-settings:var(--default-font-feature-settings,normal);font-variation-settings:var(--default-font-variation-settings,normal);-webkit-tap-highlight-color:transparent}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;-webkit-text-decoration:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,samp,pre{font-family:var(--default-mono-font-family,ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);font-feature-settings:var(--default-mono-font-feature-settings,normal);font-variation-settings:var(--default-mono-font-variation-settings,normal);font-size:1em}small{font-size:80%}sub,sup{vertical-align:baseline;font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}:-moz-focusring{outline:auto}progress{vertical-align:baseline}summary{display:list-item}ol,ul,menu{list-style:none}img,svg,video,canvas,audio,iframe,embed,object{vertical-align:middle;display:block}img,video{max-width:100%;height:auto}button,input,select,optgroup,textarea{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}::file-selector-button{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}:where(select:is([multiple],[size])) optgroup{font-weight:bolder}:where(select:is([multiple],[size])) optgroup option{padding-inline-start:20px}::file-selector-button{margin-inline-end:4px}::placeholder{opacity:1}@supports (not ((-webkit-appearance:-apple-pay-button))) or (contain-intrinsic-size:1px){::placeholder{color:currentColor}@supports (color:color-mix(in lab,red,red)){::placeholder{color:color-mix(in oklab,currentcolor 50%,transparent)}}}textarea{resize:vertical}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-date-and-time-value{min-height:1lh;text-align:inherit}::-webkit-datetime-edit{display:inline-flex}::-webkit-datetime-edit-fields-wrapper{padding:0}::-webkit-datetime-edit{padding-block:0}::-webkit-datetime-edit-year-field{padding-block:0}::-webkit-datetime-edit-month-field{padding-block:0}::-webkit-datetime-edit-day-field{padding-block:0}::-webkit-datetime-edit-hour-field{padding-block:0}::-webkit-datetime-edit-minute-field{padding-block:0}::-webkit-datetime-edit-second-field{padding-block:0}::-webkit-datetime-edit-millisecond-field{padding-block:0}::-webkit-datetime-edit-meridiem-field{padding-block:0}::-webkit-calendar-picker-indicator{line-height:1}:-moz-ui-invalid{box-shadow:none}button,input:where([type=button],[type=reset],[type=submit]){-webkit-appearance:button;-moz-appearance:button;appearance:button}::file-selector-button{-webkit-appearance:button;-moz-appearance:button;appearance:button}::-webkit-inner-spin-button{height:auto}::-webkit-outer-spin-button{height:auto}[hidden]:where(:not([hidden=until-found])){display:none!important}}@layer components;@layer utilities{.invisible{visibility:hidden}.visible{visibility:visible}.absolute{position:absolute}.fixed{position:fixed}.relative{position:relative}.static{position:static}.sticky{position:sticky}.start{inset-inline-start:var(--spacing)}.end{inset-inline-end:var(--spacing)}.isolate{isolation:isolate}.order-0,.order-none{order:0}.container{width:100%}@media(min-width:40rem){.container{max-width:40rem}}@media(min-width:48rem){.container{max-width:48rem}}@media(min-width:64rem){.container{max-width:64rem}}@media(min-width:80rem){.container{max-width:80rem}}@media(min-width:96rem){.container{max-width:96rem}}.\\!hidden{display:none!important}.block{display:block}.contents{display:contents}.flex{display:flex}.grid{display:grid}.hidden{display:none}.inline{display:inline}.inline-block{display:inline-block}.table{display:table}.table-caption{display:table-caption}.table-cell{display:table-cell}.flex-shrink{flex-shrink:1}.flex-grow,.grow{flex-grow:1}.border-collapse{border-collapse:collapse}.transform{transform:var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)}.resize{resize:both}.flex-wrap{flex-wrap:wrap}.truncate{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.rounded{border-radius:.25rem}.border{border-style:var(--tw-border-style);border-width:1px}.mask-repeat{-webkit-mask-repeat:repeat;mask-repeat:repeat}.text-wrap{text-wrap:wrap}.break-words,.wrap-break-word{overflow-wrap:break-word}.capitalize{text-transform:capitalize}.lowercase{text-transform:lowercase}.uppercase{text-transform:uppercase}.italic{font-style:italic}.ordinal{--tw-ordinal:ordinal;font-variant-numeric:var(--tw-ordinal,) var(--tw-slashed-zero,) var(--tw-numeric-figure,) var(--tw-numeric-spacing,) var(--tw-numeric-fraction,)}.underline{text-decoration-line:underline}.shadow{--tw-shadow:0 1px 3px 0 var(--tw-shadow-color,#0000001a), 0 1px 2px -1px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.outline{outline-style:var(--tw-outline-style);outline-width:1px}.blur{--tw-blur:blur(8px);filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}.grayscale{--tw-grayscale:grayscale(100%);filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}.invert{--tw-invert:invert(100%);filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}.sepia{--tw-sepia:sepia(100%);filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}.\\!filter{filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)!important}.filter{filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}.backdrop-filter{-webkit-backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,)}.transition{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to,opacity,box-shadow,transform,translate,scale,rotate,filter,-webkit-backdrop-filter,backdrop-filter,display,content-visibility,overlay,pointer-events;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}.data-\\[personality\\=passionate\\]\\:bg-red-900[data-personality=passionate]{background-color:var(--color-red-900)}}:host{font-family:var(--sq-font-family,"Varela Round", "Nunito", sans-serif);--sq-bg:#888;--sq-accent:#888;--sq-overlay-text:#fffffff2;--sq-overlay-text-muted:#ffffff8c;--sq-ctrl-bg:#ffffff26;--sq-ctrl-border:#ffffff4d;--sq-ctrl-text:#fffffff2;--sq-row-1:#00000026;--sq-row-2:#0000001a;--sq-row-3:#0003;--sq-row-border:#0000001f;--sq-dot-empty-bg:#fff3;--sq-dot-empty-border:#fff6;background-color:var(--sq-bg);color:#3f3e4a;display:block}:host([data-personality=passionate]){--sq-bg:#943a11;--sq-accent:#943a11}:host([data-personality=calculating]){--sq-bg:#26869d;--sq-accent:#26869d}:host([data-personality=wild]){--sq-bg:#758d2c;--sq-accent:#758d2c}:host([data-personality=selfish]){--sq-bg:#3f3e4a;--sq-accent:#3f3e4a}:host([data-personality=righteous]){--sq-bg:#daceae;--sq-accent:#5a5060;--sq-overlay-text:#5a5060;--sq-overlay-text-muted:#5a506080;--sq-ctrl-bg:#0000000f;--sq-ctrl-border:#5a506040;--sq-ctrl-text:#5a5060;--sq-row-1:#0000000f;--sq-row-2:#0000000a;--sq-row-3:#00000014;--sq-row-border:#5a506026;--sq-dot-empty-bg:#5a50601f;--sq-dot-empty-border:#5a506040}.die-inline{color:#26869d;cursor:pointer;border-bottom:1px solid #26869d;font-weight:700}@property --tw-rotate-x{syntax:"*";inherits:false}@property --tw-rotate-y{syntax:"*";inherits:false}@property --tw-rotate-z{syntax:"*";inherits:false}@property --tw-skew-x{syntax:"*";inherits:false}@property --tw-skew-y{syntax:"*";inherits:false}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-ordinal{syntax:"*";inherits:false}@property --tw-slashed-zero{syntax:"*";inherits:false}@property --tw-numeric-figure{syntax:"*";inherits:false}@property --tw-numeric-spacing{syntax:"*";inherits:false}@property --tw-numeric-fraction{syntax:"*";inherits:false}@property --tw-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-shadow-color{syntax:"*";inherits:false}@property --tw-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-inset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-shadow-color{syntax:"*";inherits:false}@property --tw-inset-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-ring-color{syntax:"*";inherits:false}@property --tw-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-ring-color{syntax:"*";inherits:false}@property --tw-inset-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-ring-inset{syntax:"*";inherits:false}@property --tw-ring-offset-width{syntax:"<length>";inherits:false;initial-value:0}@property --tw-ring-offset-color{syntax:"*";inherits:false;initial-value:#fff}@property --tw-ring-offset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-outline-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-blur{syntax:"*";inherits:false}@property --tw-brightness{syntax:"*";inherits:false}@property --tw-contrast{syntax:"*";inherits:false}@property --tw-grayscale{syntax:"*";inherits:false}@property --tw-hue-rotate{syntax:"*";inherits:false}@property --tw-invert{syntax:"*";inherits:false}@property --tw-opacity{syntax:"*";inherits:false}@property --tw-saturate{syntax:"*";inherits:false}@property --tw-sepia{syntax:"*";inherits:false}@property --tw-drop-shadow{syntax:"*";inherits:false}@property --tw-drop-shadow-color{syntax:"*";inherits:false}@property --tw-drop-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-drop-shadow-size{syntax:"*";inherits:false}@property --tw-backdrop-blur{syntax:"*";inherits:false}@property --tw-backdrop-brightness{syntax:"*";inherits:false}@property --tw-backdrop-contrast{syntax:"*";inherits:false}@property --tw-backdrop-grayscale{syntax:"*";inherits:false}@property --tw-backdrop-hue-rotate{syntax:"*";inherits:false}@property --tw-backdrop-invert{syntax:"*";inherits:false}@property --tw-backdrop-opacity{syntax:"*";inherits:false}@property --tw-backdrop-saturate{syntax:"*";inherits:false}@property --tw-backdrop-sepia{syntax:"*";inherits:false}';
-var Oo = /* @__PURE__ */ v("<style>"), Po = /* @__PURE__ */ v("<div style=height:100%;display:flex;flex-direction:column;overflow:hidden;position:relative><div style=flex:1;overflow-y:auto;min-height:0>");
-function Lo(n) {
+W(["click"]);
+const qo = '@import"https://fonts.googleapis.com/css2?family=Varela+Round&family=Nunito:wght@400;600;700&display=swap";/*! tailwindcss v4.2.4 | MIT License | https://tailwindcss.com */@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-rotate-x:initial;--tw-rotate-y:initial;--tw-rotate-z:initial;--tw-skew-x:initial;--tw-skew-y:initial;--tw-border-style:solid;--tw-ordinal:initial;--tw-slashed-zero:initial;--tw-numeric-figure:initial;--tw-numeric-spacing:initial;--tw-numeric-fraction:initial;--tw-shadow:0 0 #0000;--tw-shadow-color:initial;--tw-shadow-alpha:100%;--tw-inset-shadow:0 0 #0000;--tw-inset-shadow-color:initial;--tw-inset-shadow-alpha:100%;--tw-ring-color:initial;--tw-ring-shadow:0 0 #0000;--tw-inset-ring-color:initial;--tw-inset-ring-shadow:0 0 #0000;--tw-ring-inset:initial;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-offset-shadow:0 0 #0000;--tw-outline-style:solid;--tw-blur:initial;--tw-brightness:initial;--tw-contrast:initial;--tw-grayscale:initial;--tw-hue-rotate:initial;--tw-invert:initial;--tw-opacity:initial;--tw-saturate:initial;--tw-sepia:initial;--tw-drop-shadow:initial;--tw-drop-shadow-color:initial;--tw-drop-shadow-alpha:100%;--tw-drop-shadow-size:initial;--tw-backdrop-blur:initial;--tw-backdrop-brightness:initial;--tw-backdrop-contrast:initial;--tw-backdrop-grayscale:initial;--tw-backdrop-hue-rotate:initial;--tw-backdrop-invert:initial;--tw-backdrop-opacity:initial;--tw-backdrop-saturate:initial;--tw-backdrop-sepia:initial}}}@layer theme{:root,:host{--font-sans:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";--font-mono:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;--color-red-900:oklch(39.6% .141 25.723);--spacing:.25rem;--default-transition-duration:.15s;--default-transition-timing-function:cubic-bezier(.4, 0, .2, 1);--default-font-family:var(--font-sans);--default-mono-font-family:var(--font-mono)}}@layer base{*,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}::file-selector-button{box-sizing:border-box;border:0 solid;margin:0;padding:0}html,:host{-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;line-height:1.5;font-family:var(--default-font-family,ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");font-feature-settings:var(--default-font-feature-settings,normal);font-variation-settings:var(--default-font-variation-settings,normal);-webkit-tap-highlight-color:transparent}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;-webkit-text-decoration:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,samp,pre{font-family:var(--default-mono-font-family,ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);font-feature-settings:var(--default-mono-font-feature-settings,normal);font-variation-settings:var(--default-mono-font-variation-settings,normal);font-size:1em}small{font-size:80%}sub,sup{vertical-align:baseline;font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}:-moz-focusring{outline:auto}progress{vertical-align:baseline}summary{display:list-item}ol,ul,menu{list-style:none}img,svg,video,canvas,audio,iframe,embed,object{vertical-align:middle;display:block}img,video{max-width:100%;height:auto}button,input,select,optgroup,textarea{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}::file-selector-button{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}:where(select:is([multiple],[size])) optgroup{font-weight:bolder}:where(select:is([multiple],[size])) optgroup option{padding-inline-start:20px}::file-selector-button{margin-inline-end:4px}::placeholder{opacity:1}@supports (not ((-webkit-appearance:-apple-pay-button))) or (contain-intrinsic-size:1px){::placeholder{color:currentColor}@supports (color:color-mix(in lab,red,red)){::placeholder{color:color-mix(in oklab,currentcolor 50%,transparent)}}}textarea{resize:vertical}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-date-and-time-value{min-height:1lh;text-align:inherit}::-webkit-datetime-edit{display:inline-flex}::-webkit-datetime-edit-fields-wrapper{padding:0}::-webkit-datetime-edit{padding-block:0}::-webkit-datetime-edit-year-field{padding-block:0}::-webkit-datetime-edit-month-field{padding-block:0}::-webkit-datetime-edit-day-field{padding-block:0}::-webkit-datetime-edit-hour-field{padding-block:0}::-webkit-datetime-edit-minute-field{padding-block:0}::-webkit-datetime-edit-second-field{padding-block:0}::-webkit-datetime-edit-millisecond-field{padding-block:0}::-webkit-datetime-edit-meridiem-field{padding-block:0}::-webkit-calendar-picker-indicator{line-height:1}:-moz-ui-invalid{box-shadow:none}button,input:where([type=button],[type=reset],[type=submit]){-webkit-appearance:button;-moz-appearance:button;appearance:button}::file-selector-button{-webkit-appearance:button;-moz-appearance:button;appearance:button}::-webkit-inner-spin-button{height:auto}::-webkit-outer-spin-button{height:auto}[hidden]:where(:not([hidden=until-found])){display:none!important}}@layer components;@layer utilities{.invisible{visibility:hidden}.visible{visibility:visible}.absolute{position:absolute}.fixed{position:fixed}.relative{position:relative}.static{position:static}.sticky{position:sticky}.start{inset-inline-start:var(--spacing)}.end{inset-inline-end:var(--spacing)}.isolate{isolation:isolate}.order-0,.order-none{order:0}.container{width:100%}@media(min-width:40rem){.container{max-width:40rem}}@media(min-width:48rem){.container{max-width:48rem}}@media(min-width:64rem){.container{max-width:64rem}}@media(min-width:80rem){.container{max-width:80rem}}@media(min-width:96rem){.container{max-width:96rem}}.\\!hidden{display:none!important}.block{display:block}.contents{display:contents}.flex{display:flex}.grid{display:grid}.hidden{display:none}.inline{display:inline}.inline-block{display:inline-block}.table{display:table}.table-caption{display:table-caption}.table-cell{display:table-cell}.flex-shrink{flex-shrink:1}.flex-grow,.grow{flex-grow:1}.border-collapse{border-collapse:collapse}.transform{transform:var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)}.resize{resize:both}.flex-wrap{flex-wrap:wrap}.truncate{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.rounded{border-radius:.25rem}.border{border-style:var(--tw-border-style);border-width:1px}.mask-repeat{-webkit-mask-repeat:repeat;mask-repeat:repeat}.text-wrap{text-wrap:wrap}.break-words,.wrap-break-word{overflow-wrap:break-word}.capitalize{text-transform:capitalize}.lowercase{text-transform:lowercase}.uppercase{text-transform:uppercase}.italic{font-style:italic}.ordinal{--tw-ordinal:ordinal;font-variant-numeric:var(--tw-ordinal,) var(--tw-slashed-zero,) var(--tw-numeric-figure,) var(--tw-numeric-spacing,) var(--tw-numeric-fraction,)}.line-through{text-decoration-line:line-through}.underline{text-decoration-line:underline}.shadow{--tw-shadow:0 1px 3px 0 var(--tw-shadow-color,#0000001a), 0 1px 2px -1px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.outline{outline-style:var(--tw-outline-style);outline-width:1px}.blur{--tw-blur:blur(8px);filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}.grayscale{--tw-grayscale:grayscale(100%);filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}.invert{--tw-invert:invert(100%);filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}.sepia{--tw-sepia:sepia(100%);filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}.\\!filter{filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)!important}.filter{filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}.backdrop-filter{-webkit-backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,)}.transition{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to,opacity,box-shadow,transform,translate,scale,rotate,filter,-webkit-backdrop-filter,backdrop-filter,display,content-visibility,overlay,pointer-events;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}.data-\\[personality\\=passionate\\]\\:bg-red-900[data-personality=passionate]{background-color:var(--color-red-900)}}:host{font-family:var(--sq-font-family,"Varela Round", "Nunito", sans-serif);--sq-bg:#888;--sq-accent:#888;--sq-overlay-text:#fffffff2;--sq-overlay-text-muted:#ffffff8c;--sq-ctrl-bg:#ffffff26;--sq-ctrl-border:#ffffff4d;--sq-ctrl-text:#fffffff2;--sq-row-1:#00000026;--sq-row-2:#0000001a;--sq-row-3:#0003;--sq-row-border:#0000001f;--sq-dot-empty-bg:#fff3;--sq-dot-empty-border:#fff6;background-color:var(--sq-bg);color:#3f3e4a;display:block}:host([data-personality=passionate]){--sq-bg:#943a11;--sq-accent:#943a11}:host([data-personality=calculating]){--sq-bg:#26869d;--sq-accent:#26869d}:host([data-personality=wild]){--sq-bg:#758d2c;--sq-accent:#758d2c}:host([data-personality=selfish]){--sq-bg:#3f3e4a;--sq-accent:#3f3e4a}:host([data-personality=righteous]){--sq-bg:#daceae;--sq-accent:#5a5060;--sq-overlay-text:#5a5060;--sq-overlay-text-muted:#5a506080;--sq-ctrl-bg:#0000000f;--sq-ctrl-border:#5a506040;--sq-ctrl-text:#5a5060;--sq-row-1:#0000000f;--sq-row-2:#0000000a;--sq-row-3:#00000014;--sq-row-border:#5a506026;--sq-dot-empty-bg:#5a50601f;--sq-dot-empty-border:#5a506040}.die-inline{color:#26869d;cursor:pointer;border-bottom:1px solid #26869d;font-weight:700}@property --tw-rotate-x{syntax:"*";inherits:false}@property --tw-rotate-y{syntax:"*";inherits:false}@property --tw-rotate-z{syntax:"*";inherits:false}@property --tw-skew-x{syntax:"*";inherits:false}@property --tw-skew-y{syntax:"*";inherits:false}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-ordinal{syntax:"*";inherits:false}@property --tw-slashed-zero{syntax:"*";inherits:false}@property --tw-numeric-figure{syntax:"*";inherits:false}@property --tw-numeric-spacing{syntax:"*";inherits:false}@property --tw-numeric-fraction{syntax:"*";inherits:false}@property --tw-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-shadow-color{syntax:"*";inherits:false}@property --tw-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-inset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-shadow-color{syntax:"*";inherits:false}@property --tw-inset-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-ring-color{syntax:"*";inherits:false}@property --tw-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-ring-color{syntax:"*";inherits:false}@property --tw-inset-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-ring-inset{syntax:"*";inherits:false}@property --tw-ring-offset-width{syntax:"<length>";inherits:false;initial-value:0}@property --tw-ring-offset-color{syntax:"*";inherits:false;initial-value:#fff}@property --tw-ring-offset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-outline-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-blur{syntax:"*";inherits:false}@property --tw-brightness{syntax:"*";inherits:false}@property --tw-contrast{syntax:"*";inherits:false}@property --tw-grayscale{syntax:"*";inherits:false}@property --tw-hue-rotate{syntax:"*";inherits:false}@property --tw-invert{syntax:"*";inherits:false}@property --tw-opacity{syntax:"*";inherits:false}@property --tw-saturate{syntax:"*";inherits:false}@property --tw-sepia{syntax:"*";inherits:false}@property --tw-drop-shadow{syntax:"*";inherits:false}@property --tw-drop-shadow-color{syntax:"*";inherits:false}@property --tw-drop-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-drop-shadow-size{syntax:"*";inherits:false}@property --tw-backdrop-blur{syntax:"*";inherits:false}@property --tw-backdrop-brightness{syntax:"*";inherits:false}@property --tw-backdrop-contrast{syntax:"*";inherits:false}@property --tw-backdrop-grayscale{syntax:"*";inherits:false}@property --tw-backdrop-hue-rotate{syntax:"*";inherits:false}@property --tw-backdrop-invert{syntax:"*";inherits:false}@property --tw-backdrop-opacity{syntax:"*";inherits:false}@property --tw-backdrop-saturate{syntax:"*";inherits:false}@property --tw-backdrop-sepia{syntax:"*";inherits:false}';
+var zo = /* @__PURE__ */ k("<style>"), Yo = /* @__PURE__ */ k("<div style=height:100%;display:flex;flex-direction:column;overflow:hidden;position:relative><div style=flex:1;overflow-y:auto;min-height:0>");
+function Oo(n) {
   const {
     state: e,
     setState: t,
@@ -2633,9 +2637,7 @@ function Lo(n) {
     loadFromStorage: a,
     saveCharacter: r,
     loadCharacter: i
-  } = gn(), [s, l] = B(""), [c, u] = B(!1), [d, h] = B(!1);
-  let p;
-  const k = M(() => {
+  } = yn(), [s, l] = F(!1), [c, u] = F(/* @__PURE__ */ new Set()), d = L(() => {
     if (!n.content) return null;
     try {
       return JSON.parse(n.content);
@@ -2645,38 +2647,33 @@ function Lo(n) {
   });
   Nt(() => {
     a();
-  }), pe(() => {
+  }), J(() => {
     if (n.character)
       try {
-        const y = JSON.parse(n.character);
+        const p = JSON.parse(n.character);
         t({
-          ...y
+          ...p
         });
       } catch {
       }
-  }), lt(() => {
-    p !== void 0 && clearTimeout(p);
-  });
-  function C(y) {
-    p !== void 0 && clearTimeout(p), l(y), u(!0), p = setTimeout(() => u(!1), 2500);
-  }
-  function _(y) {
-    const A = Math.floor(Math.random() * y) + 1;
-    C(`d${y} → ${A}`);
-  }
-  function q(y) {
-    y.energyCost !== void 0 && n.element.dispatchEvent(new CustomEvent("abilityactivate", {
+  }), J(Pt(() => e.round, () => {
+    u(/* @__PURE__ */ new Set());
+  }, {
+    defer: !0
+  }));
+  function h(p) {
+    p.energyCost !== void 0 && n.element.dispatchEvent(new CustomEvent("abilityactivate", {
       detail: {
-        title: y.title,
-        energyCost: y.energyCost
+        title: p.title,
+        energyCost: p.energyCost
       },
       bubbles: !0,
       composed: !0
     }));
   }
-  return pe(() => {
+  return J(() => {
     e.personality ? n.element.setAttribute("data-personality", e.personality) : n.element.removeAttribute("data-personality");
-  }), pe(() => {
+  }), J(() => {
     n.element.dispatchEvent(new CustomEvent("characterchange", {
       detail: {
         name: e.name,
@@ -2689,11 +2686,11 @@ function Lo(n) {
       composed: !0
     }));
   }), [(() => {
-    var y = Oo();
-    return g(y, Io), y;
+    var p = zo();
+    return g(p, qo), p;
   })(), (() => {
-    var y = Po(), A = y.firstChild;
-    return g(y, b(Cn, {
+    var p = Yo(), x = p.firstChild;
+    return g(p, b(Cn, {
       get hp() {
         return e.hp;
       },
@@ -2714,7 +2711,7 @@ function Lo(n) {
       },
       onHpChange: (f) => t("hp", f),
       onEnergyClick: o
-    }), A), g(y, b(Sn, {
+    }), x), g(p, b(Rn, {
       get name() {
         return e.name;
       },
@@ -2729,41 +2726,41 @@ function Lo(n) {
       },
       get personalities() {
         var f;
-        return ((f = k()) == null ? void 0 : f.personalities) ?? [];
+        return ((f = d()) == null ? void 0 : f.personalities) ?? [];
       },
       get classes() {
         var f;
-        return ((f = k()) == null ? void 0 : f.classes) ?? [];
+        return ((f = d()) == null ? void 0 : f.classes) ?? [];
       },
       get professions() {
         var f;
-        return ((f = k()) == null ? void 0 : f.professions) ?? [];
+        return ((f = d()) == null ? void 0 : f.professions) ?? [];
       },
       onNameChange: (f) => t("name", f),
       onPersonalityChange: (f) => t("personality", f),
       onClassChange: (f) => t("class", f),
       onProfessionChange: (f) => t("profession", f)
-    }), A), g(y, b(_n, {
+    }), x), g(p, b(Dn, {
       get combat() {
         return e.combat;
       },
       get statuses() {
         var f;
-        return ((f = k()) == null ? void 0 : f.statuses) ?? [];
+        return ((f = d()) == null ? void 0 : f.statuses) ?? [];
       },
       onChange: (f) => t("combat", f)
-    }), A), g(A, b(Ao, {
+    }), x), g(x, b(Co, {
       get abilities() {
         var f;
-        return ((f = k()) == null ? void 0 : f.abilities) ?? [];
+        return ((f = d()) == null ? void 0 : f.abilities) ?? [];
       },
       get descriptions() {
         var f;
-        return ((f = k()) == null ? void 0 : f.descriptions) ?? {};
+        return ((f = d()) == null ? void 0 : f.descriptions) ?? {};
       },
       get deathContent() {
         var f;
-        return ((f = k()) == null ? void 0 : f.deathContent) ?? "";
+        return ((f = d()) == null ? void 0 : f.deathContent) ?? "";
       },
       get charClass() {
         return e.class;
@@ -2780,9 +2777,12 @@ function Lo(n) {
       get hp() {
         return e.hp;
       },
-      onRoll: _,
-      onActivate: q
-    }), null), g(A, b(_o, {
+      get usedCards() {
+        return c();
+      },
+      onUseCard: (f) => u((S) => /* @__PURE__ */ new Set([...S, f])),
+      onActivate: h
+    }), null), g(x, b($o, {
       get enabled() {
         return e.gmMode;
       },
@@ -2795,31 +2795,24 @@ function Lo(n) {
       onToggle: (f) => t("gmMode", f),
       onSave: r,
       onLoad: i,
-      onHelpOpen: () => h(!0)
-    }), null), g(y, b(zo, {
-      get message() {
-        return s();
-      },
-      get visible() {
-        return c();
-      }
-    }), null), g(y, b(X, {
+      onHelpOpen: () => l(!0)
+    }), null), g(p, b(ee, {
       get when() {
-        return d();
+        return s();
       },
       get children() {
         return b(Eo, {
           get body() {
             var f;
-            return ((f = k()) == null ? void 0 : f.generalContent) ?? "";
+            return ((f = d()) == null ? void 0 : f.generalContent) ?? "";
           },
-          onClose: () => h(!1)
+          onClose: () => l(!1)
         });
       }
-    }), null), y;
+    }), null), p;
   })()];
 }
-const Mo = {
+const No = {
   personalities: ["passionate", "wild", "calculating", "righteous", "selfish"],
   classes: ["wizard", "sage", "fighter", "marksman", "monk"],
   professions: [
@@ -4226,12 +4219,12 @@ Your tinkerer can keep up to 2 successfully created machines to use later. Every
     }
   ]
 };
-ln("simple-quest", {
+cn("simple-quest", {
   content: "",
   character: ""
 }, (n, {
   element: e
-}) => b(Lo, {
+}) => b(Oo, {
   get content() {
     return n.content;
   },
@@ -4243,5 +4236,5 @@ ln("simple-quest", {
   shadow: !0
 });
 export {
-  Mo as sampleContent
+  No as sampleContent
 };
