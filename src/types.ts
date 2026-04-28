@@ -25,6 +25,14 @@ export interface SimpleQuestContent {
   deathContent: string                 // rendered as DeathCard when HP = 0
 }
 
+export interface ItemCard {
+  id: string
+  name: string
+  description: string
+  quantity: number
+  energyCost?: number
+}
+
 export interface CharacterData {
   name: string
   personality: string
@@ -37,6 +45,9 @@ export interface CharacterData {
   round?: number           // current combat round — passed from game
   usedAbilities?: string[] // ability titles used this turn (game-managed)
   selectedAbility?: string | null  // currently selected ability (game-managed)
+  items?: ItemCard[]       // hero's carried items (game-managed)
+  starRating?: number      // 0–5 star upgrade level
+  gear?: { weapon?: string | null; weaponBonus?: number }
 }
 
 export interface CharacterState extends CharacterData {

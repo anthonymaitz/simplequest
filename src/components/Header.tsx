@@ -8,15 +8,31 @@ interface HeaderProps {
   charClass: string
   profession: string
   personality: string
+  starRating?: number
+  gear?: { weapon?: string | null; weaponBonus?: number }
   onHpChange: (hp: number) => void
   onEnergyClick: (index: number) => void
 }
+
+const STAR_LABELS = ['', '★', '★★', '★★★', '★★★★', '★★★★★']
 
 export function Header(props: HeaderProps) {
   const info = () =>
     [props.name, props.charClass, props.profession, props.personality]
       .filter(Boolean)
       .join(' · ')
+
+  const starLabel = () => {
+    const r = props.starRating ?? 0
+    return r > 0 ? STAR_LABELS[r] ?? '' : ''
+  }
+
+  const weaponLabel = () => {
+    const w = props.gear?.weapon
+    if (!w) return ''
+    const bonus = props.gear?.weaponBonus
+    return bonus ? `⚔ ${w} (+${bonus})` : `⚔ ${w}`
+  }
 
   return (
     <div
@@ -43,6 +59,16 @@ export function Header(props: HeaderProps) {
         }}
       >
         {info()}
+        {starLabel() && (
+          <span style={{ color: '#f0c040', 'margin-left': '6px', 'font-size': '12px' }}>
+            {starLabel()}
+          </span>
+        )}
+        {weaponLabel() && (
+          <span style={{ color: '#88aaff', 'margin-left': '8px', 'font-size': '11px', 'text-transform': 'none' }}>
+            {weaponLabel()}
+          </span>
+        )}
       </div>
       {/* HP + energy row */}
       <div

@@ -4,9 +4,10 @@ import { Header } from './components/Header'
 import { CharacterSelector } from './components/CharacterSelector'
 import { CombatStateSelector } from './components/CombatStateSelector'
 import { AbilityCards } from './components/AbilityCards'
+import { ItemCards } from './components/ItemCards'
 import { GMMode } from './components/GMMode'
 import { HelpPanel } from './components/HelpPanel'
-import type { SimpleQuestContent, CombatState, CharacterData, AbilityCard as AbilityCardType } from './types'
+import type { SimpleQuestContent, CombatState, CharacterData, AbilityCard as AbilityCardType, ItemCard as ItemCardType } from './types'
 import cssString from './styles/tailwind.css?inline'
 
 interface SimpleQuestProps {
@@ -53,6 +54,14 @@ export function SimpleQuest(props: SimpleQuestProps) {
     }))
   }
 
+  function handleItemActivate(item: ItemCardType) {
+    props.element.dispatchEvent(new CustomEvent('itemactivate', {
+      detail: { id: item.id, name: item.name },
+      bubbles: true,
+      composed: true,
+    }))
+  }
+
   // Sync personality to data-personality on the host element for CSS theming
   createEffect(() => {
     if (state.personality) {
@@ -88,6 +97,8 @@ export function SimpleQuest(props: SimpleQuestProps) {
           charClass={state.class}
           profession={state.profession}
           personality={state.personality}
+          starRating={state.starRating}
+          gear={state.gear}
           onHpChange={(hp) => setState('hp', hp)}
           onEnergyClick={setEnergy}
         />
@@ -122,6 +133,10 @@ export function SimpleQuest(props: SimpleQuestProps) {
             usedAbilities={state.usedAbilities ?? []}
             selectedAbility={state.selectedAbility ?? null}
             onActivate={handleAbilityActivate}
+          />
+          <ItemCards
+            items={state.items ?? []}
+            onActivate={handleItemActivate}
           />
           <GMMode
             enabled={state.gmMode}
