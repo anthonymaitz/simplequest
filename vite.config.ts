@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [tailwindcss(), solid()],
   server: {
     host: true,
+    allowedHosts: true,
   },
   build: {
     lib: {
